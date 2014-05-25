@@ -1,4 +1,4 @@
-Mailjet Java API Wrapper
+[API v3] Mailjet Java API Wrapper
 ========================
 Communication with our API in Java applications is done using a client library providing wrapper around the API which enables the developers to build requests, read responses and handle errors in a native for Java way. The client handles all the HTTP communication and JSON serialization thus no specific knowledge of the developers are required.
 
