@@ -34,6 +34,7 @@ The client is designed to be used with the least effort possible. The typical st
 
 The wrapper is designed to be able to do the steps with three or less statement in Java:
 
+
 ```java
 MailJetClientConfiguration config = new MailJetClientConfiguration()
     			.setBaseURL("api_url")
@@ -46,6 +47,10 @@ ResultSet<Campaign> campaigns = client
 				.createCall(Campaign.List)
 				.execute();
 ```
+
+The api_url for Mailjet's REST api is :https://api.mailjet.com/v3/REST/
+
+
 All the classes and interfaces part of the wrapper are designed using the *fluent interface* technique which enables chaining of method invocations. As result the above code could be written in just one statement:
 ```java
 ResultSet<Campaign> campaigns = new MailJetClientConfiguration()
