@@ -1,0 +1,9 @@
+K 18
+svn:global-ignores
+V 40
+*.classpath
+*.project
+*.settings
+target
+
+END

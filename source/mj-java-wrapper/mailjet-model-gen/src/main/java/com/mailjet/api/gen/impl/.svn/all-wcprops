@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn3/!svn/ver/53/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/impl
+END
+CodeGeneratorContextImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn3/!svn/ver/53/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/impl/CodeGeneratorContextImpl.java
+END
+MailJetPropertyClassGeneratorImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/impl/MailJetPropertyClassGeneratorImpl.java
+END
+MailJetBeanInnerEnumTypesGeneratorImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/impl/MailJetBeanInnerEnumTypesGeneratorImpl.java
+END
+MailJetFilterClassGeneratorImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/impl/MailJetFilterClassGeneratorImpl.java
+END
+MailJetBeanEnumTypesGeneratorImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/impl/MailJetBeanEnumTypesGeneratorImpl.java
+END
+MailJetBeanClassImplementorImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/impl/MailJetBeanClassImplementorImpl.java
+END
+MailJetTestClassGeneratorImpl.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn3/!svn/ver/53/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/impl/MailJetTestClassGeneratorImpl.java
+END

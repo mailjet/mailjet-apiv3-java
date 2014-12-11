@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/main/java/com/mailjet/api/client/model/metadata
+END
+EnumValue.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/main/java/com/mailjet/api/client/model/metadata/EnumValue.java
+END
+Component.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/main/java/com/mailjet/api/client/model/metadata/Component.java
+END
+package-info.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/main/java/com/mailjet/api/client/model/metadata/package-info.java
+END
+Resource.java
+K 25
+svn:wc:ra_dav:version-url
+V 120
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/main/java/com/mailjet/api/client/model/metadata/Resource.java
+END

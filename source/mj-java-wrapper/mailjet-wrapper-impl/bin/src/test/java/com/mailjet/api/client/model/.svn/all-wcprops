@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/test/java/com/mailjet/api/client/model
+END
+TRunLevel.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/test/java/com/mailjet/api/client/model/TRunLevel.java
+END
+TCustomStatus.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/test/java/com/mailjet/api/client/model/TCustomStatus.java
+END
+TApiKey.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/test/java/com/mailjet/api/client/model/TApiKey.java
+END
+ResultSetTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/test/java/com/mailjet/api/client/model/ResultSetTest.java
+END
+TApiKeyProperty.java
+K 25
+svn:wc:ra_dav:version-url
+V 118
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/test/java/com/mailjet/api/client/model/TApiKeyProperty.java
+END

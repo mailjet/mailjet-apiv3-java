@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/test/resources
+END
+mailjet_custom.properties
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/test/resources/mailjet_custom.properties
+END
+mailjet.properties
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/test/resources/mailjet.properties
+END

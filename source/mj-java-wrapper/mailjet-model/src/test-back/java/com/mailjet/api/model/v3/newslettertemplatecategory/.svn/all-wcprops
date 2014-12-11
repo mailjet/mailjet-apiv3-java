@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn3/!svn/ver/55/mj-java-wrapper/mailjet-model/src/test/java/com/mailjet/api/model/v3/newslettertemplatecategory
+END
+NewsletterTemplateCategoryTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 149
+/svn3/!svn/ver/55/mj-java-wrapper/mailjet-model/src/test/java/com/mailjet/api/model/v3/newslettertemplatecategory/NewsletterTemplateCategoryTest.java
+END
+NewsletterTemplateCategoryCustomTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 155
+/svn3/!svn/ver/55/mj-java-wrapper/mailjet-model/src/test/java/com/mailjet/api/model/v3/newslettertemplatecategory/NewsletterTemplateCategoryCustomTest.java
+END

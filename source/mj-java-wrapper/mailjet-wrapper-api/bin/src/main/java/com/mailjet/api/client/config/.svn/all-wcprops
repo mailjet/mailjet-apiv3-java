@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-api/src/main/java/com/mailjet/api/client/config
+END
+package-info.java
+K 25
+svn:wc:ra_dav:version-url
+V 115
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-api/src/main/java/com/mailjet/api/client/config/package-info.java
+END
+MailJetClientConfigurationException.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-api/src/main/java/com/mailjet/api/client/config/MailJetClientConfigurationException.java
+END
+MailJetClientConfiguration.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-api/src/main/java/com/mailjet/api/client/config/MailJetClientConfiguration.java
+END

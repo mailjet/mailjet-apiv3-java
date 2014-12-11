@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 90
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/meta
+END
+ComponentMetadata.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/meta/ComponentMetadata.java
+END
+PropertyMetadata.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/meta/PropertyMetadata.java
+END
+FilterMetadata.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/meta/FilterMetadata.java
+END
+ResourceMetadata.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/meta/ResourceMetadata.java
+END
+ApiMetadata.java
+K 25
+svn:wc:ra_dav:version-url
+V 107
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-model-gen/src/main/java/com/mailjet/api/gen/meta/ApiMetadata.java
+END

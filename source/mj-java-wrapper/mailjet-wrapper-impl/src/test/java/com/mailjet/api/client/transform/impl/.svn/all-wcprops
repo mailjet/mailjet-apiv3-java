@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn3/!svn/ver/53/mj-java-wrapper/mailjet-wrapper-impl/src/test/java/com/mailjet/api/client/transform/impl
+END
+RFC3339DateTimeAdapterTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/test/java/com/mailjet/api/client/transform/impl/RFC3339DateTimeAdapterTest.java
+END
+ApiKeyNoAnno.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/test/java/com/mailjet/api/client/transform/impl/ApiKeyNoAnno.java
+END
+InternetDateFormatTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 134
+/svn3/!svn/ver/53/mj-java-wrapper/mailjet-wrapper-impl/src/test/java/com/mailjet/api/client/transform/impl/InternetDateFormatTest.java
+END
+GsonDataTransformerImplTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/svn3/!svn/ver/51/mj-java-wrapper/mailjet-wrapper-impl/src/test/java/com/mailjet/api/client/transform/impl/GsonDataTransformerImplTest.java
+END

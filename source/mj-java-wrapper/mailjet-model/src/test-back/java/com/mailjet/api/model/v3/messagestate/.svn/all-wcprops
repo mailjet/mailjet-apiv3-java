@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn3/!svn/ver/55/mj-java-wrapper/mailjet-model/src/test/java/com/mailjet/api/model/v3/messagestate
+END
+MessageStateTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn3/!svn/ver/55/mj-java-wrapper/mailjet-model/src/test/java/com/mailjet/api/model/v3/messagestate/MessageStateTest.java
+END
+MessageStateCustomTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/svn3/!svn/ver/55/mj-java-wrapper/mailjet-model/src/test/java/com/mailjet/api/model/v3/messagestate/MessageStateCustomTest.java
+END

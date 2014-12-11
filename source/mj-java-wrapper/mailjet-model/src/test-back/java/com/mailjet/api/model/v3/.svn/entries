@@ -1,0 +1,175 @@
+10
+
+dir
+56
+https://188.165.254.163/svn3/mj-java-wrapper/mailjet-model/src/test/java/com/mailjet/api/model/v3
+https://188.165.254.163/svn3
+
+
+
+2013-11-20T22:01:45.350165Z
+55
+svetozar
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+141c7099-0681-4603-9955-1114883eb8ed
+
+newsletterblock
+dir
+
+useragentstatistics
+dir
+
+apitoken
+dir
+
+batchjob
+dir
+
+graphstatistics
+dir
+
+metadata
+dir
+
+apikey
+dir
+
+geostatistics
+dir
+
+newslettertemplatecategory
+dir
+
+liststatistics
+dir
+
+messagesentstatistics
+dir
+
+messageinformation
+dir
+
+contact
+dir
+
+contactslistsignup
+dir
+
+clickstatistics
+dir
+
+preferences
+dir
+
+manycontacts
+dir
+
+trigger
+dir
+
+apikeyaccess
+dir
+
+newslettertemplateproperties
+dir
+
+myprofile
+dir
+
+contactstatistics
+dir
+
+openinformation
+dir
+
+newsletterproperties
+dir
+
+apikeytotals
+dir
+
+contactslist
+dir
+
+widgetcustomvalue
+dir
+
+openstatistics
+dir
+
+listrecipient
+dir
+
+user
+dir
+
+campaign
+dir
+
+sender
+dir
+
+eventcallbackurl
+dir
+
+domainstatistics
+dir
+
+widget
+dir
+
+message
+dir
+
+messagestate
+dir
+
+bouncestatistics
+dir
+
+metasender
+dir
+
+newslettertemplate
+dir
+
+listrecipientstatistics
+dir
+
+campaignstatistics
+dir
+
+senderstatistics
+dir
+
+newsletter
+dir
+
+messageclientstatistics
+dir
+
+messagestatistics
+dir
+
+toplinkclicked
+dir
+
+newslettertemplateblock
+dir
+
+messagehistory
+dir
+
