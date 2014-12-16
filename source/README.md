@@ -2,7 +2,7 @@
 
 If you wish to compile the JAR, the most convenient way is to use Maven:
 
-http://maven.apache.org/ (this can also be installe via Homebrew on a Mac)
+http://maven.apache.org/ (this can also be installed via Homebrew on a Mac)
 
 Then you can run:
 
