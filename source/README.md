@@ -10,5 +10,5 @@ Then you can run:
 mvn package
 ```
 
-in the mailjet-parent directory. The output will be in mailjet-wrapper-dist/target.
+in the <strong>mailjet-parent</strong> directory. The output will be in mailjet-wrapper-dist/target.
 
