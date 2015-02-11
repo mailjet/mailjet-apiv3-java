@@ -165,7 +165,7 @@ public class CodeGeneratorContextImpl implements CodeGeneratorContext {
 		if (metadata != null) {
 			JAnnotationUse annotate = field
 					.annotate(com.mailjet.api.client.model.metadata.Component.class);
-			annotate.param("name", metadata.getName());
+			annotate.param("name", name);
 			annotate.param("type", metadata.getDataType());
 			annotate.param("defaultValue", metadata.getDefaultValue());
 			annotate.param("required", metadata.getIsRequired());
