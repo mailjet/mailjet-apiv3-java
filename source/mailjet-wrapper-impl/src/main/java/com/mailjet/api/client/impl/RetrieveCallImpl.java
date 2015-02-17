@@ -75,7 +75,7 @@ final class RetrieveCallImpl<CallResultType> extends
 
 	private Map<String, Object> filters = new LinkedHashMap<String, Object>();
 	private int offset = 0;
-	private int limit = -1;
+	private int limit = -2;
 	private MailJetResourceProperty<CallResultType,?> sortProperty = null;
 	private boolean orderDesc = false;
 
@@ -146,7 +146,7 @@ final class RetrieveCallImpl<CallResultType> extends
 		if (offset > 0) {
 			this.filters.put(OFFSET_PARAM_NAME, String.valueOf(offset));
 		}
-		if (limit > 0) {
+		if (limit >= -1) {
 			this.filters.put(LIMIT_PARAM_NAME, String.valueOf(limit));
 		}
 		if (sortProperty != null) {

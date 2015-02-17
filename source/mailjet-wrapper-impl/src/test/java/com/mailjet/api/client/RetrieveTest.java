@@ -311,7 +311,7 @@ public abstract class RetrieveTest extends MailJetBaseT{
 		final MailJetConnectionProvider connProvider = context.mock(MailJetConnectionProvider.class);
 		
 		context.checking(new Expectations() {{
-            oneOf (connProvider).get(new URI(MAILJET_URL + "/TestObject?" + DEFAULT_PARAMS), defaultCredetials());
+            oneOf (connProvider).get(new URI(MAILJET_URL + "/TestObject?limit=-1&" + DEFAULT_PARAMS), defaultCredetials());
             will(returnValue(sampleResponse()));
         }});
 		
