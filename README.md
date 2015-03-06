@@ -37,7 +37,7 @@ The wrapper is designed to be able to do the steps with three or less statement 
 
 ```java
 MailJetClientConfiguration config = new MailJetClientConfiguration()
-    			.setBaseURL("api_url")
+    				.setBaseUrl("https://api.mailjet.com/v3/REST/")
 				.setDefaultApiKey("your_api_key")
 				.setDefaultSecretKey("your_secret_key");
 		
