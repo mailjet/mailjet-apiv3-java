@@ -48,7 +48,7 @@ ResultSet<Campaign> campaigns = client
 				.execute();
 ```
 
-The api_url for Mailjet's REST api is :https://api.mailjet.com/v3/REST/
+The api_url for Mailjet's REST api is: https://api.mailjet.com/v3/REST/
 
 
 All the classes and interfaces part of the wrapper are designed using the *fluent interface* technique which enables chaining of method invocations. As result the above code could be written in just one statement:
