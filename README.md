@@ -3,24 +3,30 @@
 Communication with our API in Java applications is done using a client library providing wrapper around the API which enables the developers to build requests, read responses and handle errors in a native for Java way. The client handles all the HTTP communication and JSON serialization thus no specific knowledge of the developers are required.
 
 
-###Contents
+###Table of contents
 
 1. [Usage](#chapter-1-usage)
 2. [Configuration](#chapter-2-configuration)
 3. [Obtaining a client](#chapter-3-obtaining-a-client)
-4. Calling the MailJet API  
-  4.1. Creation of resource instance  
-  4.2. Update of resource instance  
-  4.3. Removal of resource instance  
-  4.4. Retrival of resource instances using filters  
-  4.5. Retrival of resource instance using it's id or unique key
-  4.6. Using the Send API
-5. Error handling
-6. API Structure
-7. Dependencies  
-  7.1 Advanced configuration
-8. Spring integration
-9. Logging
+4. [Using the MailJet API](#chapter-4-using-the-client)
+  1. [Creation of resource instance](#41-creation-of-resource-instance)
+  2. [Update of resource instance](#42-update-of-resource-instance)
+  3. [Removal of resource instance](#43-delete-a-resource-instance)
+  4. [Retrival of resource instances using filters](#44-retrieve-resource-data)
+  5. [Retrival of resource instance using it's id or unique key](#45-retrieve-resource-instance-by-identifier-or-unique-key)
+  6. [Using the Send API](#46-using-the-send-api)
+    1. [Client configuration](#461-client-configuration)
+    2. [Basic usage](#462-basic-usage)
+    3. [Sending an email with attachments](#463-sending-an-email-with-attachments)
+    4. [Sending an email with vars](#464-sending-an-email-with-vars)
+    5. [API Response](#465-api-response)
+    6. [Going further](#456-going-further)
+5. [Error handling](#chapter-5-error-handling)
+6. [API Structure](#chapter-6-api-structure)
+7. [Dependencies](#chapter-7-dependencies)
+  1. [Advanced configuration](#71-advanced-configuration)
+8. [Spring integration](#chapter-8-spring-integration)
+9. [Logging](#chapter-9-logging)
 
 
 ---------------------------------
@@ -45,8 +51,8 @@ The wrapper is designed to be able to do the steps with three or less statement 
     MailJetApiClient client = config.buildClient();
 
     ResultSet<Campaign> campaigns = client
-    				.createCall(Campaign.List)
-    				.execute();
+            .createCall(Campaign.List)
+            .execute();
 ```
 
 The api_url for Mailjet's REST api is: https://api.mailjet.com/v3/REST/
