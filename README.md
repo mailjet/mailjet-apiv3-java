@@ -5,15 +5,16 @@ Communication with our API in Java applications is done using a client library p
 
 ###Contents
 
-1. Usage
-2. Configuration
-3. Obtaining a client
+1. [Usage](#chapter-1-usage)
+2. [Configuration](#chapter-2-configuration)
+3. [Obtaining a client](#chapter-3-obtaining-a-client)
 4. Calling the MailJet API  
   4.1. Creation of resource instance  
   4.2. Update of resource instance  
   4.3. Removal of resource instance  
   4.4. Retrival of resource instances using filters  
   4.5. Retrival of resource instance using it's id or unique key
+  4.6. Using the Send API
 5. Error handling
 6. API Structure
 7. Dependencies  
@@ -34,32 +35,33 @@ The client is designed to be used with the least effort possible. The typical st
 
 The wrapper is designed to be able to do the steps with three or less statement in Java:
 
-
 ```java
-MailJetClientConfiguration config = new MailJetClientConfiguration()
-    				.setBaseUrl("https://api.mailjet.com/v3/REST/")
-				.setDefaultApiKey("your_api_key")
-				.setDefaultSecretKey("your_secret_key");
-		
-MailJetApiClient client = config.buildClient();
- 
-ResultSet<Campaign> campaigns = client
-				.createCall(Campaign.List)
-				.execute();
+
+    MailJetClientConfiguration config = new MailJetClientConfiguration()
+                .setBaseUrl("https://api.mailjet.com/v3/REST/")
+                .setDefaultApiKey("your_api_key")
+                .setDefaultSecretKey("your_secret_key");
+
+    MailJetApiClient client = config.buildClient();
+
+    ResultSet<Campaign> campaigns = client
+    				.createCall(Campaign.List)
+    				.execute();
 ```
 
-The api_url for Mailjet's REST api is :https://api.mailjet.com/v3/REST/
+The api_url for Mailjet's REST api is: https://api.mailjet.com/v3/REST/
 
 
 All the classes and interfaces part of the wrapper are designed using the *fluent interface* technique which enables chaining of method invocations. As result the above code could be written in just one statement:
 ```java
-ResultSet<Campaign> campaigns = new MailJetClientConfiguration()
-        		.setBaseURL("api_url")
-				.setDefaultApiKey("your_api_key")
-				.setDefaultSecretKey("your_secret_key")
+
+    ResultSet<Campaign> campaigns = new MailJetClientConfiguration()
+                .setBaseURL("api_url")
+                .setDefaultApiKey("your_api_key")
+                .setDefaultSecretKey("your_secret_key")
                 .buildClient()
                 .createCall(Campaign.List)
-    			.execute();
+                .execute();
 ```
 Note: reusing client instances is recomanded for better performance.
 
@@ -80,20 +82,23 @@ The minumum set of configuration properties required by the API wrapper library 
 
 These properties could be setup in two ways: programatically or with dedicated configuration file. In our first example we already showed how to setup the configuration in a programatic way. The second option you can use to specify the configuration file as follows:
 ```java
-MailJetClientConfiguration config = new MailJetClientConfiguration()
-		.loadFromClassPath("my_mailjet.properties");
+
+    MailJetClientConfiguration config = new MailJetClientConfiguration()
+                                .loadFromClassPath("my_mailjet.properties");
 ```
 or load the data from the default location assumed by the wrapper library: **mailjet.properties**.
 ```java
-MailJetClientConfiguration config = new MailJetClientConfiguration()
-		.loadDefault();
+
+    MailJetClientConfiguration config = new MailJetClientConfiguration()
+                                .loadDefault();
 ```
 In both cases the file path specified is relative to the root of your classpath.
 Example of content of wrapper configuration file:
-```
-baseUrl=api_url
-defaultApiKey=your_api_key
-defaultSecretKey=your_secret_key
+```java
+
+    baseUrl=api_url
+    defaultApiKey=your_api_key
+    defaultSecretKey=your_secret_key
 ```
 
 ---------------------------------
@@ -102,7 +107,8 @@ Chapter 3. Obtaining a client
 ------------------
 When all properties are parsed by the configuration, the aplication can obtain client instances. The produced client is thread-safe and it is intended to be used by all application threads. 
 ```java
-MailJetApiClient client = config.buildClient();
+
+    MailJetApiClient client = config.buildClient();
 ```
 MailJet API Wrapper allows you to instantiate more than one client from different configurations. This could be useful if you want to use the API with more than one Api key/Secret key pair.
 
@@ -125,11 +131,11 @@ The ***com.mailjet.api.client.MailJetApiClient*** interface defines a single met
 
 You can use the created ***com.mailjet.api.client.MailJetApiCall*** instance to build your request to the API. For example for retrieving a *campaign* by id you have to do the following:
 ```java
-    Campaign campaign = 
-            client
-    			.createCall(Campaign.Get)
-				.identifiedBy(CampaignProperty.ID, 342135423452L)
-				.execute();
+
+    Campaign campaign = client
+                .createCall(Campaign.Get)
+                .identifiedBy(CampaignProperty.ID, 342135423452L)
+                .execute();
 ```
 
 To study the interface of the wrapper we'll look at the way you can manage *newsletter* resource instances using the client's API:
@@ -138,13 +144,14 @@ To study the interface of the wrapper we'll look at the way you can manage *news
 
 To create a new *newsletter* you have to build a`Create` call and specify the value of properties you want to set for the new *newsletter*. Every property comes with it's expected data type and prevents the client code to accidentially pass wrong type of data.
 ```java
-        Newsletter newsletter = 
-            client.createCall(Newsletter.Create)
-    			.property(NewsletterProperty.SENDER, "Test")
-				.property(NewsletterProperty.SENDEREMAIL, "test@example.com")
-				.property(NewsletterProperty.LOCALE, "FR")
-				.property(NewsletterProperty.FOOTER, Newsletter.Footer.NONE)
-				.property(NewsletterProperty.SUBJECT, "subject")
+
+    Newsletter newsletter = client
+                .createCall(Newsletter.Create)
+                .property(NewsletterProperty.SENDER, "Test")
+                .property(NewsletterProperty.SENDEREMAIL, "test@example.com")
+                .property(NewsletterProperty.LOCALE, "FR")
+                .property(NewsletterProperty.FOOTER, Newsletter.Footer.NONE)
+                .property(NewsletterProperty.SUBJECT, "subject")
                 .execute();
 ```
 Setting value for same property twice will result in ***com.mailjet.api.client.MailJetApiCallException*** as such operation is meaningless and indicates a programming error.
@@ -155,64 +162,72 @@ Note that for enumerated types such as *newsletter.footer* the wrapper library p
 
 To update existing *newsletter* you have to build an `Update` call and specify the value of properties you want to update for that *newsletter*. Same rules for properties apply as for creation. The main difference is that before specifying the properties the client code should identify the *newsletter* which should be updated:
 ```java
-    Newsletter newsletter = 
-            client.createCall(Newsletter.Update)
-    			.identifiedBy(NewsletterProperty.ID, 1234L)
-				.property(NewsletterProperty.SUBJECT, "subject2")
+
+    Newsletter newsletter = client
+                .createCall(Newsletter.Update)
+                .identifiedBy(NewsletterProperty.ID, 1234L)
+                .property(NewsletterProperty.SUBJECT, "subject2")
                 .execute();
 ```
+
 To prevent accidential misuse the client will verify at compile time that you are passing a property that will uniquely identify a *newsletter* instance and the value passed is of correct type. For example the following code won't compile because property *newsletter.campaignid* cannot identify uniquely a *newsletter* instance:
 ```java
-    Newsletter newsletter = 
-            client.createCall(Newsletter.Update)
-    			.identifiedBy(NewsletterProperty.CAMPAIGNID, 1234L)
-				.property(NewsletterProperty.SUBJECT, "subject").execute();
+
+    Newsletter newsletter = client
+                .createCall(Newsletter.Update)
+                .identifiedBy(NewsletterProperty.CAMPAIGNID, 1234L)
+                .property(NewsletterProperty.SUBJECT, "subject").execute();
 ```
+
 Even though the wrapper tries to enforce a correct usage at compile time some of the checks are done in the runtime, for example if the code tries to execute the call without specifying an unique key the call will result in a ***com.mailjet.api.client.MailJetApiCallException*** indicating that the client is not used correctly.
 
 ###4.3. Delete a resource instance
 
-To remove existing *newsletter* you have to build a `Delete` call and identify the instance that have to be removed in the same manner as update:
+**_Some_** resources can be permanently deleted from your account.  
+To remove an existing *sender* you have to build a `Delete` call and identify the instance that have to be removed in the same manner as you would for an update call:
 ```java
-            client.createCall(Newsletter.Delete)
-        		.identifiedBy(NewsletterProperty.ID, 1234L)
-                .execute();
+
+    client
+      .createCall(Sender.Delete)
+      .identifiedBy(SenderProperty.ID, 1234L)
+      .execute();
 ```
-That's the only method apart from execute that can be called for delete. If the code tries to execute the call without specifying an unique key the call will result in a ***com.mailjet.api.client.MailJetApiCallException*** indicating that the client is not used correctly. The reurn of this call is of type `Void` as the MailJet API doesn't provide response for deletions.
+That's the only method apart from execute that can be called for delete. If the code tries to execute the call without specifying an unique key the call will result in a ***com.mailjet.api.client.MailJetApiCallException*** indicating that the client is not used correctly. The return of this call is of type `Void` as the MailJet API doesn't provide response for deletions.
 
 ###4.4. Retrieve resource data 
 
 You can very easily retrieve resource instances by just creating a `Retrieve` call and executing it without any parametrization:
 ```java
-    ResultSet<Newsletter> newsletters = 
-        client
-            .createCall(Newsletter.List)
-    		.execute();
+
+    ResultSet<Newsletter> newsletters = client
+                .createCall(Newsletter.List)
+                .execute();
 ```
 The above code with fetch the default number of instances that is provided by the MailJet API. If you want to fetch more records you can increase/decrease the limit with following lines:
 ```java
-    ResultSet<Newsletter> newsletters = 
-        client
-            .createCall(Newsletter.List)
-    		.limitBy(10)
-			.execute();
+
+    ResultSet<Newsletter> newsletters = client
+                .createCall(Newsletter.List)
+                .limitBy(10)
+                .execute();
 ```
 If you don't want to fetch records from begining of the result set you can aditionally specify an offset to be applied:
 ```java
-    ResultSet<Newsletter> newsletters = 
-        client
-            .createCall(Newsletter.List)
-    		.limitBy(10)
-			.offsetBy(20)
-			.execute();
+
+    ResultSet<Newsletter> newsletters = client
+                .createCall(Newsletter.List)
+                .limitBy(10)
+                .offsetBy(20)
+                .execute();
 ```
 The above example will fetch at most *10* records which are located between index 20 and 30 in the result set. Specifying filter criteria which the returned isntances must match is just easy and straightforward as using *limit* and *offset* options. You just have to specify the filter you want to apply and the value to use:
 ```java
-    ResultSet<Newsletter> newsletters = 
-            client.createCall(Newsletter.List)
-    			.filterBy(NewsletterFilter.EDITMODE, Newsletter.EditMode.HTML)
-				.filterBy(NewsletterFilter.ISDELETED, false)
-				.execute();
+
+    ResultSet<Newsletter> newsletters = client
+                .createCall(Newsletter.List)
+                .filterBy(NewsletterFilter.EDITMODE, Newsletter.EditMode.HTML)
+                .filterBy(NewsletterFilter.ISDELETED, false)
+                .execute();
 ```
 As with properties, the wrapper library provides Java *enum* representing the valid values for filters which have specific set of allowed values. The wrapper also verifies that the value set for for specific filter has a correct type. Multiple filters can be combined together however multiple values for one filter are not supported. Trying to set multiple values for one filter will result in ***com.mailjet.api.client.MailJetApiCallException*** indicating a programming error. For convinience empty/null values are allowed. The wrapper won't include filters having an empty/null value in the generated request. 
 
@@ -221,22 +236,147 @@ As with properties, the wrapper library provides Java *enum* representing the va
 
 You can retrieve resource instances by id by creating a `RetrieveById` call and executing it against the API. For example for retrieving a *newsletter* by id you have to do the following:
 ```java
-    Newsletter newsletter = 
-            client
+
+    Newsletter newsletter = client
                 .createCall(Newsletter.Get)
-        		.identifiedBy(NewsletterProperty.ID, 1234L)
+                .identifiedBy(NewsletterProperty.ID, 1234L)
                 .execute();
 ```
 As with delete that's the only method apart from execute that can be called this type of calls and it's mandatory. If the code tries to execute the call without specifying an unique key the call will result in a **MailJetApiCallException** with `error` set to `Error.ClientMisuse` and indicating that the client is not used correctly. If the MailJet API is unable to locate resource instance with the specified id the wrapper will signal this as **MailJetApiCallException**  with `error` set to `Error.NotFound`.
 
 Alternatively you can fetch resource instance not by an identifier property but by it's unique key(if such exists). For example for *campaign* the property *CustomValue* is specified to be unique key thus the wrapper will allow the following call:
 ```java
-    Campaign campaign = 
-            client
-        		.createCall(Campaign.Get)
-				.identifiedBy(CampaignProperty.CUSTOMVALUE, "value1")
-				.execute();
+
+    Campaign campaign = client
+                .createCall(Campaign.Get)
+                .identifiedBy(CampaignProperty.CUSTOMVALUE, "value1")
+                .execute();
 ```
+
+###4.6. Using the Send API
+
+If you want to send a transactional email using the API, you can do so through the Send API, implemented in the Java Wrapper.  
+This section will describe the full process, from client configuration to the call itself, as there is some specifics about this side of the API. It's still easy, though!
+
+A word of caution though: if you were using the Send API in `form/data` mode, don't forget to go through your field names as some are called differently in the `application/json` mode.
+
+Please also note that if a `recipient` isn't already assigned to a contacts list, it will be created from scratch. Which means that if you're sending a welcome email, be sure to add that contact to your account first, or `GET` its `ID` once the email is sent thanks to that contact's email address if you want to add data to it.
+
+####4.6.1. Client configuration
+
+Please note that the base url is stripped from its "REST" part. There is a failsafe code-wise, but it's good practice to set it up!
+```java
+    
+    MailJetClientConfiguration config = new MailJetClientConfiguration()
+                    .setBaseUrl("https://api.mailjet.com/v3/")            
+                    .setDefaultApiKey("your_api_key")
+                    .setDefaultSecretKey("your_secret_key");
+
+    MailJetApiClient client = config.buildClient();
+```
+
+####4.6.2 Basic usage
+
+To send a simple email, you need to set up this fields _at least_: `FromEmail`, `Recipients`, `Subject` and either `Text-part` or `Html-part`.  
+Here's how:
+(Note that the `Recipients` field must consist of an `ArrayList` of one or more `SendMessageRecipient` objects.)
+```java
+
+    ArrayList<SendMessageRecipient> recipients;
+    recipients = new ArrayList<SendMessageRecipient>();
+
+    recipients.add(
+          new SendMessageRecipient(
+                  "recipients@email",
+                  "recipients_name",
+                  optional_recipients_specific_vars_HashMap
+                  ));
+
+    SendMessage m = client
+              .createCall(SendMessage.Create)
+              .property(SendMessageProperty.FROMEMAIL, "your_from_email")
+              .property(SendMessageProperty.SUBJECT, "emails_subject")
+              .property(SendMessageProperty.TEXTPART, "emails_text-part")
+              .property(SendMessageProperty.RECIPIENTS, recipients)
+              .execute();
+```
+
+####4.6.3 Sending an email with attachments
+
+To send an email with attachments, you need to add the `attachments` field to the one already set in the basic usage section.  
+An attachment is composed of three fields: `Content-type` (the mime type of the attachment), `Filename` and `content` (the base64 hash of the attachments file content).  
+Here's how:
+```java
+
+    ArrayList<SendMessageRecipient> recipients;
+    recipients = new ArrayList<SendMessageRecipient>();
+
+    recipients.add(
+          new SendMessageRecipient(
+                  "recipients@email",
+                  "recipients_name",
+                  optional_recipients_specific_vars_HashMap
+                  ));
+    
+    ArrayList<HashMap<String, String>> attachments;
+    attachments = new ArrayList<HashMap<String,String>>();
+        
+    HashMap<String, String> attachment1 = new HashMap<String, String>();
+
+    attachment1.put("Content-type", "form/data");
+    attachment1.put("Filename", "the_attachement's_filename");
+    attachment1.put("content", "file's_content_base64_hash");
+    
+    attachments.add(attachment1);
+
+    SendMessage m = client
+              .createCall(SendMessage.Create)
+              .property(SendMessageProperty.FROMEMAIL, "your_from_email")
+              .property(SendMessageProperty.SUBJECT, "emails_subject")
+              .property(SendMessageProperty.TEXTPART, "emails_text-part")
+              .property(SendMessageProperty.RECIPIENTS, recipients)
+              .property(SendMessageProperty.ATTACHMENTS, attach)
+              .execute();
+```
+####4.6.4 Sending an email with vars
+
+To send a customized generic email, you will want to make use of the `vars` fields.  
+There are two types of `vars`: the one you want to set up for a particular email, and the one you want to set up for a particular recipient.  
+The following example will make use of both.
+```java
+
+    ArrayList<SendMessageRecipient> recipients;
+    recipients = new ArrayList<SendMessageRecipient>();
+        
+    HashMap<String, String> recepVars = new HashMap<String, String>(); 
+    recepVars.put("name", "Luc");
+    
+    recipients.add(
+          new SendMessageRecipient(
+                  "recipients@email",
+                  "recipients_name",
+                  recepVars
+                  ));
+
+    SendMessage m = client
+              .createCall(SendMessage.Create)
+              .property(SendMessageProperty.FROMEMAIL, "gaetan@mailjet.com")
+              .property(SendMessageProperty.SENDER, "gaetan@mailjet.com")
+              .property(SendMessageProperty.SUBJECT, "Welcome to our service!")
+              .property(SendMessageProperty.TEXTPART, "Hello [[var:name]], welcome to Mailjet! The delivery force be with you! [[var:day]] promo: you get [[var:hugs]] free hugs!")
+              .property(SendMessageProperty.RECIPIENTS, recipient)
+              .property(SendMessageProperty.VARS, vars)
+              .execute();
+```
+
+####4.6.5 API Response
+
+The API issues a `200 OK` response code upon successfully sending the email.
+
+####4.5.6 Going further
+
+There are other properties that you can set for the email you want to send.  
+Please refer to [this guide](http://dev.mailjet.com/guides/send-api-guide/) for more infos.
 
 ---------------------------------
 
