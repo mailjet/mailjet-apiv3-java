@@ -28,7 +28,6 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.protocol.HTTP;
-import org.apache.http.util.EntityUtils;
 
 import com.mailjet.api.client.MailJetApiCallException;
 import com.mailjet.api.client.MailJetApiCallException.Error;
@@ -219,6 +218,7 @@ public final class HttpClientConnectionProviderImpl implements
 			req.setHeader(authScheme.authenticate(
 					new UsernamePasswordCredentials(credentials.getApiKey(),
 							credentials.getSecretKey()), req, null));
+			req.setHeader("Content-Type", "application/json");
 		} catch (AuthenticationException e) {
 			throw new MailJetApiCallException(Error.ClientMisconfiguration, e);
 		}

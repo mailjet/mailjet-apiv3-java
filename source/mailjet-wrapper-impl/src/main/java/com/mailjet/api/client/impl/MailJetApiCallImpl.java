@@ -176,7 +176,28 @@ abstract class MailJetApiCallImpl<CallResultType> {
 		String base = config.getBaseUrl();
 		String uriString = base.endsWith("/") ? base.substring(0,
 				base.length() - 1) : base;
-		uriString += "/" + operation.getName();
+		if ((base.substring(base.length() - 1).equals("/")))
+		{
+			uriString = base.substring(0, base.lastIndexOf("/"));
+		}
+
+		if (operation.getName().equals("sendmessage"))
+		{
+			if (base.contains("/REST"))
+			{
+				uriString = base.substring(0, base.indexOf("/REST"));
+			}
+			else if (base.contains("/send"))
+			{
+				uriString = base.substring(0, base.indexOf("/send"));
+			}
+			uriString += "/send/message";
+		}
+		else
+		{
+			uriString += "/" + operation.getName();
+		}
+
 		for (String segment : segments) {
 			String encodedPathSegment = UriUtils.encodePathSegment(segment,
 					"UTF-8");
@@ -198,7 +219,6 @@ abstract class MailJetApiCallImpl<CallResultType> {
 						tuple.getValue()));
 			}
 		}
-
 		return new URI(uriString);
 	}
 

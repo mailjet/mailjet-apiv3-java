@@ -97,7 +97,7 @@ final class CreateCallImpl<CallResultType> extends
 	
 	@Override
 	protected boolean isSuccessfull(final int code) {
-		return code == CREATED_STATUS_CODE;
+		return code == CREATED_STATUS_CODE || code == SUCCESS_OK;
 	}
 
 }
