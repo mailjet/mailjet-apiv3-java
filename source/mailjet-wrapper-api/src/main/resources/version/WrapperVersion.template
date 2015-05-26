@@ -1,0 +1,10 @@
+package ${ver.package.name};
+
+/**
+ *	Last built: ${ver.buildtime}
+ *
+ */
+public final class ${ver.class.name}
+{
+    public static String VERSION="${mailjet.wrapper.impl.version}";
+}

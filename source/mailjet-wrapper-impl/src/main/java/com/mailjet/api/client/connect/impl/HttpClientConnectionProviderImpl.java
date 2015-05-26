@@ -31,6 +31,7 @@ import org.apache.http.protocol.HTTP;
 
 import com.mailjet.api.client.MailJetApiCallException;
 import com.mailjet.api.client.MailJetApiCallException.Error;
+import com.mailjet.api.client.config.Version;
 import com.mailjet.api.client.connect.MailJetConnectionProvider;
 
 /**
@@ -219,6 +220,7 @@ public final class HttpClientConnectionProviderImpl implements
 					new UsernamePasswordCredentials(credentials.getApiKey(),
 							credentials.getSecretKey()), req, null));
 			req.setHeader("Content-Type", "application/json");
+			req.setHeader("User-Agent", "mailjet-apiv3-java/" + Version.VERSION);
 		} catch (AuthenticationException e) {
 			throw new MailJetApiCallException(Error.ClientMisconfiguration, e);
 		}
