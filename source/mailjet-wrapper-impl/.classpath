@@ -11,7 +11,7 @@
   <classpathentry kind="var" path="M2_REPO/commons-logging/commons-logging/1.1.3/commons-logging-1.1.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/commons-codec/commons-codec/1.6/commons-codec-1.6.jar"/>
   <classpathentry kind="var" path="M2_REPO/com/google/code/gson/gson/2.2.4/gson-2.2.4.jar"/>
-  <classpathentry kind="src" path="/mailjet-wrapper-api"/>
+  <classpathentry kind="var" path="M2_REPO/com/mailjet/mailjet-wrapper-api/1.1.0/mailjet-wrapper-api-1.1.0.jar"/>
   <classpathentry kind="var" path="M2_REPO/junit/junit/4.11/junit-4.11.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar"/>
   <classpathentry kind="var" path="M2_REPO/org/jmock/jmock-junit4/2.6.0/jmock-junit4-2.6.0.jar"/>

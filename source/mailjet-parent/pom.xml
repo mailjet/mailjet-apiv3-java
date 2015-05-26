@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.mailjet</groupId>
 	<artifactId>mailjet-parent</artifactId>
-	<version>1.0.8</version>
+	<version>1.1.0</version>
 	<packaging>pom</packaging>
 	<modules>
 		<module>../mailjet-wrapper-dist</module>
@@ -44,10 +44,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<gson.version>2.2.4</gson.version>
 		<httpclient.version>4.3</httpclient.version>
-		<mailjet.wrapper.api.version>1.0.8</mailjet.wrapper.api.version>
-		<mailjet.wrapper.impl.version>1.0.8</mailjet.wrapper.impl.version>
-		<mailjet.model.version>1.0.8</mailjet.model.version>
-		<mailjet.model.gen.version>1.0.8</mailjet.model.gen.version>
+		<mailjet.wrapper.api.version>1.1.0</mailjet.wrapper.api.version>
+		<mailjet.wrapper.impl.version>1.1.0</mailjet.wrapper.impl.version>
+		<mailjet.model.version>1.1.0</mailjet.model.version>
+		<mailjet.model.gen.version>1.1.0</mailjet.model.gen.version>
 	</properties>
 	
 	<organization>
