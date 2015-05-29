@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "User account definition for Mailjet.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "user", description = "User account definition for Mailjet.", allowedOperations = {
@@ -20,14 +20,14 @@ import com.mailjet.api.client.model.metadata.Resource;
 }, uniquekey = "Email")
 public final class User {
 
+    @Component(name = "ACL", type = "AnsiString", defaultValue = "", required = false, description = "")
+    private String ACL;
     @Component(name = "CreatedAt", type = "TRFC3339DateTime", defaultValue = "Current time", required = false, description = "Timestamp when object was created in database.")
     private Date CreatedAt;
     @Component(name = "Email", type = "TEmail", defaultValue = "", required = false, description = "Email address of user.")
     private String Email;
     @Component(name = "ID", type = "Int64", defaultValue = "", required = false, description = "Unique numerical ID for this object.")
     private Long ID;
-    @Component(name = "IsRulesAccepted", type = "Boolean", defaultValue = "false", required = false, description = "Has the user accepted the Mailjet Rules ?.")
-    private Boolean IsRulesAccepted;
     @Component(name = "LastIp", type = "AnsiString", defaultValue = "The same as FirstIP", required = true, description = "IP address of last contact from user.")
     private String LastIp;
     @Component(name = "LastLoginAt", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "Timestamp when user last logged in.")
@@ -57,6 +57,29 @@ public final class User {
      * 
      */
     public final static MailJetApiService<com.mailjet.api.client.MailJetApiCall.Update<User>> Update = new MailJetApiService<com.mailjet.api.client.MailJetApiCall.Update<User>>(User.class, ResourceOperationTypes.Put);
+
+    /**
+     * Gets "" property.
+     * 
+     * @return
+     *     the value set for the property or null if value is not present
+     */
+    public String getACL() {
+        return ACL;
+    }
+
+    /**
+     * Sets the specified value to "" property.
+     * 
+     * @param value
+     *     the new value for the property
+     * @return
+     *     not null, the object on which this method was called 
+     */
+    public User setACL(String value) {
+        ACL = value;
+        return this;
+    }
 
     /**
      * Gets "Timestamp when object was created in database." property.
@@ -124,29 +147,6 @@ public final class User {
      */
     public User setID(Long value) {
         ID = value;
-        return this;
-    }
-
-    /**
-     * Gets "Has the user accepted the Mailjet Rules ?." property.
-     * 
-     * @return
-     *     the value set for the property or null if value is not present
-     */
-    public Boolean getIsRulesAccepted() {
-        return IsRulesAccepted;
-    }
-
-    /**
-     * Sets the specified value to "Has the user accepted the Mailjet Rules ?." property.
-     * 
-     * @param value
-     *     the new value for the property
-     * @return
-     *     not null, the object on which this method was called 
-     */
-    public User setIsRulesAccepted(Boolean value) {
-        IsRulesAccepted = value;
         return this;
     }
 

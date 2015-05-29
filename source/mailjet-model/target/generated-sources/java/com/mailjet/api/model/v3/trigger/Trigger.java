@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Triggers for outgoing events.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "trigger", description = "Triggers for outgoing events.", allowedOperations = {
@@ -205,7 +205,7 @@ public final class Trigger {
 
     /**
      * Enumeration defining allowed values for "Event"(Type of event.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum Event {

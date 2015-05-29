@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Manage the relationship between a contact and a contactslists.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "listrecipient", description = "Manage the relationship between a contact and a contactslists.", allowedOperations = {
@@ -22,7 +22,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 })
 public final class ListRecipient {
 
-    @Component(name = "Contact", type = "TContact", defaultValue = "", required = true, description = "Reference to contact which is suscribed to the contactslist.")
+    @Component(name = "ContactID", type = "TContact", defaultValue = "", required = true, description = "Reference to contact which is suscribed to the contactslist.")
     private Long ContactID;
     @Component(name = "ID", type = "Int64", defaultValue = "", required = false, description = "Unique numerical ID for this object.")
     private Long ID;
@@ -30,7 +30,7 @@ public final class ListRecipient {
     private Boolean IsActive;
     @Component(name = "IsUnsubscribed", type = "Boolean", defaultValue = "True if UnsubscribedAt is a valid date", required = false, description = "Has the contact been unsubscribed from the list ?.")
     private Boolean IsUnsubscribed;
-    @Component(name = "List", type = "TContactsList", defaultValue = "", required = true, description = "Contacts list to which contact is subscribed.")
+    @Component(name = "ListID", type = "TContactsList", defaultValue = "", required = true, description = "Contacts list to which contact is subscribed.")
     private Long ListID;
     @Component(name = "UnsubscribedAt", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "Timestamp when unsubscription was registered.")
     private Date UnsubscribedAt;

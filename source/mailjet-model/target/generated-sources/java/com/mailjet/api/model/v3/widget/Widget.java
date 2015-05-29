@@ -10,7 +10,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Manage settings for Widgets. Widgets are small registration forms that you may include on your website to ease the process of subscribing to a Contacts List.Mailjet widget definitions.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "widget", description = "Manage settings for Widgets. Widgets are small registration forms that you may include on your website to ease the process of subscribing to a Contacts List.Mailjet widget definitions.", allowedOperations = {
@@ -23,13 +23,13 @@ public final class Widget {
 
     @Component(name = "CreatedAt", type = "Int64", defaultValue = "", required = false, description = "Timestamp when widget was created.")
     private Long CreatedAt;
-    @Component(name = "From", type = "TSender", defaultValue = "", required = true, description = "Reference to Sender address for this widget.")
+    @Component(name = "FromID", type = "TSender", defaultValue = "", required = true, description = "Reference to Sender address for this widget.")
     private Long FromID;
     @Component(name = "ID", type = "Int64", defaultValue = "", required = false, description = "Unique numerical ID for this object.")
     private Long ID;
     @Component(name = "IsActive", type = "Boolean", defaultValue = "false", required = false, description = "Is the widget still active.")
     private Boolean IsActive;
-    @Component(name = "List", type = "TContactsList", defaultValue = "", required = true, description = "Contactslist for which this widget handles subscriptions.")
+    @Component(name = "ListID", type = "TContactsList", defaultValue = "", required = true, description = "Contactslist for which this widget handles subscriptions.")
     private Long ListID;
     @Component(name = "Locale", type = "AnsiString", defaultValue = "", required = true, description = "Locale in which the information in this record is recorded.")
     private String Locale;
@@ -41,7 +41,7 @@ public final class Widget {
     private String Sendername;
     @Component(name = "Subject", type = "AnsiString", defaultValue = "", required = false, description = "Subject for this widget.")
     private String Subject;
-    @Component(name = "Template", type = "TMessageTemplate", defaultValue = "", required = false, description = "Message to send when sending mail for this widget.")
+    @Component(name = "TemplateID", type = "TMessageTemplate", defaultValue = "", required = false, description = "Message to send when sending mail for this widget.")
     private Long TemplateID;
     /**
      * API Operation "List".

@@ -12,7 +12,7 @@ import com.mailjet.api.model.v3.customtypes.Property;
 /**
  * Class representing "Mailjet API meta data.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "metadata", description = "Mailjet API meta data.", allowedOperations = {
@@ -20,6 +20,8 @@ import com.mailjet.api.model.v3.customtypes.Property;
 }, uniquekey = "Name")
 public final class Metadata {
 
+    @Component(name = "Actions", type = "TResourceActionList", defaultValue = "", required = false, description = "")
+    private java.util.List<Long> Actions;
     @Component(name = "APIVersion", type = "AnsiString", defaultValue = "", required = false, description = "")
     private String APIVersion;
     @Component(name = "Description", type = "AnsiString", defaultValue = "", required = false, description = "Description of resource.")
@@ -45,6 +47,29 @@ public final class Metadata {
      * 
      */
     public final static MailJetApiService<com.mailjet.api.client.MailJetApiCall.Retrieve<Metadata>> List = new MailJetApiService<com.mailjet.api.client.MailJetApiCall.Retrieve<Metadata>>(Metadata.class, ResourceOperationTypes.Get);
+
+    /**
+     * Gets "" property.
+     * 
+     * @return
+     *     the value set for the property or null if value is not present
+     */
+    public java.util.List<Long> getActions() {
+        return Actions;
+    }
+
+    /**
+     * Sets the specified value to "" property.
+     * 
+     * @param value
+     *     the new value for the property
+     * @return
+     *     not null, the object on which this method was called 
+     */
+    public Metadata setActions(java.util.List<Long> value) {
+        Actions = value;
+        return this;
+    }
 
     /**
      * Gets "" property.

@@ -13,7 +13,7 @@ import com.mailjet.api.model.v3.customtypes.SpamAssassinRuleList;
 /**
  * Class representing "API Key campaign/message information.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "messageinformation", description = "API Key campaign/message information.", allowedOperations = {
@@ -21,11 +21,11 @@ import com.mailjet.api.model.v3.customtypes.SpamAssassinRuleList;
 })
 public final class MessageInformation {
 
-    @Component(name = "Campaign", type = "TCampaign", defaultValue = "", required = false, description = "reference to Campaign to which message belongs.")
+    @Component(name = "CampaignID", type = "TCampaign", defaultValue = "", required = false, description = "reference to Campaign to which message belongs.")
     private Long CampaignID;
     @Component(name = "ClickTrackedCount", type = "Int64", defaultValue = "", required = false, description = "Number of click track requests.")
     private Long ClickTrackedCount;
-    @Component(name = "Contact", type = "TContact", defaultValue = "", required = false, description = "Reference to contact to which message was sent.")
+    @Component(name = "ContactID", type = "TContact", defaultValue = "", required = false, description = "Reference to contact to which message was sent.")
     private Long ContactID;
     @Component(name = "CreatedAt", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "Timestamp when object was created in database.")
     private Date CreatedAt;

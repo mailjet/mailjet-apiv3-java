@@ -11,7 +11,7 @@ import com.mailjet.api.model.v3.customtypes.ContactFilterStatus;
 /**
  * Class representing "A list of filter expressions for use in newsletters.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "contactfilter", description = "A list of filter expressions for use in newsletters.", allowedOperations = {

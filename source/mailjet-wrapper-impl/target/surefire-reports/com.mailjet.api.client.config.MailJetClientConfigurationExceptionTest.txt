@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.mailjet.api.client.config.MailJetClientConfigurationExceptionTest
 -------------------------------------------------------------------------------
-Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.177 sec
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.088 sec

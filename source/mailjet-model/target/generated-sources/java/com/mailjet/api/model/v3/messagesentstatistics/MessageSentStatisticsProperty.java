@@ -9,7 +9,7 @@ import com.mailjet.api.client.model.MailJetResourceProperty;
 /**
  * Class defining property constants for "messagesentstatistics" MailJet API resource.
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 public final class MessageSentStatisticsProperty<DataType >
@@ -57,10 +57,25 @@ public final class MessageSentStatisticsProperty<DataType >
      */
     public final static MessageSentStatisticsProperty<Long> CNTRECIPIENTS = new MessageSentStatisticsProperty<Long>("CntRecipients", Long.class);
     /**
+     * 
+     * 
+     */
+    public final static MessageSentStatisticsProperty<Date> COMPLAINTDATE = new MessageSentStatisticsProperty<Date>("ComplaintDate", Date.class);
+    /**
      * Reference to contact to which message was sent.
      * 
      */
     public final static MessageSentStatisticsProperty<Long> CONTACTID = new MessageSentStatisticsProperty<Long>("ContactID", Long.class);
+    /**
+     * 
+     * 
+     */
+    public final static MessageSentStatisticsProperty<String> DETAILS = new MessageSentStatisticsProperty<String>("Details", String.class);
+    /**
+     * 
+     * 
+     */
+    public final static MessageSentStatisticsProperty<String> FBLSOURCE = new MessageSentStatisticsProperty<String>("FBLSource", String.class);
     /**
      * Only retrieve statistics for the selected message
      * 
@@ -101,6 +116,11 @@ public final class MessageSentStatisticsProperty<DataType >
      * 
      */
     public final static MessageSentStatisticsProperty<String> STATUS = new MessageSentStatisticsProperty<String>("Status", String.class);
+    /**
+     * 
+     * 
+     */
+    public final static MessageSentStatisticsProperty<String> TOEMAIL = new MessageSentStatisticsProperty<String>("ToEmail", String.class);
 
     private MessageSentStatisticsProperty(String name, Class<?> type) {
         super(name, type);

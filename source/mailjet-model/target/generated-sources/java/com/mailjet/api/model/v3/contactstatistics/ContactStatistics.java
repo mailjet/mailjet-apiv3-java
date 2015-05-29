@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "View message statistics for a given contact.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "contactstatistics", description = "View message statistics for a given contact.", allowedOperations = {
@@ -25,12 +25,14 @@ public final class ContactStatistics {
     private Long BouncedCount;
     @Component(name = "ClickedCount", type = "Int64", defaultValue = "", required = false, description = "Number of registered clicks.")
     private Long ClickedCount;
-    @Component(name = "Contact", type = "TContact", defaultValue = "", required = false, description = "The contact for which statistics are shown.")
+    @Component(name = "ContactID", type = "TContact", defaultValue = "", required = false, description = "The contact for which statistics are shown.")
     private Long ContactID;
     @Component(name = "DeliveredCount", type = "Int64", defaultValue = "", required = false, description = "Number of messages delivered to their destination.")
     private Long DeliveredCount;
     @Component(name = "LastActivityAt", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "Timestamp of last registered activity for this contact.")
     private Date LastActivityAt;
+    @Component(name = "MarketingContacts", type = "Int64", defaultValue = "", required = false, description = "")
+    private Long MarketingContacts;
     @Component(name = "OpenedCount", type = "Int64", defaultValue = "", required = false, description = "Number of message open registrations.")
     private Long OpenedCount;
     @Component(name = "ProcessedCount", type = "Int64", defaultValue = "", required = false, description = "Total number of messages processed by Mailjet.")
@@ -41,6 +43,8 @@ public final class ContactStatistics {
     private Long SpamComplaintCount;
     @Component(name = "UnsubscribedCount", type = "Int64", defaultValue = "", required = false, description = "")
     private Long UnsubscribedCount;
+    @Component(name = "UserMarketingContacts", type = "Int64", defaultValue = "", required = false, description = "")
+    private Long UserMarketingContacts;
     /**
      * API Operation "List".
      * 
@@ -186,6 +190,29 @@ public final class ContactStatistics {
     }
 
     /**
+     * Gets "" property.
+     * 
+     * @return
+     *     the value set for the property or null if value is not present
+     */
+    public Long getMarketingContacts() {
+        return MarketingContacts;
+    }
+
+    /**
+     * Sets the specified value to "" property.
+     * 
+     * @param value
+     *     the new value for the property
+     * @return
+     *     not null, the object on which this method was called 
+     */
+    public ContactStatistics setMarketingContacts(Long value) {
+        MarketingContacts = value;
+        return this;
+    }
+
+    /**
      * Gets "Number of message open registrations." property.
      * 
      * @return
@@ -297,6 +324,29 @@ public final class ContactStatistics {
      */
     public ContactStatistics setUnsubscribedCount(Long value) {
         UnsubscribedCount = value;
+        return this;
+    }
+
+    /**
+     * Gets "" property.
+     * 
+     * @return
+     *     the value set for the property or null if value is not present
+     */
+    public Long getUserMarketingContacts() {
+        return UserMarketingContacts;
+    }
+
+    /**
+     * Sets the specified value to "" property.
+     * 
+     * @param value
+     *     the new value for the property
+     * @return
+     *     not null, the object on which this method was called 
+     */
+    public ContactStatistics setUserMarketingContacts(Long value) {
+        UserMarketingContacts = value;
         return this;
     }
 

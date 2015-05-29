@@ -1,7 +1,7 @@
 package com.mailjet.api.client.config;
 
 /**
- *	Last built: 20150526-1056
+ *	Last built: 20150529-1621
  *
  */
 public final class Version

@@ -4,20 +4,24 @@ package com.mailjet.api.model.v3.apikey;
 import java.util.Date;
 import com.mailjet.api.client.model.MailJetKeyProperty;
 import com.mailjet.api.client.model.MailJetResourceProperty;
-import com.mailjet.api.model.v3.customtypes.CustomStatus;
 import com.mailjet.api.model.v3.customtypes.RunLevel;
 
 
 /**
  * Class defining property constants for "apikey" MailJet API resource.
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:20 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 public final class ApiKeyProperty<DataType >
     extends MailJetResourceProperty<ApiKey, DataType>
 {
 
+    /**
+     * 
+     * 
+     */
+    public final static ApiKeyProperty<String> ACL = new ApiKeyProperty<String>("ACL", String.class);
     /**
      * The unique key for this API Key.
      * 
@@ -28,11 +32,6 @@ public final class ApiKeyProperty<DataType >
      * 
      */
     public final static ApiKeyProperty<Date> CREATEDAT = new ApiKeyProperty<Date>("CreatedAt", Date.class);
-    /**
-     * Status of this API Key.
-     * 
-     */
-    public final static ApiKeyProperty<CustomStatus> CUSTOMSTATUS = new ApiKeyProperty<CustomStatus>("CustomStatus", CustomStatus.class);
     /**
      * Unique numerical ID for this object.
      * 
@@ -53,6 +52,11 @@ public final class ApiKeyProperty<DataType >
      * 
      */
     public final static ApiKeyProperty<String> NAME = new ApiKeyProperty<String>("Name", String.class);
+    /**
+     * 
+     * 
+     */
+    public final static ApiKeyProperty<Integer> QUARANTINEVALUE = new ApiKeyProperty<Integer>("QuarantineValue", Integer.class);
     /**
      * Runlevel, used to indicate data is migrated and reduced performance is expected.
      * 

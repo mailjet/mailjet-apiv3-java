@@ -13,7 +13,7 @@ import com.mailjet.api.model.v3.customtypes.SenderStatus;
 /**
  * Class representing "Manage details related to Sender e-mail adresses. An e-mail address has to be registered and Confirmed before being used to send e-mails. See the related MetaSender object if you wish to register a complete Domain.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "sender", description = "Manage details related to Sender e-mail adresses. An e-mail address has to be registered and Confirmed before being used to send e-mails. See the related MetaSender object if you wish to register a complete Domain.", allowedOperations = {
@@ -26,7 +26,7 @@ public final class Sender {
 
     @Component(name = "CreatedAt", type = "TRFC3339DateTime", defaultValue = "Current time", required = false, description = "Timestamp when object was created in database.")
     private Date CreatedAt;
-    @Component(name = "DNS", type = "TDNS", defaultValue = "Calculated from the Email", required = false, description = "DNS domain to which sender belongs.")
+    @Component(name = "DNSID", type = "TDNS", defaultValue = "Calculated from the Email", required = false, description = "DNS domain to which sender belongs.")
     private Long DNSID;
     @Component(name = "Email", type = "TSenderEmail", defaultValue = "", required = true, description = "Email Address of this sender.")
     private String Email;
@@ -282,7 +282,7 @@ public final class Sender {
 
     /**
      * Enumeration defining allowed values for "EmailType"(Type of emails that can be sent from this address.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum EmailType {

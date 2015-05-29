@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Batch jobs running on the Mailjet infrastructure. Currently not documented.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:20 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "batchjob", description = "Batch jobs running on the Mailjet infrastructure. Currently not documented.", allowedOperations = {
@@ -23,7 +23,7 @@ public final class BatchJob {
 
     @Component(name = "AliveAt", type = "Int64", defaultValue = "", required = false, description = "Timestamp indicating when batch process was last seen alive.")
     private Long AliveAt;
-    @Component(name = "APIKey", type = "TAPIKey", defaultValue = "", required = false, description = "API key for which this batch job is destined.")
+    @Component(name = "APIKeyID", type = "TAPIKey", defaultValue = "", required = false, description = "API key for which this batch job is destined.")
     private Long APIKeyID;
     @Component(name = "Blocksize", type = "LongInt", defaultValue = "", required = false, description = "Size of processing blocks (e.g. number of contacts to process as one block in a contact import job).")
     private Integer Blocksize;
@@ -31,7 +31,7 @@ public final class BatchJob {
     private Integer Count;
     @Component(name = "Current", type = "LongInt", defaultValue = "", required = false, description = "Current item being processed (if applicable).")
     private Integer Current;
-    @Component(name = "Data", type = "TBaseData", defaultValue = "", required = true, description = "Reference to more data for this batch job.")
+    @Component(name = "DataID", type = "TBaseData", defaultValue = "", required = true, description = "Reference to more data for this batch job.")
     private Long DataID;
     @Component(name = "Errcount", type = "LongInt", defaultValue = "", required = false, description = "Number of errors encountered.")
     private Integer Errcount;
@@ -474,7 +474,7 @@ public final class BatchJob {
 
     /**
      * Enumeration defining allowed values for "JobType"(Type of job.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:20 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum JobType {

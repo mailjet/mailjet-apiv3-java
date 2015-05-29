@@ -8,7 +8,7 @@ import com.mailjet.api.client.model.MailJetResourceFilter;
 /**
  * Class representing filter for  "contactstatistics" MailJet API resource.
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 public final class ContactStatisticsFilter<DataType >
@@ -55,6 +55,11 @@ public final class ContactStatisticsFilter<DataType >
      * 
      */
     public final static ContactStatisticsFilter<Boolean> QUEUED = new ContactStatisticsFilter<Boolean>("Queued", Boolean.class);
+    /**
+     * 
+     * 
+     */
+    public final static ContactStatisticsFilter<Boolean> RECALCULATE = new ContactStatisticsFilter<Boolean>("Recalculate", Boolean.class);
     /**
      * Only retrieve contacts that have sent messages.
      * 

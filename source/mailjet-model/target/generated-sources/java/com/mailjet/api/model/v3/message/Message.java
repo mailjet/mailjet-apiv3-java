@@ -13,7 +13,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Allows you to list and view the details of a Message (an e-mail) processed by Mailjet".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "message", description = "Allows you to list and view the details of a Message (an e-mail) processed by Mailjet", allowedOperations = {
@@ -27,17 +27,17 @@ public final class Message {
     private Integer AttachmentCount;
     @Component(name = "AttemptCount", type = "LongInt", defaultValue = "", required = false, description = "Number of attempts made to deliver the message.")
     private Integer AttemptCount;
-    @Component(name = "Campaign", type = "TCampaign", defaultValue = "", required = true, description = "Reference to campaign in which this message is delivered.")
+    @Component(name = "CampaignID", type = "TCampaign", defaultValue = "", required = true, description = "Reference to campaign in which this message is delivered.")
     private Long CampaignID;
-    @Component(name = "Contact", type = "TContact", defaultValue = "", required = true, description = "Reference to contact to which message was sent.")
+    @Component(name = "ContactID", type = "TContact", defaultValue = "", required = true, description = "Reference to contact to which message was sent.")
     private Long ContactID;
     @Component(name = "Delay", type = "Currency", defaultValue = "", required = false, description = "Delay between arrival and delivery [?].")
     private BigDecimal Delay;
-    @Component(name = "Destination", type = "TDestination", defaultValue = "", required = true, description = "Reference to destination domain.")
+    @Component(name = "DestinationID", type = "TDestination", defaultValue = "", required = true, description = "Reference to destination domain.")
     private Long DestinationID;
     @Component(name = "FilterTime", type = "LongInt", defaultValue = "", required = false, description = "Time spent processing the text of the message (milliseconds).")
     private Integer FilterTime;
-    @Component(name = "From", type = "TSender", defaultValue = "", required = true, description = "Reference to the sender of the message.")
+    @Component(name = "FromID", type = "TSender", defaultValue = "", required = true, description = "Reference to the sender of the message.")
     private Long FromID;
     @Component(name = "ID", type = "Int64", defaultValue = "", required = false, description = "Unique numerical ID for this object.")
     private Long ID;
@@ -57,7 +57,7 @@ public final class Message {
     private BigDecimal SpamassassinScore;
     @Component(name = "SpamassRules", type = "AnsiString", defaultValue = "", required = false, description = "Matched spam assassin rules.")
     private String SpamassRules;
-    @Component(name = "State", type = "TMessageState", defaultValue = "", required = false, description = "Current state of the message.")
+    @Component(name = "StateID", type = "TMessageState", defaultValue = "", required = false, description = "Current state of the message.")
     private Long StateID;
     @Component(name = "StatePermanent", type = "Boolean", defaultValue = "false", required = false, description = "Is the state of the message permanent (i.e. will no longer change).")
     private Boolean StatePermanent;
@@ -564,7 +564,7 @@ public final class Message {
 
     /**
      * Enumeration defining allowed values for "Status"(Status of the message.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum Status {

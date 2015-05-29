@@ -13,7 +13,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Newsletter data.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "newsletter", description = "Newsletter data.", allowedOperations = {
@@ -27,13 +27,13 @@ public final class Newsletter {
     private BigDecimal AXFraction;
     @Component(name = "AXFractionName", type = "AnsiString", defaultValue = "", required = false, description = "")
     private String AXFractionName;
-    @Component(name = "AXTesting", type = "TAXTesting", defaultValue = "", required = false, description = "")
+    @Component(name = "AXTestingID", type = "TAXTesting", defaultValue = "", required = false, description = "")
     private Long AXTestingID;
     @Component(name = "Callback", type = "AnsiString", defaultValue = "", required = false, description = "Callback URL.")
     private String Callback;
-    @Component(name = "Campaign", type = "TCampaign", defaultValue = "", required = false, description = "Reference to campaign created for this newsletter.")
+    @Component(name = "CampaignID", type = "TCampaign", defaultValue = "", required = false, description = "Reference to campaign created for this newsletter.")
     private Long CampaignID;
-    @Component(name = "ContactsList", type = "TContactsList", defaultValue = "", required = false, description = "Reference to contacts list to which newsletter will be sent.")
+    @Component(name = "ContactsListID", type = "TContactsList", defaultValue = "", required = false, description = "Reference to contacts list to which newsletter will be sent.")
     private Long ContactsListID;
     @Component(name = "CreatedAt", type = "TRFC3339DateTime", defaultValue = "Current time", required = false, description = "Timestamp when object was created in database.")
     private Date CreatedAt;
@@ -81,7 +81,7 @@ public final class Newsletter {
     private Short PolitenessMode;
     @Component(name = "ReplyEmail", type = "TEmail", defaultValue = "", required = false, description = "Reply-To address for the mail.")
     private String ReplyEmail;
-    @Component(name = "Segmentation", type = "TContactFilter", defaultValue = "", required = false, description = "")
+    @Component(name = "SegmentationID", type = "TContactFilter", defaultValue = "", required = false, description = "")
     private Long SegmentationID;
     @Component(name = "Sender", type = "AnsiString", defaultValue = "", required = true, description = "Sender.")
     private String Sender;
@@ -93,7 +93,7 @@ public final class Newsletter {
     private Newsletter.Status Status;
     @Component(name = "Subject", type = "AnsiString", defaultValue = "", required = true, description = "Newsletter subject.")
     private String Subject;
-    @Component(name = "Template", type = "TNewsLetterTemplate", defaultValue = "", required = false, description = "Template from which this newsletter was generated, or as which it was last saved.")
+    @Component(name = "TemplateID", type = "TNewsLetterTemplate", defaultValue = "", required = false, description = "Template from which this newsletter was generated, or as which it was last saved.")
     private Long TemplateID;
     @Component(name = "TestAddress", type = "AnsiString", defaultValue = "", required = false, description = "Address used for testing.")
     private String TestAddress;
@@ -1026,7 +1026,7 @@ public final class Newsletter {
 
     /**
      * Enumeration defining allowed values for "EditMode"(Edit mode for newsletter.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum EditMode {
@@ -1051,7 +1051,7 @@ public final class Newsletter {
 
     /**
      * Enumeration defining allowed values for "EditType"(Edit type.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum EditType {
@@ -1083,7 +1083,7 @@ public final class Newsletter {
 
     /**
      * Enumeration defining allowed values for "Footer"(Footer type to generate.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum Footer {
@@ -1108,7 +1108,7 @@ public final class Newsletter {
 
     /**
      * Enumeration defining allowed values for "Permalink"(Type of permalink that should be added to the newsletter.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum Permalink {
@@ -1133,46 +1133,53 @@ public final class Newsletter {
 
     /**
      * Enumeration defining allowed values for "Status"(Status of the newsletter.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum Status {
 
 
         /**
-         * Value "-2".
+         * Value "AXCanceled (-3)".
          * 
          */
-        @EnumValue("-2")
-        MINUS_2,
+        @EnumValue("AXCanceled (-3)")
+        AXCANCELED___3_,
 
         /**
-         * Value "-1".
+         * Value "Deleted (-2)".
          * 
          */
-        @EnumValue("-1")
-        MINUS_1,
+        @EnumValue("Deleted (-2)")
+        DELETED___2_,
 
         /**
-         * Value "0".
+         * Value "Archived (-1)".
          * 
          */
-        @EnumValue("0")
-        _0,
+        @EnumValue("Archived (-1)")
+        ARCHIVED___1_,
 
         /**
-         * Value "1".
+         * Value "Draft (0)".
          * 
          */
-        @EnumValue("1")
-        _1,
+        @EnumValue("Draft (0)")
+        DRAFT__0_,
 
         /**
-         * Value "2".
+         * Value "Programmed (1)".
          * 
          */
-        @EnumValue("2")
-        _2;
+        @EnumValue("Programmed (1)")
+        PROGRAMMED__1_,
+
+        /**
+         * Value "AXSelected (4)".
+         * 
+         */
+        @EnumValue("AXSelected (4)")
+        AXSELECTED__4_;
 
     }
 

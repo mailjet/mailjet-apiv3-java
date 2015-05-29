@@ -10,7 +10,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Specifics settings for a given Mailjet Widget. See Widget.Mailjet widget settings.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "widgetcustomvalue", description = "Specifics settings for a given Mailjet Widget. See Widget.Mailjet widget settings.", allowedOperations = {
@@ -21,7 +21,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 }, uniquekey = "Widget|Name")
 public final class WidgetCustomValue {
 
-    @Component(name = "APIKey", type = "TAPIKey", defaultValue = "", required = false, description = "APIKey to which the widget and custom value belongs.")
+    @Component(name = "APIKeyID", type = "TAPIKey", defaultValue = "", required = false, description = "APIKey to which the widget and custom value belongs.")
     private Long APIKeyID;
     @Component(name = "Display", type = "Boolean", defaultValue = "false", required = false, description = "Should the value be displayed.")
     private Boolean Display;
@@ -31,7 +31,7 @@ public final class WidgetCustomValue {
     private String Name;
     @Component(name = "Value", type = "AnsiString", defaultValue = "", required = false, description = "Value of the custom value.")
     private String Value;
-    @Component(name = "Widget", type = "TWidget", defaultValue = "", required = true, description = "Widget for which the value is registered.")
+    @Component(name = "WidgetID", type = "TWidget", defaultValue = "", required = true, description = "Widget for which the value is registered.")
     private Long WidgetID;
     /**
      * API Operation "List".

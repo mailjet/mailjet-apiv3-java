@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Management of domains used for sending messages. A domain or address must be registered and validated before being used. See the related Sender object if you wish to register a given e-mail address.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "metasender", description = "Management of domains used for sending messages. A domain or address must be registered and validated before being used. See the related Sender object if you wish to register a given e-mail address.", allowedOperations = {

@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Manage event-driven callback URLs, also called webhooks, used by the Mailjet platform when a specific action is triggered".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "eventcallbackurl", description = "Manage event-driven callback URLs, also called webhooks, used by the Mailjet platform when a specific action is triggered", allowedOperations = {
@@ -22,7 +22,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 }, uniquekey = "EventType|Backup")
 public final class EventCallbackUrl {
 
-    @Component(name = "APIKey", type = "TAPIKey", defaultValue = "", required = true, description = "API Key for which the callback URL is registered.")
+    @Component(name = "APIKeyID", type = "TAPIKey", defaultValue = "", required = true, description = "API Key for which the callback URL is registered.")
     private Long APIKeyID;
     @Component(name = "EventType", type = "AnsiString", defaultValue = "", required = false, description = "Numerical event type.")
     private EventCallbackUrl.EventType EventType;
@@ -230,7 +230,7 @@ public final class EventCallbackUrl {
 
     /**
      * Enumeration defining allowed values for "EventType"(Numerical event type.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum EventType {
@@ -318,7 +318,7 @@ public final class EventCallbackUrl {
 
     /**
      * Enumeration defining allowed values for "Status"(Status of the event.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum Status {

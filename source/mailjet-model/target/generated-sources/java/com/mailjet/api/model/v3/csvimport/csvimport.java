@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "csvimport", allowedOperations = {
@@ -23,7 +23,7 @@ public final class csvimport {
 
     @Component(name = "AliveAt", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "Timestamp when the CSV import background job reported a status.")
     private Date AliveAt;
-    @Component(name = "ContactsList", type = "TContactsList", defaultValue = "", required = true, description = "Contacts list for which the import should be started.")
+    @Component(name = "ContactsListID", type = "TContactsList", defaultValue = "", required = true, description = "Contacts list for which the import should be started.")
     private Long ContactsListID;
     @Component(name = "Count", type = "LongInt", defaultValue = "", required = false, description = "Number of contacts detected in the CSV file.")
     private Integer Count;

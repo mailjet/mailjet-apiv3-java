@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.mailjet.api.client.model.ResultSetTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0 sec
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 sec

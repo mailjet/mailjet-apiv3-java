@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "This resource can be used to examine the associated extra historical data of a contact.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "contacthistorydata", description = "This resource can be used to examine the associated extra historical data of a contact.", allowedOperations = {
@@ -21,7 +21,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 })
 public final class ContactHistorydata {
 
-    @Component(name = "Contact", type = "TContact", defaultValue = "", required = false, description = "Contact for which this is the historical data.")
+    @Component(name = "ContactID", type = "TContact", defaultValue = "", required = false, description = "Contact for which this is the historical data.")
     private Long ContactID;
     @Component(name = "CreatedAt", type = "TRFC3339DateTime", defaultValue = "Current time", required = false, description = "Timestamp when the historical data was registered by Mailjet")
     private Date CreatedAt;

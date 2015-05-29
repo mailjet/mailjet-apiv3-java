@@ -10,7 +10,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Contacts list signup request.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "contactslistsignup", description = "Contacts list signup request.", allowedOperations = {
@@ -22,15 +22,15 @@ public final class ContactsListSignup {
     private Long ConfirmAt;
     @Component(name = "ConfirmIp", type = "AnsiString", defaultValue = "", required = false, description = "IP address detected during signup confirmation.")
     private String ConfirmIp;
-    @Component(name = "Contact", type = "TContact", defaultValue = "", required = false, description = "Reference to Contact to be signed up.")
+    @Component(name = "ContactID", type = "TContact", defaultValue = "", required = false, description = "Reference to Contact to be signed up.")
     private Long ContactID;
     @Component(name = "Email", type = "TEmail", defaultValue = "", required = true, description = "Email address to be signed up.")
     private String Email;
     @Component(name = "ID", type = "Int64", defaultValue = "", required = false, description = "Unique numerical ID for this object.")
     private Long ID;
-    @Component(name = "List", type = "TContactsList", defaultValue = "", required = true, description = "Contact list to which contact will be subscribed.")
+    @Component(name = "ListID", type = "TContactsList", defaultValue = "", required = true, description = "Contact list to which contact will be subscribed.")
     private Long ListID;
-    @Component(name = "Recipient", type = "TRecipient", defaultValue = "", required = false, description = "Reference to recipient to which contact corresponds.")
+    @Component(name = "RecipientID", type = "TRecipient", defaultValue = "", required = false, description = "Reference to recipient to which contact corresponds.")
     private Long RecipientID;
     @Component(name = "SignupAt", type = "Int64", defaultValue = "", required = false, description = "Timestamp of sign up registration.")
     private Long SignupAt;

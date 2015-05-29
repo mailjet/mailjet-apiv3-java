@@ -12,7 +12,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Manages a Newsletter Template Properties.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "newslettertemplate", description = "Manages a Newsletter Template Properties.", allowedOperations = {
@@ -22,7 +22,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 })
 public final class NewsletterTemplate {
 
-    @Component(name = "Category", type = "TNewsLetterTemplateCategory", defaultValue = "", required = false, description = "Category for this newsletter.")
+    @Component(name = "CategoryID", type = "TNewsLetterTemplateCategory", defaultValue = "", required = false, description = "Category for this newsletter.")
     private Long CategoryID;
     @Component(name = "CreatedAt", type = "TRFC3339DateTime", defaultValue = "Current time", required = false, description = "Timestamp when object was created in database.")
     private Date CreatedAt;
@@ -450,7 +450,7 @@ public final class NewsletterTemplate {
 
     /**
      * Enumeration defining allowed values for "Footer"(Footer type to generate.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum Footer {
@@ -475,7 +475,7 @@ public final class NewsletterTemplate {
 
     /**
      * Enumeration defining allowed values for "Permalink"(Type of permalink that should be added to the newsletter.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum Permalink {

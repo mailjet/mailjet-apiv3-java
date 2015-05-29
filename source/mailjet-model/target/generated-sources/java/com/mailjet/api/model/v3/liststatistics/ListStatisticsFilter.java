@@ -7,7 +7,7 @@ import com.mailjet.api.client.model.MailJetResourceFilter;
 /**
  * Class representing filter for  "liststatistics" MailJet API resource.
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 public final class ListStatisticsFilter<DataType >
@@ -20,10 +20,20 @@ public final class ListStatisticsFilter<DataType >
      */
     public final static ListStatisticsFilter<String> ADDRESS = new ListStatisticsFilter<String>("Address", String.class);
     /**
+     * 
+     * 
+     */
+    public final static ListStatisticsFilter<Boolean> CALCACTIVE = new ListStatisticsFilter<Boolean>("CalcActive", Boolean.class);
+    /**
      * Should the ActiveUnsubscribedCount property be calculated?.
      * 
      */
     public final static ListStatisticsFilter<Boolean> CALCACTIVEUNSUB = new ListStatisticsFilter<Boolean>("CalcActiveUnsub", Boolean.class);
+    /**
+     * 
+     * 
+     */
+    public final static ListStatisticsFilter<Long> CONTACTSLISTID = new ListStatisticsFilter<Long>("ContactsListID", Long.class);
     /**
      * Unique numerical ID for this object.
      * 

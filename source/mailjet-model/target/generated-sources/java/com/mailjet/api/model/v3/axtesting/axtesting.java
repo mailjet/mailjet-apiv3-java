@@ -13,7 +13,7 @@ import com.mailjet.api.model.v3.customtypes.AXTestMode;
 /**
  * Class representing "".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:20 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "axtesting", allowedOperations = {
@@ -24,7 +24,7 @@ import com.mailjet.api.model.v3.customtypes.AXTestMode;
 })
 public final class axtesting {
 
-    @Component(name = "ContactList", type = "TContactsList", defaultValue = "", required = false, description = "")
+    @Component(name = "ContactListID", type = "TContactsList", defaultValue = "", required = false, description = "")
     private Long ContactListID;
     @Component(name = "CreatedAt", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "")
     private Date CreatedAt;
@@ -40,7 +40,7 @@ public final class axtesting {
     private BigDecimal Percentage;
     @Component(name = "RemainderAt", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "")
     private Date RemainderAt;
-    @Component(name = "Segmentation", type = "TContactFilter", defaultValue = "", required = false, description = "")
+    @Component(name = "SegmentationID", type = "TContactFilter", defaultValue = "", required = false, description = "")
     private Long SegmentationID;
     @Component(name = "Starred", type = "Boolean", defaultValue = "false", required = false, description = "")
     private Boolean Starred;

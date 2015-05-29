@@ -8,7 +8,7 @@ import com.mailjet.api.client.model.MailJetResourceFilter;
 /**
  * Class representing filter for  "messagesentstatistics" MailJet API resource.
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 public final class MessageSentStatisticsFilter<DataType >
@@ -45,6 +45,11 @@ public final class MessageSentStatisticsFilter<DataType >
      * 
      */
     public final static MessageSentStatisticsFilter<String> CUSTOMCAMPAIGN = new MessageSentStatisticsFilter<String>("CustomCampaign", String.class);
+    /**
+     * 
+     * 
+     */
+    public final static MessageSentStatisticsFilter<String> CUSTOMID = new MessageSentStatisticsFilter<String>("CustomID", String.class);
     /**
      * Only retrieve campaigns with given From header.
      * 
@@ -89,12 +94,17 @@ public final class MessageSentStatisticsFilter<DataType >
      * Only retrieve messages with Status equal to specified value.
      * 
      */
-    public final static MessageSentStatisticsFilter<Long> MESSAGESTATUSID = new MessageSentStatisticsFilter<Long>("MessageStatusID", Long.class);
+    public final static MessageSentStatisticsFilter<String> MESSAGESTATUS = new MessageSentStatisticsFilter<String>("MessageStatus", String.class);
     /**
      * Set FromTS and ToTS timestamps to beginning of indicated period and current timestamp, respectively.
      * 
      */
     public final static MessageSentStatisticsFilter<String> PERIOD = new MessageSentStatisticsFilter<String>("Period", String.class);
+    /**
+     * 
+     * 
+     */
+    public final static MessageSentStatisticsFilter<Boolean> RAWDATA = new MessageSentStatisticsFilter<Boolean>("RawData", Boolean.class);
     /**
      * 
      * 

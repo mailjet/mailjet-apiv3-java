@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:20 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "campaignaggregate", allowedOperations = {
@@ -24,9 +24,9 @@ public final class Campaignaggregate {
 
     @Component(name = "CampaignIDS", type = "AnsiString", defaultValue = "", required = false, description = "")
     private String CampaignIDS;
-    @Component(name = "ContactFilter", type = "TContactFilter", defaultValue = "", required = false, description = "")
+    @Component(name = "ContactFilterID", type = "TContactFilter", defaultValue = "", required = false, description = "")
     private Long ContactFilterID;
-    @Component(name = "ContactsList", type = "TContactsList", defaultValue = "", required = false, description = "")
+    @Component(name = "ContactsListID", type = "TContactsList", defaultValue = "", required = false, description = "")
     private Long ContactsListID;
     @Component(name = "Final", type = "Boolean", defaultValue = "false", required = false, description = "")
     private Boolean Final;
@@ -38,7 +38,7 @@ public final class Campaignaggregate {
     private String Keyword;
     @Component(name = "Name", type = "AnsiString", defaultValue = "", required = false, description = "")
     private String Name;
-    @Component(name = "Sender", type = "TSender", defaultValue = "", required = false, description = "")
+    @Component(name = "SenderID", type = "TSender", defaultValue = "", required = false, description = "")
     private Long SenderID;
     @Component(name = "ToDate", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "")
     private Date ToDate;

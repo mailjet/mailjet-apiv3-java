@@ -9,13 +9,18 @@ import com.mailjet.api.client.model.MailJetResourceProperty;
 /**
  * Class defining property constants for "user" MailJet API resource.
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 public final class UserProperty<DataType >
     extends MailJetResourceProperty<User, DataType>
 {
 
+    /**
+     * 
+     * 
+     */
+    public final static UserProperty<String> ACL = new UserProperty<String>("ACL", String.class);
     /**
      * Timestamp when object was created in database.
      * 
@@ -31,11 +36,6 @@ public final class UserProperty<DataType >
      * 
      */
     public final static UserProperty.Key<Long> ID = new UserProperty.Key<Long>("ID", Long.class);
-    /**
-     * Has the user accepted the Mailjet Rules ?.
-     * 
-     */
-    public final static UserProperty<Boolean> ISRULESACCEPTED = new UserProperty<Boolean>("IsRulesAccepted", Boolean.class);
     /**
      * IP address of last contact from user.
      * 

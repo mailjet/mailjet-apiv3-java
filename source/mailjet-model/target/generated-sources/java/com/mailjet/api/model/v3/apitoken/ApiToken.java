@@ -12,7 +12,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Access token for API, used to give access to an API Key in conjunction with our IFrame API.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:20 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "apitoken", description = "Access token for API, used to give access to an API Key in conjunction with our IFrame API.", allowedOperations = {
@@ -23,9 +23,11 @@ import com.mailjet.api.client.model.metadata.Resource;
 }, uniquekey = "Token")
 public final class ApiToken {
 
+    @Component(name = "ACL", type = "AnsiString", defaultValue = "", required = false, description = "")
+    private String ACL;
     @Component(name = "AllowedAccess", type = "AnsiString", defaultValue = "Full access", required = true, description = "Access rights of this token. Options are one or all the following: 'campaigns', 'contacts','reports', 'stats', 'preferences'.")
     private ApiToken.AllowedAccess AllowedAccess;
-    @Component(name = "APIKey", type = "TAPIKey", defaultValue = "", required = true, description = "Reference to API Key to which this token belongs.")
+    @Component(name = "APIKeyID", type = "TAPIKey", defaultValue = "", required = true, description = "Reference to API Key to which this token belongs.")
     private Long APIKeyID;
     @Component(name = "CatchedIp", type = "AnsiString", defaultValue = "Caller's IP address", required = false, description = "Last registered IP address for this token.")
     private String CatchedIp;
@@ -76,6 +78,29 @@ public final class ApiToken {
      * 
      */
     public final static MailJetApiService<com.mailjet.api.client.MailJetApiCall.Delete<ApiToken>> Delete = new MailJetApiService<com.mailjet.api.client.MailJetApiCall.Delete<ApiToken>>(ApiToken.class, ResourceOperationTypes.Delete);
+
+    /**
+     * Gets "" property.
+     * 
+     * @return
+     *     the value set for the property or null if value is not present
+     */
+    public String getACL() {
+        return ACL;
+    }
+
+    /**
+     * Sets the specified value to "" property.
+     * 
+     * @param value
+     *     the new value for the property
+     * @return
+     *     not null, the object on which this method was called 
+     */
+    public ApiToken setACL(String value) {
+        ACL = value;
+        return this;
+    }
 
     /**
      * Gets "Access rights of this token. Options are one or all the following: 'campaigns', 'contacts','reports', 'stats', 'preferences'." property.
@@ -406,7 +431,7 @@ public final class ApiToken {
 
     /**
      * Enumeration defining allowed values for "AllowedAccess"(Access rights of this token. Options are one or all the following: 'campaigns', 'contacts','reports', 'stats', 'preferences'.) MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:20 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum AllowedAccess {
@@ -480,7 +505,7 @@ public final class ApiToken {
 
     /**
      * Enumeration defining allowed values for "TokenType"(Type of token: options are 'url','iframe','page') MailJet API property.
-     * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:20 CEST 2014.
+     * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
      * 
      */
     public static enum TokenType {

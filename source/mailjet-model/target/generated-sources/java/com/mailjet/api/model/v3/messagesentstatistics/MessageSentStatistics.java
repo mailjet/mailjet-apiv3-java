@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "API Key Statistical campaign/message data.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "messagesentstatistics", description = "API Key Statistical campaign/message data.", allowedOperations = {
@@ -29,14 +29,20 @@ public final class MessageSentStatistics {
     private Date BounceDate;
     @Component(name = "BounceReason", type = "AnsiString", defaultValue = "", required = false, description = "")
     private String BounceReason;
-    @Component(name = "Campaign", type = "TCampaign", defaultValue = "", required = true, description = "reference to the Campaign to which message belongs.")
+    @Component(name = "CampaignID", type = "TCampaign", defaultValue = "", required = true, description = "reference to the Campaign to which message belongs.")
     private Long CampaignID;
     @Component(name = "Click", type = "Boolean", defaultValue = "false", required = false, description = "Was a click registered for this message ?.")
     private Boolean Click;
     @Component(name = "CntRecipients", type = "Int64", defaultValue = "", required = false, description = "Number of recipients for this campaign.")
     private Long CntRecipients;
-    @Component(name = "Contact", type = "TContact", defaultValue = "", required = true, description = "Reference to contact to which message was sent.")
+    @Component(name = "ComplaintDate", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "")
+    private Date ComplaintDate;
+    @Component(name = "ContactID", type = "TContact", defaultValue = "", required = true, description = "Reference to contact to which message was sent.")
     private Long ContactID;
+    @Component(name = "Details", type = "AnsiString", defaultValue = "", required = false, description = "")
+    private String Details;
+    @Component(name = "FBLSource", type = "AnsiString", defaultValue = "", required = false, description = "")
+    private String FBLSource;
     @Component(name = "MessageID", type = "Int64", defaultValue = "", required = false, description = "Only retrieve statistics for the selected message")
     private Long MessageID;
     @Component(name = "Open", type = "Boolean", defaultValue = "false", required = false, description = "Was the message opened ?.")
@@ -47,12 +53,14 @@ public final class MessageSentStatistics {
     private Boolean Sent;
     @Component(name = "Spam", type = "Boolean", defaultValue = "false", required = false, description = "Was a spam complaint registered for this message ?.")
     private Boolean Spam;
-    @Component(name = "State", type = "TMessageState", defaultValue = "", required = true, description = "Current state of the message.")
+    @Component(name = "StateID", type = "TMessageState", defaultValue = "", required = true, description = "Current state of the message.")
     private Long StateID;
     @Component(name = "StatePermanent", type = "Boolean", defaultValue = "false", required = false, description = "Is the current state of the message permanent ?.")
     private Boolean StatePermanent;
     @Component(name = "Status", type = "AnsiString", defaultValue = "", required = false, description = "Current status of the message.")
     private String Status;
+    @Component(name = "ToEmail", type = "AnsiString", defaultValue = "", required = false, description = "")
+    private String ToEmail;
     /**
      * API Operation "List".
      * 
@@ -244,6 +252,29 @@ public final class MessageSentStatistics {
     }
 
     /**
+     * Gets "" property.
+     * 
+     * @return
+     *     the value set for the property or null if value is not present
+     */
+    public Date getComplaintDate() {
+        return ComplaintDate;
+    }
+
+    /**
+     * Sets the specified value to "" property.
+     * 
+     * @param value
+     *     the new value for the property
+     * @return
+     *     not null, the object on which this method was called 
+     */
+    public MessageSentStatistics setComplaintDate(Date value) {
+        ComplaintDate = value;
+        return this;
+    }
+
+    /**
      * Gets "Reference to contact to which message was sent." property.
      * 
      * @return
@@ -263,6 +294,52 @@ public final class MessageSentStatistics {
      */
     public MessageSentStatistics setContactID(Long value) {
         ContactID = value;
+        return this;
+    }
+
+    /**
+     * Gets "" property.
+     * 
+     * @return
+     *     the value set for the property or null if value is not present
+     */
+    public String getDetails() {
+        return Details;
+    }
+
+    /**
+     * Sets the specified value to "" property.
+     * 
+     * @param value
+     *     the new value for the property
+     * @return
+     *     not null, the object on which this method was called 
+     */
+    public MessageSentStatistics setDetails(String value) {
+        Details = value;
+        return this;
+    }
+
+    /**
+     * Gets "" property.
+     * 
+     * @return
+     *     the value set for the property or null if value is not present
+     */
+    public String getFBLSource() {
+        return FBLSource;
+    }
+
+    /**
+     * Sets the specified value to "" property.
+     * 
+     * @param value
+     *     the new value for the property
+     * @return
+     *     not null, the object on which this method was called 
+     */
+    public MessageSentStatistics setFBLSource(String value) {
+        FBLSource = value;
         return this;
     }
 
@@ -447,6 +524,29 @@ public final class MessageSentStatistics {
      */
     public MessageSentStatistics setStatus(String value) {
         Status = value;
+        return this;
+    }
+
+    /**
+     * Gets "" property.
+     * 
+     * @return
+     *     the value set for the property or null if value is not present
+     */
+    public String getToEmail() {
+        return ToEmail;
+    }
+
+    /**
+     * Sets the specified value to "" property.
+     * 
+     * @param value
+     *     the new value for the property
+     * @return
+     *     not null, the object on which this method was called 
+     */
+    public MessageSentStatistics setToEmail(String value) {
+        ToEmail = value;
         return this;
     }
 

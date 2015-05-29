@@ -1,6 +1,7 @@
 
 package com.mailjet.api.model.v3.contactdata;
 
+import java.util.Map;
 import com.mailjet.api.client.MailJetApiService;
 import com.mailjet.api.client.model.ResourceOperationTypes;
 import com.mailjet.api.client.model.metadata.Component;
@@ -10,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "This resource can be used to examine and manipulate the associated extra static data of a contact.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "contactdata", description = "This resource can be used to examine and manipulate the associated extra static data of a contact.", allowedOperations = {
@@ -24,7 +25,7 @@ public final class Contactdata {
     @Component(name = "ContactID", type = "Int64", defaultValue = "", required = false, description = "")
     private Long ContactID;
     @Component(name = "Data", type = "TKeyValueList", defaultValue = "", required = false, description = "Static data in an array with Name, Value pairs.")
-    private java.util.List<Long> Data;
+    private java.util.List<Map> Data;
     @Component(name = "ID", type = "Int64", defaultValue = "", required = false, description = "ID of this resource. It equals the Contact ID.")
     private Long ID;
     /**
@@ -82,7 +83,7 @@ public final class Contactdata {
      * @return
      *     the value set for the property or null if value is not present
      */
-    public java.util.List<Long> getData() {
+    public java.util.List<Map> getData() {
         return Data;
     }
 
@@ -94,7 +95,7 @@ public final class Contactdata {
      * @return
      *     not null, the object on which this method was called 
      */
-    public Contactdata setData(java.util.List<Long> value) {
+    public Contactdata setData(java.util.List<Map> value) {
         Data = value;
         return this;
     }

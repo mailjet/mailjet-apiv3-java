@@ -11,13 +11,18 @@ import com.mailjet.api.model.v3.customtypes.Property;
 /**
  * Class defining property constants for "metadata" MailJet API resource.
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 public final class MetadataProperty<DataType >
     extends MailJetResourceProperty<Metadata, DataType>
 {
 
+    /**
+     * 
+     * 
+     */
+    public final static MetadataProperty<List<Long>> ACTIONS = new MetadataProperty<List<Long>>("Actions", List.class);
     /**
      * 
      * 

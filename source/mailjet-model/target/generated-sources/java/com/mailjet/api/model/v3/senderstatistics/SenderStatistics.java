@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "API Key sender email address message/open/click statistical information.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "senderstatistics", description = "API Key sender email address message/open/click statistical information.", allowedOperations = {
@@ -35,7 +35,7 @@ public final class SenderStatistics {
     private Long ProcessedCount;
     @Component(name = "QueuedCount", type = "Int64", defaultValue = "", required = false, description = "Number of messages waiting in send queue.")
     private Long QueuedCount;
-    @Component(name = "Sender", type = "TSender", defaultValue = "", required = true, description = "Reference to the sender for which the statistics are collected.")
+    @Component(name = "SenderID", type = "TSender", defaultValue = "", required = true, description = "Reference to the sender for which the statistics are collected.")
     private Long SenderID;
     @Component(name = "SpamComplaintCount", type = "Int64", defaultValue = "", required = false, description = "Number of spam complaints.")
     private Long SpamComplaintCount;

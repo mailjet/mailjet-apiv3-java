@@ -2,6 +2,7 @@
 package com.mailjet.api.model.v3.contactdata;
 
 import java.util.List;
+import java.util.Map;
 import com.mailjet.api.client.model.MailJetKeyProperty;
 import com.mailjet.api.client.model.MailJetResourceProperty;
 
@@ -9,7 +10,7 @@ import com.mailjet.api.client.model.MailJetResourceProperty;
 /**
  * Class defining property constants for "contactdata" MailJet API resource.
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 public final class ContactdataProperty<DataType >
@@ -25,7 +26,7 @@ public final class ContactdataProperty<DataType >
      * Static data in an array with Name, Value pairs.
      * 
      */
-    public final static ContactdataProperty<List<Long>> DATA = new ContactdataProperty<List<Long>>("Data", List.class);
+    public final static ContactdataProperty<List<Map>> DATA = new ContactdataProperty<List<Map>>("Data", List.class);
     /**
      * ID of this resource. It equals the Contact ID.
      * 

@@ -9,7 +9,7 @@ import com.mailjet.api.client.model.MailJetResourceProperty;
 /**
  * Class defining property constants for "contactstatistics" MailJet API resource.
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 public final class ContactStatisticsProperty<DataType >
@@ -47,6 +47,11 @@ public final class ContactStatisticsProperty<DataType >
      */
     public final static ContactStatisticsProperty<Date> LASTACTIVITYAT = new ContactStatisticsProperty<Date>("LastActivityAt", Date.class);
     /**
+     * 
+     * 
+     */
+    public final static ContactStatisticsProperty<Long> MARKETINGCONTACTS = new ContactStatisticsProperty<Long>("MarketingContacts", Long.class);
+    /**
      * Number of message open registrations.
      * 
      */
@@ -71,6 +76,11 @@ public final class ContactStatisticsProperty<DataType >
      * 
      */
     public final static ContactStatisticsProperty<Long> UNSUBSCRIBEDCOUNT = new ContactStatisticsProperty<Long>("UnsubscribedCount", Long.class);
+    /**
+     * 
+     * 
+     */
+    public final static ContactStatisticsProperty<Long> USERMARKETINGCONTACTS = new ContactStatisticsProperty<Long>("UserMarketingContacts", Long.class);
 
     private ContactStatisticsProperty(String name, Class<?> type) {
         super(name, type);

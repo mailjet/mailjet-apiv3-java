@@ -2,6 +2,7 @@
 package com.mailjet.api.model.v3.listrecipientstatistics;
 
 import java.util.Date;
+import java.util.Map;
 import com.mailjet.api.client.MailJetApiService;
 import com.mailjet.api.client.model.ResourceOperationTypes;
 import com.mailjet.api.client.model.metadata.Component;
@@ -11,7 +12,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "View statistics on Messages sent to the recipients of a given list.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "listrecipientstatistics", description = "View statistics on Messages sent to the recipients of a given list.", allowedOperations = {
@@ -26,12 +27,12 @@ public final class ListRecipientStatistics {
     @Component(name = "ClickedCount", type = "Int64", defaultValue = "", required = false, description = "Number of registered clicks.")
     private Long ClickedCount;
     @Component(name = "Data", type = "TKeyValueList", defaultValue = "", required = false, description = "Extra data associated with contact. This is only present when ShowExtraData filter is 1.")
-    private java.util.List<Long> Data;
+    private java.util.List<Map> Data;
     @Component(name = "DeliveredCount", type = "Int64", defaultValue = "", required = false, description = "Number of messages delivered to their destination.")
     private Long DeliveredCount;
     @Component(name = "LastActivityAt", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "Timestamp of last registered activity for this contact.")
     private Date LastActivityAt;
-    @Component(name = "ListRecipient", type = "TListRecipient", defaultValue = "", required = false, description = "Listrecipient for which the statistics are shown.")
+    @Component(name = "ListRecipientID", type = "TListRecipient", defaultValue = "", required = false, description = "Listrecipient for which the statistics are shown.")
     private Long ListRecipientID;
     @Component(name = "OpenedCount", type = "Int64", defaultValue = "", required = false, description = "Number of message open registrations.")
     private Long OpenedCount;
@@ -124,7 +125,7 @@ public final class ListRecipientStatistics {
      * @return
      *     the value set for the property or null if value is not present
      */
-    public java.util.List<Long> getData() {
+    public java.util.List<Map> getData() {
         return Data;
     }
 
@@ -136,7 +137,7 @@ public final class ListRecipientStatistics {
      * @return
      *     not null, the object on which this method was called 
      */
-    public ListRecipientStatistics setData(java.util.List<Long> value) {
+    public ListRecipientStatistics setData(java.util.List<Map> value) {
         Data = value;
         return this;
     }

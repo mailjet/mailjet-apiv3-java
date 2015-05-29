@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Statistics related to emails processed by Mailjet, grouped in a Campaign.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:20 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "campaignstatistics", description = "Statistics related to emails processed by Mailjet, grouped in a Campaign.", allowedOperations = {
@@ -19,13 +19,13 @@ import com.mailjet.api.client.model.metadata.Resource;
 }, uniquekey = "CustomValue")
 public final class CampaignStatistics {
 
-    @Component(name = "AXTesting", type = "TAXTesting", defaultValue = "", required = false, description = "")
+    @Component(name = "AXTestingID", type = "TAXTesting", defaultValue = "", required = false, description = "")
     private Long AXTestingID;
     @Component(name = "BlockedCount", type = "Int64", defaultValue = "", required = false, description = "Number of blocked messages.")
     private Long BlockedCount;
     @Component(name = "BouncedCount", type = "Int64", defaultValue = "", required = false, description = "Number of bounced messages.")
     private Long BouncedCount;
-    @Component(name = "Campaign", type = "TCampaign", defaultValue = "", required = false, description = "Reference to campaign.")
+    @Component(name = "CampaignID", type = "TCampaign", defaultValue = "", required = false, description = "Reference to campaign.")
     private Long CampaignID;
     @Component(name = "CampaignIsStarred", type = "Boolean", defaultValue = "false", required = false, description = "")
     private Boolean CampaignIsStarred;
@@ -41,7 +41,7 @@ public final class CampaignStatistics {
     private Long DeliveredCount;
     @Component(name = "LastActivityAt", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "Timestamp of last registered activity for this Campaign.")
     private Date LastActivityAt;
-    @Component(name = "NewsLetter", type = "TNewsLetter", defaultValue = "", required = false, description = "Only retrieve campaign statistics for the given NewsLetter ID.")
+    @Component(name = "NewsLetterID", type = "TNewsLetter", defaultValue = "", required = false, description = "Only retrieve campaign statistics for the given NewsLetter ID.")
     private Long NewsLetterID;
     @Component(name = "OpenedCount", type = "Int64", defaultValue = "", required = false, description = "Number of message open registrations.")
     private Long OpenedCount;

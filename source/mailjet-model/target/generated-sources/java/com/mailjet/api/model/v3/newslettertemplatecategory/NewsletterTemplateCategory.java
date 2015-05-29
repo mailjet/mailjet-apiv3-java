@@ -10,7 +10,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Manage categories for your newsletters. Allows you to group newsletters by category.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "newslettertemplatecategory", description = "Manage categories for your newsletters. Allows you to group newsletters by category.", allowedOperations = {
@@ -24,7 +24,7 @@ public final class NewsletterTemplateCategory {
     private Long ID;
     @Component(name = "Locale", type = "AnsiString", defaultValue = "", required = true, description = "Locale in which the information in this record is recorded.")
     private String Locale;
-    @Component(name = "ParentCategory", type = "TNewsLetterTemplateCategory", defaultValue = "", required = true, description = "Parent category reference.")
+    @Component(name = "ParentCategoryID", type = "TNewsLetterTemplateCategory", defaultValue = "", required = true, description = "Parent category reference.")
     private Long ParentCategoryID;
     @Component(name = "Value", type = "AnsiString", defaultValue = "", required = true, description = "Category name.")
     private String Value;

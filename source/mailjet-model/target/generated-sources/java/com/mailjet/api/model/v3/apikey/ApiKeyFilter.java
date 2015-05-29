@@ -2,13 +2,12 @@
 package com.mailjet.api.model.v3.apikey;
 
 import com.mailjet.api.client.model.MailJetResourceFilter;
-import com.mailjet.api.model.v3.customtypes.CustomStatus;
 
 
 /**
  * Class representing filter for  "apikey" MailJet API resource.
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:20 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 public final class ApiKeyFilter<DataType >
@@ -29,7 +28,7 @@ public final class ApiKeyFilter<DataType >
      * Only retrieve apikey resources for which CustomStatus equals the specified value.
      * 
      */
-    public final static ApiKeyFilter<CustomStatus> CUSTOMSTATUS = new ApiKeyFilter<CustomStatus>("CustomStatus", CustomStatus.class);
+    public final static ApiKeyFilter<Long> CUSTOMSTATUSID = new ApiKeyFilter<Long>("CustomStatusID", Long.class);
     /**
      * Only retrieve apikey resources for which IsActive equals the specified value.
      * 

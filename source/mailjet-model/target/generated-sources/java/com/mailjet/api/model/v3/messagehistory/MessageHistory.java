@@ -11,7 +11,7 @@ import com.mailjet.api.model.v3.customtypes.MessageEventType;
 /**
  * Class representing "Event history of a message.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "messagehistory", description = "Event history of a message.", allowedOperations = {
@@ -25,6 +25,8 @@ public final class MessageHistory {
     private Long EventAt;
     @Component(name = "EventType", type = "TMessageEventType", defaultValue = "sent", required = false, description = "Type of event.")
     private MessageEventType EventType;
+    @Component(name = "State", type = "AnsiString", defaultValue = "", required = false, description = "")
+    private String State;
     @Component(name = "Useragent", type = "AnsiString", defaultValue = "", required = false, description = "Useragent used to trigger the event (when applicable).")
     private String Useragent;
     /**
@@ -99,6 +101,29 @@ public final class MessageHistory {
      */
     public MessageHistory setEventType(MessageEventType value) {
         EventType = value;
+        return this;
+    }
+
+    /**
+     * Gets "" property.
+     * 
+     * @return
+     *     the value set for the property or null if value is not present
+     */
+    public String getState() {
+        return State;
+    }
+
+    /**
+     * Sets the specified value to "" property.
+     * 
+     * @param value
+     *     the new value for the property
+     * @return
+     *     not null, the object on which this method was called 
+     */
+    public MessageHistory setState(String value) {
+        State = value;
         return this;
     }
 

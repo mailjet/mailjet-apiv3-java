@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Access rights description on API keys for subaccounts/users.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:20 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "apikeyaccess", description = "Access rights description on API keys for subaccounts/users.", allowedOperations = {
@@ -24,7 +24,7 @@ public final class ApiKeyAccess {
 
     @Component(name = "AllowedAccess", type = "AnsiString", defaultValue = "", required = false, description = "JSON describing access rights.")
     private String AllowedAccess;
-    @Component(name = "APIKey", type = "TAPIKey", defaultValue = "", required = true, description = "API key for which the rights are descibed.")
+    @Component(name = "APIKeyID", type = "TAPIKey", defaultValue = "", required = true, description = "API key for which the rights are descibed.")
     private Long APIKeyID;
     @Component(name = "CreatedAt", type = "TRFC3339DateTime", defaultValue = "Current time", required = false, description = "Timestamp when object was created in database.")
     private Date CreatedAt;
@@ -36,11 +36,11 @@ public final class ApiKeyAccess {
     private Boolean IsActive;
     @Component(name = "LastActivityAt", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "Timestamp of last registered activity for this API Key.")
     private Date LastActivityAt;
-    @Component(name = "RealUser", type = "TUser", defaultValue = "", required = false, description = "Reference to Real user.")
+    @Component(name = "RealUserID", type = "TUser", defaultValue = "", required = false, description = "Reference to Real user.")
     private Long RealUserID;
-    @Component(name = "Subaccount", type = "TSubAccount", defaultValue = "", required = false, description = "Reference to subaccount.")
+    @Component(name = "SubaccountID", type = "TSubAccount", defaultValue = "", required = false, description = "Reference to subaccount.")
     private Long SubaccountID;
-    @Component(name = "User", type = "TUser", defaultValue = "", required = true, description = "Reference to user for whom access is described.")
+    @Component(name = "UserID", type = "TUser", defaultValue = "", required = true, description = "Reference to user for whom access is described.")
     private Long UserID;
     /**
      * API Operation "List".

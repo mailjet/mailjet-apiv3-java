@@ -9,7 +9,7 @@ import com.mailjet.api.model.v3.customtypes.MessageEventType;
 /**
  * Class defining property constants for "messagehistory" MailJet API resource.
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 public final class MessageHistoryProperty<DataType >
@@ -31,6 +31,11 @@ public final class MessageHistoryProperty<DataType >
      * 
      */
     public final static MessageHistoryProperty<MessageEventType> EVENTTYPE = new MessageHistoryProperty<MessageEventType>("EventType", MessageEventType.class);
+    /**
+     * 
+     * 
+     */
+    public final static MessageHistoryProperty<String> STATE = new MessageHistoryProperty<String>("State", String.class);
     /**
      * Useragent used to trigger the event (when applicable).
      * 

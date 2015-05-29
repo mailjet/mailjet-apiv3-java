@@ -10,7 +10,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "View statistics on User Agents. See total counts or filter per Campaign or Contacts List.API Key message Open/Click statistical data grouped per user agent (browser).".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "useragentstatistics", description = "View statistics on User Agents. See total counts or filter per Campaign or Contacts List.API Key message Open/Click statistical data grouped per user agent (browser).", allowedOperations = {

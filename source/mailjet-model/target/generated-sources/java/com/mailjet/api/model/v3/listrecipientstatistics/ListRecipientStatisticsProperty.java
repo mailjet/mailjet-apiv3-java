@@ -3,6 +3,7 @@ package com.mailjet.api.model.v3.listrecipientstatistics;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import com.mailjet.api.client.model.MailJetKeyProperty;
 import com.mailjet.api.client.model.MailJetResourceProperty;
 
@@ -10,7 +11,7 @@ import com.mailjet.api.client.model.MailJetResourceProperty;
 /**
  * Class defining property constants for "listrecipientstatistics" MailJet API resource.
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 public final class ListRecipientStatisticsProperty<DataType >
@@ -36,7 +37,7 @@ public final class ListRecipientStatisticsProperty<DataType >
      * Extra data associated with contact. This is only present when ShowExtraData filter is 1.
      * 
      */
-    public final static ListRecipientStatisticsProperty<List<Long>> DATA = new ListRecipientStatisticsProperty<List<Long>>("Data", List.class);
+    public final static ListRecipientStatisticsProperty<List<Map>> DATA = new ListRecipientStatisticsProperty<List<Map>>("Data", List.class);
     /**
      * Number of messages delivered to their destination.
      * 

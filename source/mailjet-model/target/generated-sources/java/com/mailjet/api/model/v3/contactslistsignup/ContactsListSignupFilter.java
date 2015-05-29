@@ -7,7 +7,7 @@ import com.mailjet.api.client.model.MailJetResourceFilter;
 /**
  * Class representing filter for  "contactslistsignup" MailJet API resource.
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 public final class ContactsListSignupFilter<DataType >
@@ -64,6 +64,11 @@ public final class ContactsListSignupFilter<DataType >
      * 
      */
     public final static ContactsListSignupFilter<Long> MINSIGNUPAT = new ContactsListSignupFilter<Long>("MinSignupAt", Long.class);
+    /**
+     * 
+     * 
+     */
+    public final static ContactsListSignupFilter<String> SIGNUPIP = new ContactsListSignupFilter<String>("SignupIp", String.class);
     /**
      * Only retrieve ContactsListSignup resources for which Source equals the specified value.
      * 

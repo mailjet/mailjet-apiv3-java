@@ -12,7 +12,7 @@ import com.mailjet.api.model.v3.customtypes.RunLevel;
 /**
  * Class representing "Manage your Mailjet API Keys. API keys are used as credentials to access the API and SMTP server.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:20 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "apikey", description = "Manage your Mailjet API Keys. API keys are used as credentials to access the API and SMTP server.", allowedOperations = {
@@ -22,12 +22,12 @@ import com.mailjet.api.model.v3.customtypes.RunLevel;
 }, uniquekey = "APIKey")
 public final class ApiKey {
 
+    @Component(name = "ACL", type = "AnsiString", defaultValue = "", required = false, description = "")
+    private String ACL;
     @Component(name = "APIKey", type = "AnsiString", defaultValue = "Automatically generated value", required = true, description = "The unique key for this API Key.")
     private String APIKey;
     @Component(name = "CreatedAt", type = "TRFC3339DateTime", defaultValue = "Current time", required = false, description = "Timestamp when object was created in database.")
     private Date CreatedAt;
-    @Component(name = "CustomStatus", type = "TCustomStatus", defaultValue = "up", required = false, description = "Status of this API Key.")
-    private com.mailjet.api.model.v3.customtypes.CustomStatus CustomStatus;
     @Component(name = "ID", type = "Int64", defaultValue = "", required = false, description = "Unique numerical ID for this object.")
     private Long ID;
     @Component(name = "IsActive", type = "Boolean", defaultValue = "false", required = false, description = "Is this API Key active ?.")
@@ -36,6 +36,8 @@ public final class ApiKey {
     private Boolean IsMaster;
     @Component(name = "Name", type = "AnsiString", defaultValue = "", required = true, description = "User readable name for this API Key.")
     private String Name;
+    @Component(name = "QuarantineValue", type = "LongInt", defaultValue = "", required = false, description = "")
+    private Integer QuarantineValue;
     @Component(name = "Runlevel", type = "TRunLevel", defaultValue = "Normal", required = false, description = "Runlevel, used to indicate data is migrated and reduced performance is expected.")
     private RunLevel Runlevel;
     @Component(name = "SecretKey", type = "AnsiString", defaultValue = "Automatically generated value", required = false, description = "Secret key for this API Key (equivalent to password).")
@@ -64,6 +66,29 @@ public final class ApiKey {
      * 
      */
     public final static MailJetApiService<com.mailjet.api.client.MailJetApiCall.Create<ApiKey>> Create = new MailJetApiService<com.mailjet.api.client.MailJetApiCall.Create<ApiKey>>(ApiKey.class, ResourceOperationTypes.Post);
+
+    /**
+     * Gets "" property.
+     * 
+     * @return
+     *     the value set for the property or null if value is not present
+     */
+    public String getACL() {
+        return ACL;
+    }
+
+    /**
+     * Sets the specified value to "" property.
+     * 
+     * @param value
+     *     the new value for the property
+     * @return
+     *     not null, the object on which this method was called 
+     */
+    public ApiKey setACL(String value) {
+        ACL = value;
+        return this;
+    }
 
     /**
      * Gets "The unique key for this API Key." property.
@@ -108,29 +133,6 @@ public final class ApiKey {
      */
     public ApiKey setCreatedAt(Date value) {
         CreatedAt = value;
-        return this;
-    }
-
-    /**
-     * Gets "Status of this API Key." property.
-     * 
-     * @return
-     *     the value set for the property or null if value is not present
-     */
-    public com.mailjet.api.model.v3.customtypes.CustomStatus getCustomStatus() {
-        return CustomStatus;
-    }
-
-    /**
-     * Sets the specified value to "Status of this API Key." property.
-     * 
-     * @param value
-     *     the new value for the property
-     * @return
-     *     not null, the object on which this method was called 
-     */
-    public ApiKey setCustomStatus(com.mailjet.api.model.v3.customtypes.CustomStatus value) {
-        CustomStatus = value;
         return this;
     }
 
@@ -223,6 +225,29 @@ public final class ApiKey {
      */
     public ApiKey setName(String value) {
         Name = value;
+        return this;
+    }
+
+    /**
+     * Gets "" property.
+     * 
+     * @return
+     *     the value set for the property or null if value is not present
+     */
+    public Integer getQuarantineValue() {
+        return QuarantineValue;
+    }
+
+    /**
+     * Sets the specified value to "" property.
+     * 
+     * @param value
+     *     the new value for the property
+     * @return
+     *     not null, the object on which this method was called 
+     */
+    public ApiKey setQuarantineValue(Integer value) {
+        QuarantineValue = value;
         return this;
     }
 

@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Retrieve informations about messages opened at least once by their recipients.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "openinformation", description = "Retrieve informations about messages opened at least once by their recipients.", allowedOperations = {
@@ -21,9 +21,9 @@ public final class OpenInformation {
 
     @Component(name = "ArrivedAt", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "Timestamp indicating when the message arrived.")
     private Date ArrivedAt;
-    @Component(name = "Campaign", type = "TCampaign", defaultValue = "", required = true, description = "Reference to Campaign in which message is sent.")
+    @Component(name = "CampaignID", type = "TCampaign", defaultValue = "", required = true, description = "Reference to Campaign in which message is sent.")
     private Long CampaignID;
-    @Component(name = "Contact", type = "TContact", defaultValue = "", required = true, description = "Reference to contact to which message was sent.")
+    @Component(name = "ContactID", type = "TContact", defaultValue = "", required = true, description = "Reference to contact to which message was sent.")
     private Long ContactID;
     @Component(name = "ID", type = "Int64", defaultValue = "", required = false, description = "Unique numerical ID for this object.")
     private Long ID;
@@ -31,7 +31,7 @@ public final class OpenInformation {
     private Long MessageID;
     @Component(name = "OpenedAt", type = "TRFC3339DateTime", defaultValue = "", required = false, description = "Timestamp of when then message was opened by the reader for the first time.")
     private Date OpenedAt;
-    @Component(name = "UserAgent", type = "TUserAgent", defaultValue = "", required = false, description = "Reference to canonicalized User Agent based on UserAgentFull")
+    @Component(name = "UserAgentID", type = "TUserAgent", defaultValue = "", required = false, description = "Reference to canonicalized User Agent based on UserAgentFull")
     private Long UserAgentID;
     @Component(name = "UserAgentFull", type = "AnsiString", defaultValue = "", required = false, description = "Original User Agent string used to view this message.")
     private String UserAgentFull;

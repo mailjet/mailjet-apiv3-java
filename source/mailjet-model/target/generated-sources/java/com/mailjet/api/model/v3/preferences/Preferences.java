@@ -10,14 +10,11 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "User preferences in key=value format.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "preferences", description = "User preferences in key=value format.", allowedOperations = {
-    ResourceOperationTypes.Get,
-    ResourceOperationTypes.Put,
-    ResourceOperationTypes.Post,
-    ResourceOperationTypes.Delete
+    ResourceOperationTypes.Get
 }, uniquekey = "Key")
 public final class Preferences {
 
@@ -25,7 +22,7 @@ public final class Preferences {
     private Long ID;
     @Component(name = "Key", type = "AnsiString", defaultValue = "", required = true, description = "Name of preference.")
     private String Key;
-    @Component(name = "User", type = "TUser", defaultValue = "", required = true, description = "User for which this is the preference.")
+    @Component(name = "UserID", type = "TUser", defaultValue = "", required = true, description = "User for which this is the preference.")
     private Long UserID;
     @Component(name = "Value", type = "AnsiString", defaultValue = "", required = false, description = "Value of preference.")
     private String Value;
@@ -39,21 +36,6 @@ public final class Preferences {
      * 
      */
     public final static MailJetApiService<com.mailjet.api.client.MailJetApiCall.RetrieveById<Preferences>> Get = new MailJetApiService<com.mailjet.api.client.MailJetApiCall.RetrieveById<Preferences>>(Preferences.class, ResourceOperationTypes.GetById);
-    /**
-     * API Operation "Update".
-     * 
-     */
-    public final static MailJetApiService<com.mailjet.api.client.MailJetApiCall.Update<Preferences>> Update = new MailJetApiService<com.mailjet.api.client.MailJetApiCall.Update<Preferences>>(Preferences.class, ResourceOperationTypes.Put);
-    /**
-     * API Operation "Create".
-     * 
-     */
-    public final static MailJetApiService<com.mailjet.api.client.MailJetApiCall.Create<Preferences>> Create = new MailJetApiService<com.mailjet.api.client.MailJetApiCall.Create<Preferences>>(Preferences.class, ResourceOperationTypes.Post);
-    /**
-     * API Operation "Delete".
-     * 
-     */
-    public final static MailJetApiService<com.mailjet.api.client.MailJetApiCall.Delete<Preferences>> Delete = new MailJetApiService<com.mailjet.api.client.MailJetApiCall.Delete<Preferences>>(Preferences.class, ResourceOperationTypes.Delete);
 
     /**
      * Gets "Unique numerical ID for this object." property.

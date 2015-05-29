@@ -10,7 +10,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "ParseRoute description".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "parseroute", description = "ParseRoute description", allowedOperations = {
@@ -21,7 +21,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 }, uniquekey = "Email")
 public final class parseroute {
 
-    @Component(name = "APIKey", type = "TAPIKey", defaultValue = "", required = true, description = "Reference to an API key to whom this object belongs")
+    @Component(name = "APIKeyID", type = "TAPIKey", defaultValue = "", required = true, description = "Reference to an API key to whom this object belongs")
     private Long APIKeyID;
     @Component(name = "Email", type = "TEmail", defaultValue = "", required = true, description = "Email address")
     private String Email;

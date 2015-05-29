@@ -12,7 +12,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Manage user profile data such as address, payment information etc.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "myprofile", description = "Manage user profile data such as address, payment information etc.", allowedOperations = {
@@ -55,7 +55,7 @@ public final class MyProfile {
     private String JobTitle;
     @Component(name = "Lastname", type = "AnsiString", defaultValue = "", required = false, description = "Contact person's last name.")
     private String Lastname;
-    @Component(name = "User", type = "TUser", defaultValue = "", required = false, description = "Reference to user.")
+    @Component(name = "UserID", type = "TUser", defaultValue = "", required = false, description = "Reference to user.")
     private Long UserID;
     @Component(name = "VAT", type = "Currency", defaultValue = "Depends on AddressCountry's value", required = false, description = "VAT rate for this user.")
     private BigDecimal VAT;

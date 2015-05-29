@@ -11,7 +11,7 @@ import com.mailjet.api.client.model.metadata.Resource;
 /**
  * Class representing "Click statistics for messages.".
  * 
- * Automatically generated using the MailJet API metadata on Fri Oct 10 15:32:21 CEST 2014.
+ * Automatically generated using the MailJet API metadata on Fri May 29 16:21:19 CEST 2015.
  * 
  */
 @Resource(name = "clickstatistics", description = "Click statistics for messages.", allowedOperations = {
@@ -23,15 +23,15 @@ public final class ClickStatistics {
     private Date ClickedAt;
     @Component(name = "ClickedDelay", type = "Int64", defaultValue = "", required = false, description = "Delay between registration of the click and sending of message.")
     private Long ClickedDelay;
-    @Component(name = "Contact", type = "TContact", defaultValue = "", required = true, description = "Contact for which click was registered.")
+    @Component(name = "ContactID", type = "TContact", defaultValue = "", required = true, description = "Contact for which click was registered.")
     private Long ContactID;
     @Component(name = "ID", type = "Int64", defaultValue = "", required = false, description = "Unique numerical ID for the click event.")
     private Long ID;
-    @Component(name = "Message", type = "TMessage", defaultValue = "", required = true, description = "Reference to Message for which click was registered.")
+    @Component(name = "MessageID", type = "TMessage", defaultValue = "", required = true, description = "Reference to Message for which click was registered.")
     private Long MessageID;
     @Component(name = "Url", type = "AnsiString", defaultValue = "", required = true, description = "URL that was clicked.")
     private String Url;
-    @Component(name = "UserAgent", type = "TUserAgent", defaultValue = "", required = true, description = "User agent that was used to open the URL.")
+    @Component(name = "UserAgentID", type = "TUserAgent", defaultValue = "", required = true, description = "User agent that was used to open the URL.")
     private Long UserAgentID;
     /**
      * API Operation "List".
