@@ -1,10 +1,10 @@
 package com.mailjet.api.client.config;
 
 /**
- *	Last built: 20150529-1621
+ *	Last built: 20150617-1519
  *
  */
 public final class Version
 {
-    public static String VERSION="1.1.0";
+    public static String VERSION="1.2.0";
 }

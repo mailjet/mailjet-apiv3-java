@@ -38,6 +38,10 @@ public final class SendMessageProperty<DataType >
 	
 	public final static SendMessageProperty<Integer> MJTRACKCLICK = new SendMessageProperty<Integer>("Mj-trackclick", Integer.class);
 	
+	public final static SendMessageProperty<String> MJCUSTOMID = new SendMessageProperty<String>("Mj-CustomID", String.class);
+	
+	public final static SendMessageProperty<String> MJEVENTPAYLOAD = new SendMessageProperty<String>("Mj-EventPayload", String.class);
+	
 	public final static SendMessageProperty<HashMap<String, String>> HEADER = new SendMessageProperty<HashMap<String, String>>("Headers", HashMap.class);
 	
 	public final static SendMessageProperty<HashMap<String, String>> VARS = new SendMessageProperty<HashMap<String, String>>("Vars", HashMap.class);

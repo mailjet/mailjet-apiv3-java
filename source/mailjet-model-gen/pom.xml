@@ -26,7 +26,7 @@
 	<parent>
 		<groupId>com.mailjet</groupId>
 		<artifactId>mailjet-parent</artifactId>
-		<version>1.1.0</version>
+		<version>1.2.0</version>
 		<relativePath>../mailjet-parent/pom.xml</relativePath>
 	</parent>
 </project>
