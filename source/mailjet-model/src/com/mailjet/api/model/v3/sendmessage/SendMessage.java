@@ -46,6 +46,10 @@ public final class SendMessage
 	private Integer mjTrackOpen;
 	@Component(name = "Mj-trackclick", type = "Integer", defaultValue = "", required = false, description = "")
 	private Integer mjTrackClick;
+	@Component(name = "Mj-CustomID", type = "String", defaultValue = "", required = false, description = "")
+	private String	mjCustomID;
+	@Component(name = "Mj-EventPayload", type = "String", defaultValue = "", required = false, description = "")
+	private String	mjEventPayload;
 	
     @Component(name = "Headers", type = "HashMap<String, String>", defaultValue = "", required = false, description = "")
 	private HashMap<String, String> headers;
@@ -255,6 +259,38 @@ public final class SendMessage
 	public void setMjTrackClick(Integer mjTrackClick)
 	{
 		this.mjTrackClick = mjTrackClick;
+	}
+
+	/**
+	 * @return the mjCustomID
+	 */
+	public String getMjCustomID()
+	{
+		return mjCustomID;
+	}
+
+	/**
+	 * @param mjCustomID the mjCustomID to set
+	 */
+	public void setMjCustomID(String mjCustomID)
+	{
+		this.mjCustomID = mjCustomID;
+	}
+
+	/**
+	 * @return the mjEventPayload
+	 */
+	public String getMjEventPayload()
+	{
+		return mjEventPayload;
+	}
+
+	/**
+	 * @param mjEventPayload the mjEventPayload to set
+	 */
+	public void setMjEventPayload(String mjEventPayload)
+	{
+		this.mjEventPayload = mjEventPayload;
 	}
 
 	/**
