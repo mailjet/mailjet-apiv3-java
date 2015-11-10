@@ -1,5 +1,0 @@
-defaultApiKey=custom_apiKey
-defaultSecretKey=custom_secretKey
-baseUrl=http://custom_dummy
-connectionProviderImplementation=providerImpl
-dataMapperImplementation=dataMapperImpl

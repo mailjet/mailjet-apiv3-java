@@ -1,130 +1,0 @@
-10
-
-dir
-56
-https://188.165.254.163/svn3/mj-java-wrapper/mailjet-model-gen/test/java/com/mailjet/api/model/v3
-https://188.165.254.163/svn3
-
-
-
-2013-11-20T08:17:32.208628Z
-51
-svetozar
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-141c7099-0681-4603-9955-1114883eb8ed
-
-batchjob
-dir
-
-listrecipient
-dir
-
-apikey
-dir
-
-newslettertemplatecategory
-dir
-
-messageclientstatistics
-dir
-
-contactslistsignup
-dir
-
-newslettertemplateblock
-dir
-
-manycontacts
-dir
-
-apikeyaccess
-dir
-
-newslettertemplateproperties
-dir
-
-newsletterblock
-dir
-
-newsletterproperties
-dir
-
-apikeytotals
-dir
-
-contactslist
-dir
-
-graphstatistics
-dir
-
-user
-dir
-
-campaign
-dir
-
-sender
-dir
-
-eventcallbackurl
-dir
-
-domainstatistics
-dir
-
-widget
-dir
-
-messagestate
-dir
-
-geostatistics
-dir
-
-metasender
-dir
-
-newslettertemplate
-dir
-
-contact
-dir
-
-newsletter
-dir
-
-toplinkclicked
-dir
-
-preferences
-dir
-
-trigger
-dir
-
-messagehistory
-dir
-
-myprofile
-dir
-
-apitoken
-dir
-
-widgetcustomvalue
-dir
-
