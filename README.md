@@ -106,6 +106,23 @@ response = client.post(email);
 
 ```
 
+## Get and update a Sender
+``` java
+
+MailjetRequest getSender = new MailjetRequest(Sender.resource)
+                                .filter(Sender.EMAIL, "email adress");
+        
+MailjetResponse senders = client.get(getSender);
+        
+// Grab the first sender
+JSONObject sender = senders.getData().getJSONObject(0);
+        
+// Change the name
+MailjetRequest update = new MailjetRequest(Sender.resource, sender.getLong("ID"))
+                    .setBody(sender.put(Sender.NAME, "new name"));  
+      
+```
+
 ## TODO:
  
  - head

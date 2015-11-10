@@ -15,8 +15,7 @@ import org.json.JSONObject;
 public class MailjetResponse extends JSONObject {
     
     public MailjetResponse(int status, JSONObject obj) {
-        super(obj);
-        System.out.println(obj.toString());
+        super(obj.toString());
         this.put("Status", status);
     }
 
@@ -38,9 +37,5 @@ public class MailjetResponse extends JSONObject {
     
     public int getCount() {
         return getInt("Count");
-    }
-
-    boolean getBody() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

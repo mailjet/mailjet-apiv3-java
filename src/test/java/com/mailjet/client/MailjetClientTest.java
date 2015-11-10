@@ -8,6 +8,7 @@ package com.mailjet.client;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.resource.Contact;
 import com.mailjet.client.resource.ContactGetcontactslists;
+import com.mailjet.client.resource.Sender;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import org.junit.Test;
@@ -32,7 +33,7 @@ public class MailjetClientTest {
     public void testSimpleGet() throws MailjetException, MalformedURLException, UnsupportedEncodingException {
         MailjetClient client;
         
-        client = new MailjetClient("85480869a17b7d13ef8bd393283d40d9", "7ebd58e70a16291548a02d6fcfe9b4a1");
+        client = new MailjetClient("", "");
         client.setDebug(MailjetClient.NOCALL_DEBUG);
 
         System.out.println("TESTING: Simple GET");
@@ -50,11 +51,30 @@ public class MailjetClientTest {
         
     }
     
+//    @Test
+//    public void testSimplePut() throws MailjetException {
+//        MailjetClient client;
+//        
+//        client = new MailjetClient("", "");
+//        client.setDebug(MailjetClient.NOCALL_DEBUG);
+//        
+//        System.out.println("TESTING: Simple Put");
+//      
+//        
+//        MailjetRequest request;
+//        MailjetResponse response;
+//        
+//        request = new MailjetRequest(Sender.resource)
+//                      .property(Sender.NAME, "Guillaume");
+//        
+//        response = client.put(request);
+//    }
+    
     @Test
-    public void testFilteringGet() throws MailjetException, MalformedURLException, UnsupportedEncodingException {
+    public void testFilteringGet() throws MailjetException {
         MailjetClient client;
         
-        client = new MailjetClient("85480869a17b7d13ef8bd393283d40d9", "7ebd58e70a16291548a02d6fcfe9b4a1");
+        client = new MailjetClient("", "");
         client.setDebug(MailjetClient.NOCALL_DEBUG);
 
         System.out.println("TESTING: Simple Filtering with GET");
@@ -81,7 +101,7 @@ public class MailjetClientTest {
     public void testActionGet() throws MailjetException, MalformedURLException, UnsupportedEncodingException {
         MailjetClient client;
         
-        client = new MailjetClient("85480869a17b7d13ef8bd393283d40d9", "7ebd58e70a16291548a02d6fcfe9b4a1");
+        client = new MailjetClient("", "");
         client.setDebug(MailjetClient.NOCALL_DEBUG);
 
         System.out.println("TESTING: Simple Action with GET");

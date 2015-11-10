@@ -131,6 +131,15 @@ public class MailjetRequest {
         return this;
     }
     
+        /**
+     * Pass a JSONObject formatted json as the request body
+     * @param json
+     * @return the request itself
+     */
+    public MailjetRequest setBody(JSONObject json) {
+        return setBody(json.toString());
+    }
+    
     /**
      * Use an HashMap to build the body
      * @param json
@@ -182,7 +191,7 @@ public class MailjetRequest {
         else if (_configuration == 4)
             url = base + '/' + _id + '/' + _action + '/' + _actionId;
         
-        return url + queryString();
+        return url;
     }
     
     /**
@@ -234,7 +243,7 @@ public class MailjetRequest {
             if (sb.length() == 0) {
                 sb.append('?');
             }
-            sb.append(URLEncoder.encode(key, "UTF-8")).append('=').append(URLEncoder.encode(value, "UTF-8"));
+            sb.append(URLEncoder.encode(key, "UTF-8")).append('=').append(value.replace(' ', '+'));
         }
         
         return sb.toString();

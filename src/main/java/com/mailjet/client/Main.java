@@ -19,6 +19,8 @@ package com.mailjet.client;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.resource.Contact;
 import com.mailjet.client.resource.Email;
+import com.mailjet.client.resource.Sender;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 /**
@@ -29,28 +31,19 @@ public class Main {
 
     public static void main(String[] args) throws MailjetException {
         MailjetClient client;
-        MailjetRequest request;
-        MailjetResponse response;
+        client = new MailjetClient("", "");
+//        client.setDebug(MailjetClient.VERBOSE_DEBUG);
         
-        client = new MailjetClient("85480869a17b7d13ef8bd393283d40d9", "7ebd58e70a16291548a02d6fcfe9b4a1");
-//        client.setDebug(MailjetClient.NOCALL_DEBUG);
+        MailjetRequest sender = new MailjetRequest(Sender.resource)
+                        .filter(Sender.EMAIL, "gbadi@student.42.fr");
         
-        request = new MailjetRequest(Email.resource)
-                        .property(Email.FROMNAME, "Guillaume Badi")
-                        .property(Email.FROMEMAIL, "gbadi@student.42.fr")
-                        .property(Email.SUBJECT, "Hello JAVA")
-                        .property(Email.TEXTPART, "Hello Text!")
-                        .property(Email.VARS, new JSONObject()
-                            .put("Day", "monday"))
-                        .append(Email.RECIPIENTS, new JSONObject()
-                            .put(Contact.EMAIL, "gbadi@mailjet.com"))
-                        .append(Email.ATTACHMENTS, new JSONObject()
-                            .put("Filename", "test.txt")
-                            .put("content-type", "text/plain")
-                            .put("content", "VGhpcyBpcyB5b3VyIGF0dGFjaGVkIGZpbGUhISEK"));
+        MailjetResponse senders = client.get(sender);
         
-        response = client.post(request);
+        JSONObject firstSender = senders.getData().getJSONObject(0);
         
-        System.out.println(response);
+        MailjetRequest update = new MailjetRequest(Sender.resource, firstSender.getLong("ID"))
+                    .setBody(firstSender.put(Sender.NAME, "GuillaumeBadi"));
+
+        System.out.println(client.put(update));
     }
 }
