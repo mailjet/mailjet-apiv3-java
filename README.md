@@ -107,11 +107,5 @@ response = client.post(email);
 ```
 
 ## TODO:
-
- - Helper class to send Email
- - Helper for each resource to help netbeans/eclipse autocomplete engine
- - put
- - delete
+ 
  - head
- - testing with travis
- - javadoc
