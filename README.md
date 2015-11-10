@@ -119,7 +119,9 @@ JSONObject sender = senders.getData().getJSONObject(0);
         
 // Change the name
 MailjetRequest update = new MailjetRequest(Sender.resource, sender.getLong("ID"))
-                    .setBody(sender.put(Sender.NAME, "new name"));  
+                    .setBody(sender.put(Sender.NAME, "new name"));
+                    
+System.out.println(client.put(update));
       
 ```
 
