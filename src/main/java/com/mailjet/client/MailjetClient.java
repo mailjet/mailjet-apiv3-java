@@ -158,4 +158,45 @@ public class MailjetClient {
             throw new MailjetException("Internal Exception: Unsupported Encoding");
         }
     }
-}
+    
+    public MailjetResponse put(MailjetRequest request) throws MailjetException {
+        try {
+            String url = request.buildUrl();
+            
+            if (_debug == NOCALL_DEBUG) {
+                return new MailjetResponse(new JSONObject()
+                        .put("url", _baseUrl + url)
+                        .put("payload", request.getBody()));
+            }
+            
+            HttpResponse response;
+            
+            response = _client.put(url, request.getContentType(), request.getBody().getBytes());
+            return new MailjetResponse(response.getStatus(), new JSONObject(response.getBodyAsString()));
+        } catch (MalformedURLException ex) {
+            throw new MailjetException("Internal Exception: Malformed Url");
+        } catch (UnsupportedEncodingException ex) {
+            throw new MailjetException("Internal Exception: Unsupported Encoding");
+        }
+    }
+    
+    public MailjetResponse delete(MailjetRequest request) throws MailjetException {
+        try {
+            String url = request.buildUrl();
+            
+            if (_debug == NOCALL_DEBUG) {
+                return new MailjetResponse(new JSONObject()
+                        .put("url", _baseUrl + url));
+            }
+            
+            HttpResponse response;
+            
+            response = _client.delete(url, new ParameterMap());
+            return new MailjetResponse(response.getStatus(), new JSONObject(response.getBodyAsString()));
+        } catch (MalformedURLException ex) {
+            throw new MailjetException("Internal Exception: Malformed Url");
+        } catch (UnsupportedEncodingException ex) {
+            throw new MailjetException("Internal Exception: Unsupported Encoding");
+        }
+    }
+ }
