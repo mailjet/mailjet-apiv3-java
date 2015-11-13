@@ -85,7 +85,7 @@ public class MailjetClient {
         
         _client
               .addHeader("Accept", "application/json")
-              .addHeader("user-agent", "Mailjet Java - v2")
+              .addHeader("user-agent", "mailjet-apiv3-java/v3.0.0")
               .addHeader("Authorization", "Basic " + authEncBytes);
     }
 
