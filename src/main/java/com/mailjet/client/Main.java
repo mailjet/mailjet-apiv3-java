@@ -30,8 +30,7 @@ import org.json.JSONObject;
 public class Main {
 
     public static void main(String[] args) throws MailjetException {
-        MailjetClient client;
-        client = new MailjetClient("", "");
+        MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
 //        client.setDebug(MailjetClient.VERBOSE_DEBUG);
         
         MailjetRequest sender = new MailjetRequest(Sender.resource)

@@ -16,15 +16,15 @@ This repo features the Brand new Java wrapper for the Mailjet API
 Grab your keys [here][api_credential]
 
 ``` java
-MailjetClient client;
 
-client = new MailjetClient($APIKEY, $APISECRET);
+MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+
 ```
 
 Requests are easy to understand
 ``` java
 
-MailjetRequest request = MailjetRequest($resource, $id?, $actionID?)
+MailjetRequest request = MailjetRequest(resource, id, actionId)
 
 ```
 
@@ -60,7 +60,7 @@ response = client.get(contacts);
 MailjetRequest contacts;
 MailjetResponse response;
 
-contacts = new MailjetRequest(Contact.resource, $ID)
+contacts = new MailjetRequest(Contact.resource, id)
             .filter(Contact.LIMIT, 2);
 
 response = client.get(contacts);
