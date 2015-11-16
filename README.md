@@ -6,7 +6,7 @@
 # Mailjet Java Client
 
 
-[![Build Status](https://travis-ci.org/GuillaumeBadi/Mailjet-Java.svg?branch=master)](https://travis-ci.org/GuillaumeBadi/Mailjet-Java)
+[![Build Status](https://travis-ci.org/mailjet/mailjet-apiv3-java.svg?branch=master)](https://travis-ci.org/mailjet/mailjet-apiv3-java)
 
 
 This repo features the Brand new Java wrapper for the Mailjet API
