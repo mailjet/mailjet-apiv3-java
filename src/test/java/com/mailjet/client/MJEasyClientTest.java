@@ -6,6 +6,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.Assert;
 
 public class MJEasyClientTest {
 
@@ -31,6 +32,7 @@ public class MJEasyClientTest {
 
         // We create a client
         MJEasyClient client = new MJEasyClient();
+        client.setDebug(MJEasyClient.NOCALL_DEBUG);
 
 
         for (Person r : recipients) {
@@ -46,7 +48,8 @@ public class MJEasyClientTest {
 
                     .send(); // And send it
 
-            System.out.println("Response: " + response);
+            System.out.println(response);
+            Assert.assertTrue(true);
         }
 
         // This what we get:

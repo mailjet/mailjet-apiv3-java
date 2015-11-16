@@ -115,7 +115,7 @@ public class MailjetClient {
             String url = _baseUrl + request.buildUrl();
             
             if (_debug == NOCALL_DEBUG) {
-                return new MailjetResponse(new JSONObject().put("url", url));
+                return new MailjetResponse(new JSONObject().put("url", url + request.queryString()));
             }
             
             ParameterMap p = new ParameterMap();

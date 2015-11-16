@@ -9,6 +9,10 @@ import com.mailjet.client.resource.Email;
  */
 public class MJEasyClient {
     private final MailjetClient client;
+    
+    public static final int NO_DEBUG = 0;
+    public static final int VERBOSE_DEBUG = 1;
+    public static final int NOCALL_DEBUG = 2;
 
     /**
      * Constructor with api keys
@@ -34,6 +38,11 @@ public class MJEasyClient {
         return client;
     }
 
+    public MJEasyClient setDebug(int debug) {
+        client.setDebug(debug);
+        return this;
+    }
+    
     /**
      * Create an MJEasyEmail instance to prepare an email to send.
      * @return MJEasyEMail instance

@@ -8,7 +8,6 @@ package com.mailjet.client;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.resource.Contact;
 import com.mailjet.client.resource.ContactGetcontactslists;
-import com.mailjet.client.resource.Sender;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import org.junit.Test;
@@ -30,7 +29,7 @@ public class MailjetClientTest {
      * @throws com.mailjet.client.errors.MailjetException
      */
     @Test
-    public void testSimpleGet() throws MailjetException, MalformedURLException, UnsupportedEncodingException {
+    public void testSimpleGet() throws MailjetException {
         MailjetClient client;
         
         client = new MailjetClient("", "");
@@ -85,14 +84,14 @@ public class MailjetClientTest {
         MailjetResponse response;
         
         contacts = new MailjetRequest(Contact.resource)
-                        .filter("limit", 10)
-                        .filter("offset", 2);
+                        .filter(Contact.LIMIT, 10)
+                        .filter(Contact.OFFSET, 2);
         
         response = client.get(contacts);
-        
+        System.out.println(response);
         String url = response.getString("url");
-        Boolean test = url.equals("https://api.mailjet.com/v3/REST/contact?offset=2&limit=10") ||
-                url.equals("https://api.mailjet.com/v3/REST/contact?limit=10&offset=2");
+        Boolean test = url.equals("https://api.mailjet.com/v3/REST/contact?Offset=2&Limit=10") ||
+                url.equals("https://api.mailjet.com/v3/REST/contact?Limit=10&Offset=2");
         
         assertTrue(test);
     }
