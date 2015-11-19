@@ -1,5 +1,6 @@
 
 [api_credential]: https://app.mailjet.com/account/api_keys
+[doc]: http://dev.mailjet.com/guides/?java#
 
 ![alt text](http://cdn.appstorm.net/web.appstorm.net/files/2012/02/mailjet_logo_200x200.png "Mailjet")
 
@@ -9,7 +10,7 @@
 [![Build Status](https://travis-ci.org/mailjet/mailjet-apiv3-java.svg?branch=master)](https://travis-ci.org/mailjet/mailjet-apiv3-java)
 
 
-This repo features the Brand new Java wrapper for the Mailjet API
+This repo features the Brand new Java wrapper for the Mailjet API. Check out the [Offical Documentation][doc]
 
 ## Getting Started
 
