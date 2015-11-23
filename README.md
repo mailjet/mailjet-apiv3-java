@@ -77,7 +77,7 @@ MailjetRequest contacts;
 MailjetResponse response;
 
 sender = new MailjetRequest(Sender.resource)
-            .property(Sender.EMAIL, "gbadi@mailjet.com");
+            .property(Sender.EMAIL, "dummy@mailjet.com");
 
 response = client.post(sender);
 
@@ -97,7 +97,7 @@ recipients = new JSONArray()
 
 email = new MailjetRequest(Email.resource)
                     .property(Email.FROMNAME, "Guillaume")
-                    .property(Email.FROMEMAIL, "gbadi@student.42.fr")
+                    .property(Email.FROMEMAIL, "dummy@email.fr")
                     .property(Email.SUBJECT, "Subject")
                     .property(Email.TEXTPART, "Java is coming!...")
                     .property(Email.RECIPIENTS, recipients)
