@@ -13,8 +13,4 @@ import com.mailjet.client.Resource;
 public class SenderValidate {
 
   public static Resource resource = new Resource("sender", "validate");
-
-  /*
-    Props...
-  */
 }
