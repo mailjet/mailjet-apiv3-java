@@ -16,6 +16,7 @@ public class Email {
     public static Resource resource = new Resource("send", "");
     
     public static String FROMEMAIL = "FromEmail";
+    public static String MJTEMPLATEMPLATEID = "Mj-Template-ID";
     public static String FROMNAME = "FromName";
     public static String SUBJECT = "Subject";
     public static String TEXTPART = "Text-Part";
