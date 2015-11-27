@@ -61,8 +61,7 @@ response = client.get(contacts);
 MailjetRequest contacts;
 MailjetResponse response;
 
-contacts = new MailjetRequest(Contact.resource, id)
-            .filter(Contact.LIMIT, 2);
+contacts = new MailjetRequest(Contact.resource, id);
 
 response = client.get(contacts);
 
