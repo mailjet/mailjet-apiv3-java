@@ -23,6 +23,10 @@ public class Email {
     public static String HTMLPART = "Html-Part";
     public static String RECIPIENTS = "Recipients";
     public static String VARS = "Vars";
+    public static String TO = "To";
+    public static String CC = "cc";
+    public static String BCC = "bcc";
+    public static String MJTEMPLATEID = "Mj-TemplateID";
     public static String ATTACHMENTS = "Attachments";
     public static String INLINEATTACHMENTS = "Inline-Attachments";
     public static String MJPRIO = "Mj-prio";
