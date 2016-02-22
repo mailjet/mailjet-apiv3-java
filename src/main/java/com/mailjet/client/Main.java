@@ -33,7 +33,7 @@ public class Main {
         MailjetResponse response;
         client = new MailjetClient("_", "_");
         request = new MailjetRequest(Email.resource)
-                          .property(Email.FROMEMAIL, "pilot@mailjet.com")
+                          .property(Email.FROMEMAIL, "gbadi@mailjet.com")
                           .property(Email.FROMNAME, "Mailjet Pilot")
                           .property(Email.SUBJECT, "Your email flight plan2!")
                           .property(Email.TEXTPART, "Dear passenger, welcome to Mailjet! May the delivery force be with you!")

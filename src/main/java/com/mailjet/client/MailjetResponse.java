@@ -28,10 +28,12 @@ public class MailjetResponse extends JSONObject {
     }
     
     public JSONArray getData() {
-        try {
+        if (has("Data")) {
             return getJSONArray("Data");
-        } catch (Exception e) {
+        } else if (has("Sent")) {
             return getJSONArray("Sent");
+        } else {
+            return null;
         }
     }
     

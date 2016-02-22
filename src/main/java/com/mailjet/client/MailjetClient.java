@@ -150,9 +150,11 @@ public class MailjetClient {
             }
             
             HttpResponse response;
+            String json;
             
             response = _client.post(_baseUrl + url, request.getContentType(), request.getBody().getBytes());
-            return new MailjetResponse(response.getStatus(), new JSONObject(response.getBodyAsString()));
+            json = (response.getBodyAsString() != null ? response.getBodyAsString() : "{}");
+            return new MailjetResponse(response.getStatus(), new JSONObject(json));
         } catch (MalformedURLException ex) {
             throw new MailjetException("Internal Exception: Malformed Url");
         } catch (UnsupportedEncodingException ex) {
