@@ -28,7 +28,11 @@ public class MailjetResponse extends JSONObject {
     }
     
     public JSONArray getData() {
-        return getJSONArray("Data");
+        try {
+            return getJSONArray("Data");
+        } catch (Exception e) {
+            return getJSONArray("Sent");
+        }
     }
     
     public int getTotal() {

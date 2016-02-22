@@ -24,6 +24,7 @@ public class Email {
     public static String RECIPIENTS = "Recipients";
     public static String VARS = "Vars";
     public static String ATTACHMENTS = "Attachments";
+    public static String INLINE_ATTACHMENTS = "Inline-Attachments";
     public static String INLINEATTACHMENTS = "Inline-Attachments";
     public static String MJPRIO = "Mj-prio";
     public static String MJCUSTOMID = "Mj-CustomID";
