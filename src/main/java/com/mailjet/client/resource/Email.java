@@ -23,6 +23,13 @@ public class Email {
     public static String HTMLPART = "Html-Part";
     public static String RECIPIENTS = "Recipients";
     public static String VARS = "Vars";
+    public static String TO = "To";
+    public static String CC = "cc";
+    public static String BCC = "bcc";
+    public static String MJTEMPLATEID = "Mj-TemplateID";
+    public static String MJTEMPLATELANGUAGE = "Mj-TemplateLanguage";
+    public static String MJTEMPLATEERRORREPORTING = "MJ-TemplateErrorReporting";
+    public static String MJTEMPLATEERRORDELIVERY = "MJ-TemplateErrorDeliver";
     public static String ATTACHMENTS = "Attachments";
     public static String INLINE_ATTACHMENTS = "Inline_Attachments";
     public static String INLINEATTACHMENTS = "Inline_Attachments";
