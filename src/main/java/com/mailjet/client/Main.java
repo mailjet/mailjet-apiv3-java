@@ -29,7 +29,7 @@ import org.json.JSONObject;
 public class Main {
 
     public static void main(String[] args) throws MailjetException {
-        MailjetClient client = new MailjetClient("85480869a17b7d13ef8bd393283d40d9", "f961d94099350d269f661d92e3cc195f");
+        MailjetClient client = new MailjetClient("", "");
 
             MailjetRequest email;
             JSONArray recipients;
