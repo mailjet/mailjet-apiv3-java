@@ -18,6 +18,7 @@ package com.mailjet.client;
 
 import com.mailjet.client.errors.MailjetException;
 import com.turbomanage.httpclient.BasicHttpClient;
+import com.turbomanage.httpclient.BasicRequestHandler;
 import com.turbomanage.httpclient.ConsoleRequestLogger;
 import com.turbomanage.httpclient.HttpResponse;
 import com.turbomanage.httpclient.ParameterMap;
@@ -41,6 +42,7 @@ public class MailjetClient {
     
     private String _baseUrl = "https://api.mailjet.com/v3";
     private BasicHttpClient _client;
+    private BasicRequestHandler _handler;
     
     private String _apiKey;
     private String _apiSecret;
@@ -85,7 +87,7 @@ public class MailjetClient {
         
         _client
               .addHeader("Accept", "application/json")
-              .addHeader("user-agent", "mailjet-apiv3-java/v3.0.0")
+              .addHeader("user-agent", "mailjet-apiv3-java/v3.1.0")
               .addHeader("Authorization", "Basic " + authEncBytes);
     }
 
@@ -121,6 +123,7 @@ public class MailjetClient {
             ParameterMap p = new ParameterMap();
             p.putAll(request._filters);
             HttpResponse response = _client.get(url, p);
+            
             return new MailjetResponse(
                     response.getStatus(),
                     new JSONObject(response.getBodyAsString())
@@ -152,7 +155,7 @@ public class MailjetClient {
             HttpResponse response;
             String json;
             
-            response = _client.post(_baseUrl + url, request.getContentType(), request.getBody().getBytes());
+            response = _client.post(_baseUrl + url, request.getContentType(), request.getBody().getBytes("UTF8"));
             json = (response.getBodyAsString() != null ? response.getBodyAsString() : "{}");
             return new MailjetResponse(response.getStatus(), new JSONObject(json));
         } catch (MalformedURLException ex) {
@@ -174,7 +177,7 @@ public class MailjetClient {
             
             HttpResponse response;
             
-            response = _client.put(_baseUrl + url, request.getContentType(), request.getBody().getBytes());
+            response = _client.put(_baseUrl + url, request.getContentType(), request.getBody().getBytes("UTF8"));
             return new MailjetResponse(response.getStatus(), new JSONObject(response.getBodyAsString()));
         } catch (MalformedURLException ex) {
             throw new MailjetException("Internal Exception: Malformed Url");
