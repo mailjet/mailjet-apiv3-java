@@ -5,6 +5,7 @@
  */
 package com.mailjet.client;
 
+import com.mailjet.client.errors.MailjetException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -49,16 +50,28 @@ public class MailjetResponse {
         }
     }
     
-    public String getString(String key) {
-        return _rawResponse.getString(key);
+    public String getString(String key) throws MailjetException {
+        try {
+            return _rawResponse.getString(key);
+        } catch (NullPointerException e) {
+           throw new MailjetException("No entry found for key: " + key);
+        }
     }
     
-    public int getInt(String key) {
-        return _rawResponse.getInt(key);
+    public int getInt(String key) throws MailjetException {
+        try {
+            return _rawResponse.getInt(key);
+        } catch (NullPointerException e) {
+            throw new MailjetException("No entry found for key: " + key);
+        }
     }
     
-    public JSONArray getJSONArray(String key) {
-        return _rawResponse.getJSONArray(key);
+    public JSONArray getJSONArray(String key) throws MailjetException {
+        try {
+            return _rawResponse.getJSONArray(key);
+        } catch (NullPointerException e) { 
+            throw new MailjetException("No entry found for key: " + key);
+        }
     }
     
     public int getCount() {
