@@ -29,7 +29,7 @@ import org.json.JSONObject;
 public class Main {
 
     public static void main(String[] args) throws MailjetException {
-        MailjetClient client = new MailjetClient("", ""); // these are disabled ;)
+            MailjetClient client = new MailjetClient("", "");
 
             MailjetRequest email;
             JSONArray recipients;
@@ -41,12 +41,15 @@ public class Main {
             email = new MailjetRequest(Email.resource)
                         .property(Email.FROMNAME, "Test")
                         .property(Email.FROMEMAIL, "")
-                        .property(Email.SUBJECT, "Testçndo")
+                        .property(Email.SUBJECT, "Testdo")
                         .property(Email.HTMLPART, "<html> <body> <h1>Hey</h1> <p>Lorem ipsum..</p></body> </html>")
                         .property(Email.RECIPIENTS, recipients)
                         .property(Email.MJCUSTOMID, "JAVA-Email");
 
             response = client.post(email);
             System.out.println(response.getCount());
+            System.out.println(response.getTotal());
+            System.out.println(response.getData());
+            System.out.println(response.getStatus());
     }
 }
