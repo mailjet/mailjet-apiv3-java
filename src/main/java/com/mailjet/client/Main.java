@@ -29,24 +29,24 @@ import org.json.JSONObject;
 public class Main {
 
     public static void main(String[] args) throws MailjetException {
-        MailjetClient client = new MailjetClient("85480869a17b7d13ef8bd393283d40d9", "f961d94099350d269f661d92e3cc195f");
+        MailjetClient client = new MailjetClient("", "");
 
             MailjetRequest email;
             JSONArray recipients;
             MailjetResponse response;
 
             recipients = new JSONArray()
-                    .put(new JSONObject().put(Contact.EMAIL, "gbadi@mailjet.com"));
+                    .put(new JSONObject().put(Contact.EMAIL, ""));
 
             email = new MailjetRequest(Email.resource)
-                        .property(Email.FROMNAME, "Teste")
-                        .property(Email.FROMEMAIL, "gbadi@student.42.fr")
+                        .property(Email.FROMNAME, "Test")
+                        .property(Email.FROMEMAIL, "")
                         .property(Email.SUBJECT, "Testçndo")
-                        .property(Email.HTMLPART, "<html> <body> <h1>Tesçte</h1> <p>Lorem ipsum..</p></body> </html>")
+                        .property(Email.HTMLPART, "<html> <body> <h1>Hey</h1> <p>Lorem ipsum..</p></body> </html>")
                         .property(Email.RECIPIENTS, recipients)
                         .property(Email.MJCUSTOMID, "JAVA-Email");
 
             response = client.post(email);
-    
+            System.out.println(response.getCount());
     }
 }

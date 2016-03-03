@@ -16,7 +16,7 @@ public class ExceptionChecker {
     public static MailjetResponse check(MailjetResponse response)
             throws  MailjetException {
         
-        int status = response.getInt("Status");
+        int status = response.getStatus();
 
         switch(status) {
             case 400:
