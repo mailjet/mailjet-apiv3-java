@@ -1,5 +1,0 @@
-*.class
-
-# Package Files #
-*.DS_Store
-/target/
