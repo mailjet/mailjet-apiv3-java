@@ -21,6 +21,7 @@ public class Newsletter {
 	public static String CALLBACK = "Callback";
 	public static String CAMPAIGN = "Campaign";
 	public static String CONTACTSLIST = "ContactsList";
+	public static String CONTACTSLISTID = "ContactsListID";
 	public static String CREATEDAT = "CreatedAt";
 	public static String DELIVEREDAT = "DeliveredAt";
 	public static String EDITMODE = "EditMode";
