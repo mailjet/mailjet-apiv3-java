@@ -44,10 +44,11 @@ public class MailjetRequest {
      */
     private String _action;
     
+    
     /**
      * Resource ID
      */
-    private long _id;
+    private Long _id;
     
     /**
      * Resource action ID
@@ -82,6 +83,8 @@ public class MailjetRequest {
         this._path = "/REST";
         _configuration = 1;
         _resource = res.getResource();
+        _action = res.getAction(); 
+        _id = null;
         
         if (_resource.equals("send")) {
             _path = "";
@@ -182,7 +185,9 @@ public class MailjetRequest {
         
         String url = null;
 
-        if (_configuration == 1)
+        if (_id == null && !_action.equals(""))
+            url = base + '/' + _action;
+        else if (_configuration == 1)
             url = base;
         else if (_configuration == 2)
             url = base + '/' + _id;
