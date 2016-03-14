@@ -23,6 +23,7 @@ import com.turbomanage.httpclient.ConsoleRequestLogger;
 import com.turbomanage.httpclient.HttpResponse;
 import com.turbomanage.httpclient.ParameterMap;
 import com.turbomanage.httpclient.RequestLogger;
+import com.turbomanage.httpclient.RequestHandler;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
@@ -82,6 +83,26 @@ public class MailjetClient {
         _client = new BasicHttpClient();
         _client.setRequestLogger(logger);
 
+
+        String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
+        
+        _client
+              .addHeader("Accept", "application/json")
+              .addHeader("user-agent", "mailjet-apiv3-java/v3.1.0")
+              .addHeader("Authorization", "Basic " + authEncBytes);
+    }
+    
+    /**
+     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET
+     * @param apiKey
+     * @param apiSecret
+     * @param handler
+     */
+    public MailjetClient(String apiKey, String apiSecret, RequestHandler handler) {
+        _apiKey = apiKey;
+        _apiSecret = apiSecret;
+                
+        _client = new BasicHttpClient("", handler);
 
         String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
         
