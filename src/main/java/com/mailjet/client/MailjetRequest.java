@@ -187,6 +187,8 @@ public class MailjetRequest {
 
         if (_id == null && !_action.equals(""))
             url = base + '/' + _action;
+        else if (_action.equals("managemanycontacts") && _id != null)
+            url = base + '/' + _action + '/' + _id;
         else if (_configuration == 1)
             url = base;
         else if (_configuration == 2)
