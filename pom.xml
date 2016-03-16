@@ -3,8 +3,35 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mailjet</groupId>
     <artifactId>client</artifactId>
-    <version>3.0.0</version>
+    <version>3.1.1</version>
     <packaging>jar</packaging>
+    <name>Mailjet Client</name>
+    <description>A Mailjet API Client</description>
+    <url>https://github.com/mailjet/mailjet-apiv3-java/</url>
+    <scm>
+        <connection>scm:git:git@github.com:mailjet/mailjet-apiv3-java.git</connection>
+        <developerConnection>scm:git:git@github.com:mailjet/mailjet-apiv3-java.git</developerConnection>
+        <url>git@github.com:juven/mailjet-apiv3-java.git</url>
+    </scm>
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>http://www.opensource.org/licenses/mit-license.php</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <name>Guillaume Badi</name>
+            <email>gbadi@mailjet.com</email>
+            <organization>Mailjet</organization>
+            <organizationUrl>http://www.mailjet.com</organizationUrl>
+        </developer>
+    </developers>
+    <parent>
+        <groupId>org.apache</groupId>
+        <artifactId>apache</artifactId>
+        <version>17</version>
+    </parent>
     <dependencies>
     <dependency>
         <groupId>com.turbomanage.basic-http-client</groupId>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="com.mailjet.client.MJEasyClientTest" time="0.007" tests="1" errors="0" skipped="0" failures="0">
+<testsuite name="com.mailjet.client.MJEasyClientTest" time="0.016" tests="1" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="/Library/Java/JavaVirtualMachines/jdk1.8.0_73.jdk/Contents/Home/jre/lib"/>
@@ -62,5 +62,5 @@
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="sun.cpu.isalist" value=""/>
   </properties>
-  <testcase name="testEmailSend" classname="com.mailjet.client.MJEasyClientTest" time="0.007"/>
+  <testcase name="testEmailSend" classname="com.mailjet.client.MJEasyClientTest" time="0.016"/>
 </testsuite>

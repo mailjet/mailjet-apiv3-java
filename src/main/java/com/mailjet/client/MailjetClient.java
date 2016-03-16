@@ -226,7 +226,7 @@ public class MailjetClient {
             p.putAll(request._filters);
             response = _client.delete(_baseUrl + url, p);
             String json;
-            json = (response.getBodyAsString() != null ?
+            json = (response.getBodyAsString() != null && !response.getBodyAsString().trim().equals("") ?
                     response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString());
             return new MailjetResponse(response.getStatus(), new JSONObject(json));            
         } catch (MalformedURLException ex) {
