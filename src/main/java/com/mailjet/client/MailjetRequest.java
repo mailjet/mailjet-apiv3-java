@@ -16,10 +16,15 @@
 
 package com.mailjet.client;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
 import org.json.JSONObject;
 
 /**
@@ -44,6 +49,7 @@ public class MailjetRequest {
      */
     private String _action;
     
+    private String _alt;
     
     /**
      * Resource ID
@@ -54,6 +60,8 @@ public class MailjetRequest {
      * Resource action ID
      */
     private long _actionId;
+    
+    private String _data;
     
     /**
      * Filters HashMap.
@@ -108,6 +116,24 @@ public class MailjetRequest {
             _configuration = 3;
         }
     }
+   
+    /**
+     * In case of a simple view. Call a single resource with a single ID
+     * @param res
+     * @param id
+     */
+    public MailjetRequest(Resource res, String id) {
+        this._path = "/REST";
+        _resource = res.getResource();
+        _action = res.getAction();
+        _alt = id;
+        
+        if (_action.equals("")) {
+            _configuration = 2;
+        } else {
+            _configuration = 3;
+        }
+    }
     
     /**
      * Build a Request with an actionID
@@ -124,6 +150,12 @@ public class MailjetRequest {
         _configuration = 4;
     }
   
+    public MailjetRequest setData(String path) throws IOException {
+        _data = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
+        System.out.println(_data);
+        return this;
+    }
+    
     /**
      * Pass a String formatted json as the request body
      * @param json
@@ -158,7 +190,7 @@ public class MailjetRequest {
      * @return the stringified body
      */
     public String getBody() {
-        return _body.toString();
+        return _data == null ? _body.toString() : Base64.encode(_data.getBytes());
     }
     
     /**
@@ -182,21 +214,25 @@ public class MailjetRequest {
      */
     public String buildUrl() throws MalformedURLException, UnsupportedEncodingException {
         String base = _path + '/' + _resource;
+        String id = null;
+        String url = null;        
         
-        String url = null;
+        if (_alt != null || _id != null) {
+            id = _alt != null ? _alt : _id.toString();
+        }
 
-        if (_id == null && !_action.equals(""))
+        if (id == null && !_action.equals(""))
             url = base + '/' + _action;
-        else if (_action.equals("managemanycontacts") && _id != null)
-            url = base + '/' + _action + '/' + _id;
+        else if (_action.equals("managemanycontacts") && id != null)
+            url = base + '/' + _action + '/' + id;
         else if (_configuration == 1)
             url = base;
         else if (_configuration == 2)
-            url = base + '/' + _id;
+            url = base + '/' + id;
         else if (_configuration == 3)
-            url = base + '/' + _id + '/' + _action;
+            url = base + '/' + id + '/' + _action;
         else if (_configuration == 4)
-            url = base + '/' + _id + '/' + _action + '/' + _actionId;
+            url = base + '/' + id + '/' + _action + '/' + _actionId;
         
         return url;
     }
