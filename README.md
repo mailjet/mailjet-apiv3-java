@@ -14,6 +14,20 @@ This repo features the Brand new Java wrapper for the Mailjet API. Check out the
 
 ## Getting Started
 
+### Installation (Maven)
+
+Add the following in your `pom.xml`
+
+``` xml
+    <dependencies>
+        <dependency>
+            <groupId>com.mailjet</groupId>
+            <artifactId>mailjet-client</artifactId>
+            <version>4.0.1</version>
+        </dependency>
+    </dependencies>
+```
+
 Grab your keys [here][api_credential]
 
 ``` java
