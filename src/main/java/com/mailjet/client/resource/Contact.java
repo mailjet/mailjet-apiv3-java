@@ -16,6 +16,8 @@ public class Contact {
     public static Resource resource = new Resource("contact", "");
 
 	public static String CREATEDAT = "CreatedAt";
+	public static String ISEXCLUDEDFROMCAMPAIGNS = "IsExcludedFromCampaigns";
+	public static String EXCLUSIONFROMCAMPAIGNSUPDATEDAT = "ExclusionFromCampaignsUpdatedAt";
 	public static String DELIVEREDCOUNT = "DeliveredCount";
 	public static String EMAIL = "Email";
 	public static String ID = "ID";
