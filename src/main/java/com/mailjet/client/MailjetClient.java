@@ -156,6 +156,8 @@ public class MailjetClient {
             throw new MailjetException("Internal Exception: Malformed URL");
         } catch (UnsupportedEncodingException ex) {
             throw new MailjetException("Internal Exception: Unsupported Encoding");
+        } catch (NullPointerException e) {
+            throw new MailjetException("Connection Exception");
         }
     }
         
@@ -187,6 +189,8 @@ public class MailjetClient {
             throw new MailjetException("Internal Exception: Malformed Url");
         } catch (UnsupportedEncodingException ex) {
             throw new MailjetException("Internal Exception: Unsupported Encoding");
+        } catch (NullPointerException e) {
+            throw new MailjetException("Connection Exception");
         }
     }
     
@@ -208,6 +212,8 @@ public class MailjetClient {
             throw new MailjetException("Internal Exception: Malformed Url");
         } catch (UnsupportedEncodingException ex) {
             throw new MailjetException("Internal Exception: Unsupported Encoding");
+        } catch (NullPointerException e) {
+            throw new MailjetException("Connection Exception");
         }
     }
     
@@ -233,6 +239,8 @@ public class MailjetClient {
             throw new MailjetException("Internal Exception: Malformed Url");
         } catch (UnsupportedEncodingException ex) {
             throw new MailjetException("Internal Exception: Unsupported Encoding");
+        } catch (NullPointerException e) {
+            throw new MailjetException("Connection Exception");
         }
     }
  }
