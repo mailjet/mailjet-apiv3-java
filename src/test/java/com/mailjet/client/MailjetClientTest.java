@@ -6,6 +6,7 @@
 package com.mailjet.client;
 
 import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.mailjet.client.resource.Contact;
 import com.mailjet.client.resource.ContactGetcontactslists;
 import java.io.UnsupportedEncodingException;
@@ -29,7 +30,7 @@ public class MailjetClientTest {
      * @throws com.mailjet.client.errors.MailjetException
      */
     @Test
-    public void testSimpleGet() throws MailjetException {
+    public void testSimpleGet() throws MailjetException, MailjetSocketTimeoutException {
         MailjetClient client;
         
         client = new MailjetClient("", "");
@@ -70,7 +71,7 @@ public class MailjetClientTest {
 //    }
     
     @Test
-    public void testFilteringGet() throws MailjetException {
+    public void testFilteringGet() throws MailjetException, MailjetSocketTimeoutException {
         MailjetClient client;
         
         client = new MailjetClient("", "");
@@ -97,7 +98,7 @@ public class MailjetClientTest {
     }
     
     @Test
-    public void testActionGet() throws MailjetException, MalformedURLException, UnsupportedEncodingException {
+    public void testActionGet() throws MailjetException, MalformedURLException, UnsupportedEncodingException, MailjetSocketTimeoutException {
         MailjetClient client;
         
         client = new MailjetClient("", "");

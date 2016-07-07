@@ -17,6 +17,7 @@
 package com.mailjet.client;
 
 import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.turbomanage.httpclient.BasicHttpClient;
 import com.turbomanage.httpclient.BasicRequestHandler;
 import com.turbomanage.httpclient.ConsoleRequestLogger;
@@ -133,7 +134,7 @@ public class MailjetClient {
      * @return MailjetResponse
      * @throws MailjetException
      */
-    public MailjetResponse get(MailjetRequest request) throws MailjetException {
+    public MailjetResponse get(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
         try {
             String url = _baseUrl + request.buildUrl();
             
@@ -144,7 +145,11 @@ public class MailjetClient {
             ParameterMap p = new ParameterMap();
             p.putAll(request._filters);
             HttpResponse response = _client.get(url, p);
-                        
+            
+            if (response == null) {
+                throw new MailjetSocketTimeoutException("Socket Timeout");
+            }
+            
             String json = (response.getBodyAsString() != null && !(response.getBodyAsString().equals("")) ?
                     response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString());
             
@@ -167,7 +172,7 @@ public class MailjetClient {
      * @return
      * @throws com.mailjet.client.errors.MailjetException
      */
-    public MailjetResponse post(MailjetRequest request) throws MailjetException {
+    public MailjetResponse post(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
         
         try {
             String url = request.buildUrl();
@@ -182,6 +187,11 @@ public class MailjetClient {
             String json;
             
             response = _client.post(_baseUrl + url, request.getContentType(), request.getBody().getBytes("UTF8"));
+                        
+            if (response == null) {
+                throw new MailjetSocketTimeoutException("Socket Timeout");
+            }
+                        
             json = (response.getBodyAsString() != null ?
                     response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString());
             return new MailjetResponse(response.getStatus(), new JSONObject(json));
@@ -194,7 +204,7 @@ public class MailjetClient {
         }
     }
     
-    public MailjetResponse put(MailjetRequest request) throws MailjetException {
+    public MailjetResponse put(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
         try {
             String url = request.buildUrl();
             
@@ -207,6 +217,11 @@ public class MailjetClient {
             HttpResponse response;
             
             response = _client.put(_baseUrl + url, request.getContentType(), request.getBody().getBytes("UTF8"));
+                                  
+            if (response == null) {
+                throw new MailjetSocketTimeoutException("Socket Timeout");
+            }
+                        
             return new MailjetResponse(response.getStatus(), new JSONObject(response.getBodyAsString()));
         } catch (MalformedURLException ex) {
             throw new MailjetException("Internal Exception: Malformed Url");
@@ -217,7 +232,7 @@ public class MailjetClient {
         }
     }
     
-    public MailjetResponse delete(MailjetRequest request) throws MailjetException {
+    public MailjetResponse delete(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
         try {
             String url = request.buildUrl();
             
@@ -227,11 +242,16 @@ public class MailjetClient {
             }
             
             HttpResponse response;
+            String json;
             
             ParameterMap p = new ParameterMap();
             p.putAll(request._filters);
             response = _client.delete(_baseUrl + url, p);
-            String json;
+                                   
+            if (response == null) {
+                throw new MailjetSocketTimeoutException("Socket Timeout");
+            }
+                        
             json = (response.getBodyAsString() != null && !response.getBodyAsString().trim().equals("") ?
                     response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString());
             return new MailjetResponse(response.getStatus(), new JSONObject(json));            
