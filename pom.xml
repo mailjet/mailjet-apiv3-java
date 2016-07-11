@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mailjet</groupId>
     <artifactId>mailjet-client</artifactId>
-    <version>4.0.4-SNAPSHOT</version>
+    <version>4.0.4</version>
     <packaging>jar</packaging>
     <name>Mailjet Client</name>
     <description>A Mailjet API Client</description>
