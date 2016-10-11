@@ -23,7 +23,7 @@ Add the following in your `pom.xml`
         <dependency>
             <groupId>com.mailjet</groupId>
             <artifactId>mailjet-client</artifactId>
-            <version>4.0.1</version>
+            <version>4.0.5</version>
         </dependency>
     </dependencies>
 ```
@@ -125,20 +125,20 @@ response = client.post(email);
 
 MailjetRequest getSender = new MailjetRequest(Sender.resource)
                                 .filter(Sender.EMAIL, "email adress");
-        
+
 MailjetResponse senders = client.get(getSender);
-        
+
 // Grab the first sender
 JSONObject sender = senders.getData().getJSONObject(0);
-        
+
 // Change the name
 MailjetRequest update = new MailjetRequest(Sender.resource, sender.getLong("ID"))
                     .setBody(sender.put(Sender.NAME, "new name"));
-                    
+
 System.out.println(client.put(update));
-      
+
 ```
 
 ## TODO:
- 
+
  - head
