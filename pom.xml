@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mailjet</groupId>
     <artifactId>mailjet-client</artifactId>
-    <version>4.0.5-SNAPSHOT</version>
+    <version>4.0.5</version>
     <packaging>jar</packaging>
     <name>Mailjet Client</name>
     <description>A Mailjet API Client</description>
@@ -38,9 +38,9 @@
         </developer>
     </developers>
     <parent>
-	<groupId>org.sonatype.oss</groupId>
-	<artifactId>oss-parent</artifactId>
-	<version>9</version>
+  <groupId>org.sonatype.oss</groupId>
+  <artifactId>oss-parent</artifactId>
+  <version>9</version>
     </parent>
     <dependencies>
     <dependency>
@@ -90,7 +90,7 @@
                   </goals>
                 </execution>
               </executions>
-            </plugin>                           
+            </plugin>
             <plugin>
               <groupId>org.sonatype.plugins</groupId>
               <artifactId>nexus-staging-maven-plugin</artifactId>
@@ -102,7 +102,7 @@
                 <autoReleaseAfterClose>true</autoReleaseAfterClose>
               </configuration>
             </plugin>
-       
+
         </plugins>
     </build>
 </project>

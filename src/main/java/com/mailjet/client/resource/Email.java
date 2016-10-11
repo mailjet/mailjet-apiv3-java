@@ -12,9 +12,9 @@ import com.mailjet.client.Resource;
  * @author guillaume
  */
 public class Email {
-    
+
     public static Resource resource = new Resource("send", "");
-    
+
     public static String FROMEMAIL = "FromEmail";
     public static String MJTEMPLATEMPLATEID = "Mj-Template-ID";
     public static String FROMNAME = "FromName";
@@ -40,4 +40,5 @@ public class Email {
     public static String MJEVENTPAYLOAD = "Mj-EventPayload";
     public static String HEADERS = "Headers";
     public static String MESSAGE = "Message";
+    public static String MESSAGES = "Messages";
 }
