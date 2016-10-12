@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mailjet</groupId>
     <artifactId>mailjet-client</artifactId>
-    <version>4.0.6-SNAPSHOT</version>
+    <version>4.0.5</version>
     <packaging>jar</packaging>
     <name>Mailjet Client</name>
     <description>A Mailjet API Client</description>
@@ -19,8 +19,8 @@
       </repository>
     </distributionManagement>
     <scm>
-        <connection>scm:git:git@github.com:mailjet/mailjet-apiv3-java.git</connection>
-        <developerConnection>scm:git:git@github.com:mailjet/mailjet-apiv3-java.git</developerConnection>
+        <connection>scm:git:https://github.com/mailjet/mailjet-apiv3-java.git</connection>
+        <developerConnection>scm:git:https://github.com/mailjet/mailjet-apiv3-java.git</developerConnection>
         <url>git@github.com:juven/mailjet-apiv3-java.git</url>
       <tag>mailjet-client-4.0.5</tag>
   </scm>
