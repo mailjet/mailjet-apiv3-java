@@ -21,9 +21,9 @@
     <scm>
         <connection>scm:git:https://github.com/mailjet/mailjet-apiv3-java.git</connection>
         <developerConnection>scm:git:https://github.com/mailjet/mailjet-apiv3-java.git</developerConnection>
-        <url>git@github.com:juven/mailjet-apiv3-java.git</url>
-      <tag>mailjet-client-4.0.5</tag>
-  </scm>
+        <url>git@github.com:mailjet/mailjet-apiv3-java.git</url>
+        <tag>mailjet-client-4.0.5</tag>
+    </scm>
     <licenses>
         <license>
             <name>MIT License</name>
@@ -123,7 +123,6 @@
                 <autoReleaseAfterClose>true</autoReleaseAfterClose>
               </configuration>
             </plugin>
-
         </plugins>
     </build>
 </project>
