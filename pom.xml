@@ -32,8 +32,8 @@
     </licenses>
     <developers>
         <developer>
-            <name>Cédric Paumard</name>
-            <email>cpaumard@mailjet.com</email>
+            <name>Mailjet</name>
+            <email>api@mailjet.com</email>
             <organization>Mailjet</organization>
             <organizationUrl>http://www.mailjet.com</organizationUrl>
         </developer>
