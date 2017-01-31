@@ -42,7 +42,10 @@ public class MailjetClient {
     public static final int VERBOSE_DEBUG = 1;
     public static final int NOCALL_DEBUG = 2;
     
-    private String _baseUrl = "https://api.mailjet.com/v3";
+    private String _baseUrl = "https://api.mailjet.com/";
+    private String _version = "v3";
+    private int _call = NO_DEBUG;
+    private String _url;
     private BasicHttpClient _client;
     private BasicRequestHandler _handler;
     
@@ -114,6 +117,70 @@ public class MailjetClient {
     }
 
     /**
+     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET
+     * @param apiKey
+     * @param apiSecret
+     */
+    public MailjetClient(String apiKey, String apiSecret, URLOption option) {
+        _apiKey = apiKey;
+        _apiSecret = apiSecret;
+        
+        /**
+         * Provide an Empty logger to the client.
+         * The user can enable it with .setDebug()
+         */
+        RequestLogger logger = new RequestLogger() {
+
+            @Override
+            public boolean isLoggingEnabled() {
+                return false;
+            }
+
+            @Override
+            public void log(String string) {}
+
+            @Override
+            public void logRequest(HttpURLConnection hurlc, Object o) throws IOException {}
+
+            @Override
+            public void logResponse(HttpResponse hr) {}
+        };
+        
+        
+        _client = new BasicHttpClient();
+        _client.setRequestLogger(logger);
+
+
+        String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
+        
+        _client
+              .addHeader("Accept", "application/json")
+              .addHeader("user-agent", "mailjet-apiv3-java/v3.1.1")
+              .addHeader("Authorization", "Basic " + authEncBytes);
+    }
+    
+    
+    /**
+     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET
+     * @param apiKey
+     * @param apiSecret
+     * @param handler
+     */
+    public MailjetClient(String apiKey, String apiSecret, RequestHandler handler, URLOption options) {
+        _apiKey = apiKey;
+        _apiSecret = apiSecret;
+                
+        _client = new BasicHttpClient("", handler);
+
+        String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
+        
+        _client
+              .addHeader("Accept", "application/json")
+              .addHeader("user-agent", "mailjet-apiv3-java/v3.1.0")
+              .addHeader("Authorization", "Basic " + authEncBytes);
+    }
+
+    /**
      * Set the debug level
      * @param debug:
      *  VERBOSE_DEBUG: prints every URL/payload.
@@ -134,9 +201,12 @@ public class MailjetClient {
      * @return MailjetResponse
      * @throws MailjetException
      */
-    public MailjetResponse get(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
+     public MailjetResponse get(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
+         return get(request, null);
+     }
+     public MailjetResponse get(MailjetRequest request, URLOption options) throws MailjetException, MailjetSocketTimeoutException {
         try {
-            String url = _baseUrl + request.buildUrl();
+            String url = createUrl(options) + request.buildUrl();
             
             if (_debug == NOCALL_DEBUG) {
                 return new MailjetResponse(new JSONObject().put("url", url + request.queryString()));
@@ -173,20 +243,22 @@ public class MailjetClient {
      * @throws com.mailjet.client.errors.MailjetException
      */
     public MailjetResponse post(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
-        
+        return post(request, null);
+    }
+    public MailjetResponse post(MailjetRequest request, URLOption options) throws MailjetException, MailjetSocketTimeoutException {
         try {
-            String url = request.buildUrl();
+            String url = createUrl(options) + request.buildUrl();
             
             if (_debug == NOCALL_DEBUG) {
                 return new MailjetResponse(new JSONObject()
-                        .put("url", _baseUrl + url)
+                        .put("url", url)
                         .put("payload", request.getBody()));
             }
             
             HttpResponse response;
             String json;
             
-            response = _client.post(_baseUrl + url, request.getContentType(), request.getBody().getBytes("UTF8"));
+            response = _client.post(url, request.getContentType(), request.getBody().getBytes("UTF8"));
                         
             if (response == null) {
                 throw new MailjetSocketTimeoutException("Socket Timeout");
@@ -204,19 +276,22 @@ public class MailjetClient {
         }
     }
     
-    public MailjetResponse put(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
+    public MailjetResponse put(MailjetRequest request, URLOption options) throws MailjetException, MailjetSocketTimeoutException {
+        return put(request, null);
+    }
+    public MailjetResponse put(MailjetRequest request, URLOption options) throws MailjetException, MailjetSocketTimeoutException {
         try {
-            String url = request.buildUrl();
+            String url = createUrl(options) + request.buildUrl();
             
             if (_debug == NOCALL_DEBUG) {
                 return new MailjetResponse(new JSONObject()
-                        .put("url", _baseUrl + url)
+                        .put("url", url)
                         .put("payload", request.getBody()));
             }
             
             HttpResponse response;
             
-            response = _client.put(_baseUrl + url, request.getContentType(), request.getBody().getBytes("UTF8"));
+            response = _client.put(url, request.getContentType(), request.getBody().getBytes("UTF8"));
                                   
             if (response == null) {
                 throw new MailjetSocketTimeoutException("Socket Timeout");
@@ -232,13 +307,16 @@ public class MailjetClient {
         }
     }
     
-    public MailjetResponse delete(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
+    public MailjetResponse delete(MailjetRequest request, URLOption options) throws MailjetException, MailjetSocketTimeoutException {
+        return delete(request, null);
+    }
+    public MailjetResponse delete(MailjetRequest request, URLOption options) throws MailjetException, MailjetSocketTimeoutException {
         try {
-            String url = request.buildUrl();
+            String url = createUrl(options) + request.buildUrl();
             
             if (_debug == NOCALL_DEBUG) {
                 return new MailjetResponse(new JSONObject()
-                        .put("url", _baseUrl + url));
+                        .put("url", url));
             }
             
             HttpResponse response;
@@ -246,7 +324,7 @@ public class MailjetClient {
             
             ParameterMap p = new ParameterMap();
             p.putAll(request._filters);
-            response = _client.delete(_baseUrl + url, p);
+            response = _client.delete(url, p);
                                    
             if (response == null) {
                 throw new MailjetSocketTimeoutException("Socket Timeout");
@@ -262,5 +340,39 @@ public class MailjetClient {
         } catch (NullPointerException e) {
             throw new MailjetException("Connection Exception");
         }
+    }
+    
+    public createBaseUrl(URLOption options) {
+        if (options.url !== "") {
+            _url = options.url;
+        }
+        if (options.version !== "") {
+            _version = options.version;
+        }
+        if (options.call !== -1) {
+            
+        }
+    }
+    
+    public String createUrl(URLOption options) {
+        if (options.call !== -1) {
+            _debug = options.call;
+        } else {
+            _debug = _call;
+        }
+        
+        if (options.url !== "") {
+            url = options.url;
+        } else {
+            url = _url;
+        }
+        
+        if (options.version !== "") {
+            url = url + '/' + options.version;
+        } else {
+            url = url + '/' + _version;
+        }
+        
+        return url;
     }
  }

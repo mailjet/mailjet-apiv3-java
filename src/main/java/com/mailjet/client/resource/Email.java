@@ -41,4 +41,5 @@ public class Email {
     public static String HEADERS = "Headers";
     public static String MESSAGE = "Message";
     public static String MESSAGES = "Messages";
+    public static String FROM = "From";
 }
