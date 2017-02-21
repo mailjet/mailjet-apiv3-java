@@ -13,9 +13,9 @@ import com.mailjet.client.Resource;
  */
 public class URLOption {
 
-  public String url = "";
-  public String version = "";
-  public int call = -1;
+  public String url = null;
+  public String version = null;
+  public Boolean call = null;
   
   public URLOption URLOption() {
     return this;
@@ -31,7 +31,7 @@ public class URLOption {
     return this;
   }
   
-  public URLOption setCall(int new_call) {
+  public URLOption setCall(Boolean new_call) {
     call = new_call;
     return this;
   }

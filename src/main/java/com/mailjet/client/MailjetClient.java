@@ -57,99 +57,55 @@ public class MailjetClient {
      * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET
      * @param apiKey
      * @param apiSecret
+     * @param handler
+     * @param options
      */
     public MailjetClient(String apiKey, String apiSecret) {
-        _apiKey = apiKey;
-        _apiSecret = apiSecret;
-        
-        /**
-         * Provide an Empty logger to the client.
-         * The user can enable it with .setDebug()
-         */
-        RequestLogger logger = new RequestLogger() {
-
-            @Override
-            public boolean isLoggingEnabled() {
-                return false;
-            }
-
-            @Override
-            public void log(String string) {}
-
-            @Override
-            public void logRequest(HttpURLConnection hurlc, Object o) throws IOException {}
-
-            @Override
-            public void logResponse(HttpResponse hr) {}
-        };
-        
-        
-        _client = new BasicHttpClient();
-        _client.setRequestLogger(logger);
-
-
-        String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
-        
-        _client
-              .addHeader("Accept", "application/json")
-              .addHeader("user-agent", "mailjet-apiv3-java/v3.1.1")
-              .addHeader("Authorization", "Basic " + authEncBytes);
+        init(apiKey, apiSecret, null, null);
     }
     
-    /**
-     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET
-     * @param apiKey
-     * @param apiSecret
-     * @param handler
-     */
     public MailjetClient(String apiKey, String apiSecret, RequestHandler handler) {
-        _apiKey = apiKey;
-        _apiSecret = apiSecret;
-                
-        _client = new BasicHttpClient("", handler);
-
-        String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
-        
-        _client
-              .addHeader("Accept", "application/json")
-              .addHeader("user-agent", "mailjet-apiv3-java/v3.1.0")
-              .addHeader("Authorization", "Basic " + authEncBytes);
+        init(apiKey, apiSecret, handler, null);
     }
-
-    /**
-     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET
-     * @param apiKey
-     * @param apiSecret
-     */
-    public MailjetClient(String apiKey, String apiSecret, URLOption option) {
+    
+    public MailjetClient(String apiKey, String apiSecret, URLOption options) {
+        init(apiKey, apiSecret, null, options);
+    }
+    
+    public MailjetClient(String apiKey, String apiSecret, RequestHandler handler, URLOption options) {
+        init(apiKey, apiSecret, handler, options);
+    }
+    
+    private void init(String apiKey, String apiSecret, RequestHandler handler, URLOption options) {
         _apiKey = apiKey;
         _apiSecret = apiSecret;
         
-        /**
-         * Provide an Empty logger to the client.
-         * The user can enable it with .setDebug()
-         */
-        RequestLogger logger = new RequestLogger() {
+        if (handler == null) {
+            /**
+            * Provide an Empty logger to the client.
+            * The user can enable it with .setDebug()
+            */
+            RequestLogger logger = new RequestLogger() {
 
-            @Override
-            public boolean isLoggingEnabled() {
-                return false;
-            }
+                @Override
+                public boolean isLoggingEnabled() {
+                    return false;
+                }
 
-            @Override
-            public void log(String string) {}
+                @Override
+                public void log(String string) {}
 
-            @Override
-            public void logRequest(HttpURLConnection hurlc, Object o) throws IOException {}
+                @Override
+                public void logRequest(HttpURLConnection hurlc, Object o) throws IOException {}
 
-            @Override
-            public void logResponse(HttpResponse hr) {}
-        };
-        
-        
-        _client = new BasicHttpClient();
-        _client.setRequestLogger(logger);
-
+                @Override
+                public void logResponse(HttpResponse hr) {}
+            };
+            _client = new BasicHttpClient();
+            _client.setRequestLogger(logger);
+        } else {
+            _client = new BasicHttpClient("", handler);
+        }
 
         String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
         
@@ -157,27 +113,9 @@ public class MailjetClient {
               .addHeader("Accept", "application/json")
               .addHeader("user-agent", "mailjet-apiv3-java/v3.1.1")
               .addHeader("Authorization", "Basic " + authEncBytes);
-    }
-    
-    
-    /**
-     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET
-     * @param apiKey
-     * @param apiSecret
-     * @param handler
-     */
-    public MailjetClient(String apiKey, String apiSecret, RequestHandler handler, URLOption options) {
-        _apiKey = apiKey;
-        _apiSecret = apiSecret;
-                
-        _client = new BasicHttpClient("", handler);
-
-        String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
-        
-        _client
-              .addHeader("Accept", "application/json")
-              .addHeader("user-agent", "mailjet-apiv3-java/v3.1.0")
-              .addHeader("Authorization", "Basic " + authEncBytes);
+        if (options) {
+            parseOptions(options)
+        } 
     }
 
     /**
@@ -283,7 +221,7 @@ public class MailjetClient {
         try {
             String url = createUrl(options) + request.buildUrl();
             
-            if (_debug == NOCALL_DEBUG) {
+            if (verifyDebug(options) == NOCALL_DEBUG) {
                 return new MailjetResponse(new JSONObject()
                         .put("url", url)
                         .put("payload", request.getBody()));
@@ -342,32 +280,38 @@ public class MailjetClient {
         }
     }
     
-    public createBaseUrl(URLOption options) {
-        if (options.url !== "") {
+    private parseOptions(URLOption options) {
+        if (options.url) {
             _url = options.url;
         }
-        if (options.version !== "") {
+        if (options.version) {
             _version = options.version;
         }
-        if (options.call !== -1) {
-            
+        if (options.call == false) {
+            _call = NOCALL_DEBUG;
+        } else if(options.call == true) {
+            _call = NO_DEBUG;
         }
     }
     
-    public String createUrl(URLOption options) {
-        if (options.call !== -1) {
-            _debug = options.call;
+    private int verifyDebug(URLOption options) {
+        if (options.call == false) {
+            return NOCALL_DEBUG;
+        } else if (options.call == true) {
+            return NO_DEBUG
         } else {
-            _debug = _call;
+            return _call;
         }
-        
-        if (options.url !== "") {
+    }
+    
+    private String createUrl(URLOption options) {
+        if (options.url) {
             url = options.url;
         } else {
             url = _url;
         }
         
-        if (options.version !== "") {
+        if (options.version) {
             url = url + '/' + options.version;
         } else {
             url = url + '/' + _version;
