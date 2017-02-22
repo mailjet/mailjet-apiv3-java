@@ -42,10 +42,10 @@ public class MailjetClient {
     public static final int VERBOSE_DEBUG = 1;
     public static final int NOCALL_DEBUG = 2;
     
-    private String _baseUrl = "https://api.mailjet.com/";
-    private String _version = "v3";
-    private int _call = NO_DEBUG;
-    private String _url;
+    private static String _baseUrl = "https://api.mailjet.com/";
+    private static String _version = "v3";
+    private static int _call = NO_DEBUG;
+    private ClientOptions _options;
     private BasicHttpClient _client;
     private BasicRequestHandler _handler;
     
@@ -68,15 +68,15 @@ public class MailjetClient {
         init(apiKey, apiSecret, handler, null);
     }
     
-    public MailjetClient(String apiKey, String apiSecret, URLOption options) {
+    public MailjetClient(String apiKey, String apiSecret, ClientOptions options) {
         init(apiKey, apiSecret, null, options);
     }
     
-    public MailjetClient(String apiKey, String apiSecret, RequestHandler handler, URLOption options) {
+    public MailjetClient(String apiKey, String apiSecret, RequestHandler handler, ClientOptions options) {
         init(apiKey, apiSecret, handler, options);
     }
     
-    private void init(String apiKey, String apiSecret, RequestHandler handler, URLOption options) {
+    private void init(String apiKey, String apiSecret, RequestHandler handler, ClientOptions options) {
         _apiKey = apiKey;
         _apiSecret = apiSecret;
         
@@ -114,7 +114,7 @@ public class MailjetClient {
               .addHeader("user-agent", "mailjet-apiv3-java/v3.1.1")
               .addHeader("Authorization", "Basic " + authEncBytes);
         if (options) {
-            parseOptions(options)
+            initOptions(options)
         } 
     }
 
@@ -142,7 +142,7 @@ public class MailjetClient {
      public MailjetResponse get(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
          return get(request, null);
      }
-     public MailjetResponse get(MailjetRequest request, URLOption options) throws MailjetException, MailjetSocketTimeoutException {
+     public MailjetResponse get(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
         try {
             String url = createUrl(options) + request.buildUrl();
             
@@ -183,7 +183,7 @@ public class MailjetClient {
     public MailjetResponse post(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
         return post(request, null);
     }
-    public MailjetResponse post(MailjetRequest request, URLOption options) throws MailjetException, MailjetSocketTimeoutException {
+    public MailjetResponse post(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
         try {
             String url = createUrl(options) + request.buildUrl();
             
@@ -214,10 +214,10 @@ public class MailjetClient {
         }
     }
     
-    public MailjetResponse put(MailjetRequest request, URLOption options) throws MailjetException, MailjetSocketTimeoutException {
+    public MailjetResponse put(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
         return put(request, null);
     }
-    public MailjetResponse put(MailjetRequest request, URLOption options) throws MailjetException, MailjetSocketTimeoutException {
+    public MailjetResponse put(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
         try {
             String url = createUrl(options) + request.buildUrl();
             
@@ -245,10 +245,10 @@ public class MailjetClient {
         }
     }
     
-    public MailjetResponse delete(MailjetRequest request, URLOption options) throws MailjetException, MailjetSocketTimeoutException {
+    public MailjetResponse delete(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
         return delete(request, null);
     }
-    public MailjetResponse delete(MailjetRequest request, URLOption options) throws MailjetException, MailjetSocketTimeoutException {
+    public MailjetResponse delete(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
         try {
             String url = createUrl(options) + request.buildUrl();
             
@@ -280,43 +280,44 @@ public class MailjetClient {
         }
     }
     
-    private parseOptions(URLOption options) {
-        if (options.url) {
-            _url = options.url;
+    private initOptions(ClientOptions options) {
+        _options = options
+        if (!options.url) {
+            _options.baseUrl = options.url;
         }
-        if (options.version) {
-            _version = options.version;
+        
+        if (!options.version) {
+            _options.version = options.version;
         }
-        if (options.call == false) {
-            _call = NOCALL_DEBUG;
-        } else if(options.call == true) {
-            _call = NO_DEBUG;
-        }
-    }
-    
-    private int verifyDebug(URLOption options) {
-        if (options.call == false) {
-            return NOCALL_DEBUG;
-        } else if (options.call == true) {
-            return NO_DEBUG
-        } else {
-            return _call;
+        
+        if (options.call == null) {
+            _options.call = 
         }
     }
     
-    private String createUrl(URLOption options) {
+    private String createUrl(ClientOptions options) {
         if (options.url) {
             url = options.url;
         } else {
-            url = _url;
+            url = _options.baseUrl;
         }
         
         if (options.version) {
             url = url + '/' + options.version;
         } else {
-            url = url + '/' + _version;
+            url = url + '/' + _options.version;
         }
         
         return url;
+    }
+    
+    private int verifyDebug(ClientOptions options) {
+        if (options.call == false) {
+            return NOCALL_DEBUG;
+        } else if (options.call == true) {
+            return NO_DEBUG
+        } else {
+            return _options.call;
+        }
     }
  }
