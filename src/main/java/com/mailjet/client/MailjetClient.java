@@ -30,7 +30,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import org.json.JSONObject;
-
+import com.mailjet.client.resource.ClientOptions;
 
 /**
  *
@@ -45,7 +45,7 @@ public class MailjetClient {
     private static String _baseUrl = "https://api.mailjet.com/";
     private static String _version = "v3";
     private static int _call = NO_DEBUG;
-    private ClientOptions _options;
+    private ClientOptions _options = null;
     private BasicHttpClient _client;
     private BasicRequestHandler _handler;
     
@@ -113,8 +113,8 @@ public class MailjetClient {
               .addHeader("Accept", "application/json")
               .addHeader("user-agent", "mailjet-apiv3-java/v3.1.1")
               .addHeader("Authorization", "Basic " + authEncBytes);
-        if (options) {
-            initOptions(options)
+        if (options != null) {
+            initOptions(options);
         } 
     }
 
@@ -215,9 +215,6 @@ public class MailjetClient {
     }
     
     public MailjetResponse put(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
-        return put(request, null);
-    }
-    public MailjetResponse put(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
         try {
             String url = createUrl(options) + request.buildUrl();
             
@@ -245,9 +242,6 @@ public class MailjetClient {
         }
     }
     
-    public MailjetResponse delete(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
-        return delete(request, null);
-    }
     public MailjetResponse delete(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
         try {
             String url = createUrl(options) + request.buildUrl();
@@ -280,29 +274,29 @@ public class MailjetClient {
         }
     }
     
-    private initOptions(ClientOptions options) {
-        _options = options
-        if (!options.url) {
-            _options.baseUrl = options.url;
+    private void initOptions(ClientOptions options) {
+        _options = options;
+        if (options.baseUrl == null) {
+            _options.baseUrl = _baseUrl;
         }
         
-        if (!options.version) {
-            _options.version = options.version;
+        if (options.version == null) {
+            _options.version = _version;
         }
         
         if (options.call == null) {
-            _options.call = 
+            _options.call = _call == NOCALL_DEBUG ? false : true;
         }
     }
     
     private String createUrl(ClientOptions options) {
-        if (options.url) {
-            url = options.url;
-        } else {
-            url = _options.baseUrl;
+        String url = _options.baseUrl;
+        
+        if (options != null && options.baseUrl != null) {
+            url = options.baseUrl;
         }
         
-        if (options.version) {
+        if (options != null && options.version != null) {
             url = url + '/' + options.version;
         } else {
             url = url + '/' + _options.version;
@@ -312,12 +306,16 @@ public class MailjetClient {
     }
     
     private int verifyDebug(ClientOptions options) {
-        if (options.call == false) {
+        if (options != null && options.call == false) {
             return NOCALL_DEBUG;
-        } else if (options.call == true) {
-            return NO_DEBUG
+        } else if (options != null && options.call == true) {
+            return NO_DEBUG;
+        } else if (_options.call != null && _options.call == false) {
+            return NOCALL_DEBUG;
+        } else if (options != null && options.call == true) {
+            return NO_DEBUG;
         } else {
-            return _options.call;
+            return _call;
         }
     }
  }
