@@ -30,7 +30,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import org.json.JSONObject;
-
+import com.mailjet.client.resource.ClientOptions;
 
 /**
  *
@@ -42,7 +42,10 @@ public class MailjetClient {
     public static final int VERBOSE_DEBUG = 1;
     public static final int NOCALL_DEBUG = 2;
     
-    private String _baseUrl = "https://api.mailjet.com/v3";
+    private static String _baseUrl = "https://api.mailjet.com/";
+    private static String _version = "v3";
+    private static int _call = NO_DEBUG;
+    private ClientOptions _options = null;
     private BasicHttpClient _client;
     private BasicRequestHandler _handler;
     
@@ -54,36 +57,55 @@ public class MailjetClient {
      * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET
      * @param apiKey
      * @param apiSecret
+     * @param handler
+     * @param options
      */
     public MailjetClient(String apiKey, String apiSecret) {
+        init(apiKey, apiSecret, null, null);
+    }
+    
+    public MailjetClient(String apiKey, String apiSecret, RequestHandler handler) {
+        init(apiKey, apiSecret, handler, null);
+    }
+    
+    public MailjetClient(String apiKey, String apiSecret, ClientOptions options) {
+        init(apiKey, apiSecret, null, options);
+    }
+    
+    public MailjetClient(String apiKey, String apiSecret, RequestHandler handler, ClientOptions options) {
+        init(apiKey, apiSecret, handler, options);
+    }
+    
+    private void init(String apiKey, String apiSecret, RequestHandler handler, ClientOptions options) {
         _apiKey = apiKey;
         _apiSecret = apiSecret;
         
-        /**
-         * Provide an Empty logger to the client.
-         * The user can enable it with .setDebug()
-         */
-        RequestLogger logger = new RequestLogger() {
+        if (handler == null) {
+            /**
+            * Provide an Empty logger to the client.
+            * The user can enable it with .setDebug()
+            */
+            RequestLogger logger = new RequestLogger() {
 
-            @Override
-            public boolean isLoggingEnabled() {
-                return false;
-            }
+                @Override
+                public boolean isLoggingEnabled() {
+                    return false;
+                }
 
-            @Override
-            public void log(String string) {}
+                @Override
+                public void log(String string) {}
 
-            @Override
-            public void logRequest(HttpURLConnection hurlc, Object o) throws IOException {}
+                @Override
+                public void logRequest(HttpURLConnection hurlc, Object o) throws IOException {}
 
-            @Override
-            public void logResponse(HttpResponse hr) {}
-        };
-        
-        
-        _client = new BasicHttpClient();
-        _client.setRequestLogger(logger);
-
+                @Override
+                public void logResponse(HttpResponse hr) {}
+            };
+            _client = new BasicHttpClient();
+            _client.setRequestLogger(logger);
+        } else {
+            _client = new BasicHttpClient("", handler);
+        }
 
         String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
         
@@ -91,26 +113,9 @@ public class MailjetClient {
               .addHeader("Accept", "application/json")
               .addHeader("user-agent", "mailjet-apiv3-java/v3.1.1")
               .addHeader("Authorization", "Basic " + authEncBytes);
-    }
-    
-    /**
-     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET
-     * @param apiKey
-     * @param apiSecret
-     * @param handler
-     */
-    public MailjetClient(String apiKey, String apiSecret, RequestHandler handler) {
-        _apiKey = apiKey;
-        _apiSecret = apiSecret;
-                
-        _client = new BasicHttpClient("", handler);
-
-        String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
-        
-        _client
-              .addHeader("Accept", "application/json")
-              .addHeader("user-agent", "mailjet-apiv3-java/v3.1.0")
-              .addHeader("Authorization", "Basic " + authEncBytes);
+        if (options != null) {
+            initOptions(options);
+        } 
     }
 
     /**
@@ -134,9 +139,12 @@ public class MailjetClient {
      * @return MailjetResponse
      * @throws MailjetException
      */
-    public MailjetResponse get(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
+     public MailjetResponse get(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
+         return get(request, null);
+     }
+     public MailjetResponse get(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
         try {
-            String url = _baseUrl + request.buildUrl();
+            String url = createUrl(options) + request.buildUrl();
             
             if (_debug == NOCALL_DEBUG) {
                 return new MailjetResponse(new JSONObject().put("url", url + request.queryString()));
@@ -173,20 +181,22 @@ public class MailjetClient {
      * @throws com.mailjet.client.errors.MailjetException
      */
     public MailjetResponse post(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
-        
+        return post(request, null);
+    }
+    public MailjetResponse post(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
         try {
-            String url = request.buildUrl();
+            String url = createUrl(options) + request.buildUrl();
             
             if (_debug == NOCALL_DEBUG) {
                 return new MailjetResponse(new JSONObject()
-                        .put("url", _baseUrl + url)
+                        .put("url", url)
                         .put("payload", request.getBody()));
             }
             
             HttpResponse response;
             String json;
             
-            response = _client.post(_baseUrl + url, request.getContentType(), request.getBody().getBytes("UTF8"));
+            response = _client.post(url, request.getContentType(), request.getBody().getBytes("UTF8"));
                         
             if (response == null) {
                 throw new MailjetSocketTimeoutException("Socket Timeout");
@@ -204,19 +214,19 @@ public class MailjetClient {
         }
     }
     
-    public MailjetResponse put(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
+    public MailjetResponse put(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
         try {
-            String url = request.buildUrl();
+            String url = createUrl(options) + request.buildUrl();
             
-            if (_debug == NOCALL_DEBUG) {
+            if (verifyDebug(options) == NOCALL_DEBUG) {
                 return new MailjetResponse(new JSONObject()
-                        .put("url", _baseUrl + url)
+                        .put("url", url)
                         .put("payload", request.getBody()));
             }
             
             HttpResponse response;
             
-            response = _client.put(_baseUrl + url, request.getContentType(), request.getBody().getBytes("UTF8"));
+            response = _client.put(url, request.getContentType(), request.getBody().getBytes("UTF8"));
                                   
             if (response == null) {
                 throw new MailjetSocketTimeoutException("Socket Timeout");
@@ -232,13 +242,13 @@ public class MailjetClient {
         }
     }
     
-    public MailjetResponse delete(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
+    public MailjetResponse delete(MailjetRequest request, ClientOptions options) throws MailjetException, MailjetSocketTimeoutException {
         try {
-            String url = request.buildUrl();
+            String url = createUrl(options) + request.buildUrl();
             
             if (_debug == NOCALL_DEBUG) {
                 return new MailjetResponse(new JSONObject()
-                        .put("url", _baseUrl + url));
+                        .put("url", url));
             }
             
             HttpResponse response;
@@ -246,7 +256,7 @@ public class MailjetClient {
             
             ParameterMap p = new ParameterMap();
             p.putAll(request._filters);
-            response = _client.delete(_baseUrl + url, p);
+            response = _client.delete(url, p);
                                    
             if (response == null) {
                 throw new MailjetSocketTimeoutException("Socket Timeout");
@@ -261,6 +271,51 @@ public class MailjetClient {
             throw new MailjetException("Internal Exception: Unsupported Encoding");
         } catch (NullPointerException e) {
             throw new MailjetException("Connection Exception");
+        }
+    }
+    
+    private void initOptions(ClientOptions options) {
+        _options = options;
+        if (options.baseUrl == null) {
+            _options.baseUrl = _baseUrl;
+        }
+        
+        if (options.version == null) {
+            _options.version = _version;
+        }
+        
+        if (options.call == null) {
+            _options.call = _call == NOCALL_DEBUG ? false : true;
+        }
+    }
+    
+    private String createUrl(ClientOptions options) {
+        String url = _options.baseUrl;
+        
+        if (options != null && options.baseUrl != null) {
+            url = options.baseUrl;
+        }
+        
+        if (options != null && options.version != null) {
+            url = url + '/' + options.version;
+        } else {
+            url = url + '/' + _options.version;
+        }
+        
+        return url;
+    }
+    
+    private int verifyDebug(ClientOptions options) {
+        if (options != null && options.call == false) {
+            return NOCALL_DEBUG;
+        } else if (options != null && options.call == true) {
+            return NO_DEBUG;
+        } else if (_options.call != null && _options.call == false) {
+            return NOCALL_DEBUG;
+        } else if (options != null && options.call == true) {
+            return NO_DEBUG;
+        } else {
+            return _call;
         }
     }
  }
