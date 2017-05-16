@@ -37,6 +37,8 @@ public class MailjetResponse {
             return _rawResponse.getJSONArray("Data");
         } else if (_rawResponse.has("Sent")) {
             return _rawResponse.getJSONArray("Sent");
+        } else if (_rawResponse.has("Messages")) {
+            return _rawResponse.getJSONArray("Messages");
         } else {
             return new JSONArray();
         }
