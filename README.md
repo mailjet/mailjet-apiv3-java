@@ -96,7 +96,32 @@ response = client.post(sender);
 
 ```
 
-### Send an Email
+### Send an Email with Send API v3.1
+``` java
+
+MailjetClient client;
+MailjetRequest email;
+MailjetResponse response;
+
+// Note how we set the version to v3.1 using ClientOptions
+MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"), new ClientOptions("v3.1"));
+
+email = new MailjetRequest(Emailv31.resource)
+                .property(Emailv31.FROM, new JSONObject()
+                .put("Email", "passenger@mailjet.com")
+                .put("Name", "Mailjet Pilot"))
+                .property(Emailv31.SUBJECT, "Your email flight plan!")
+                .property(Emailv31.TEXT_PART, "Dear passenger, welcome to Mailjet! May the delivery force be with you!")
+                .property(Emailv31.HTML_PART, "&lt;h3&gt;Dear passenger, welcome to Mailjet!&lt;/h3&gt;&lt;br /&gt;May the delivery force be with you!")
+                .property(Emailv31.TO, new JSONArray()
+                .put(new JSONObject()
+                .put("Email", "passenger@mailjet.com")));
+
+response = client.post(email);
+
+```
+
+### Send an Email with Send API v3.0
 ``` java
 
 MailjetRequest email;
