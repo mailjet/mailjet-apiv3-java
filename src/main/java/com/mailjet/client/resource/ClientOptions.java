@@ -13,14 +13,20 @@ import com.mailjet.client.Resource;
  */
 public class ClientOptions {
 
-  public String baseUrl = null;
-  public String version = null;
-  public Boolean call = null;
-  
-  public ClientOptions(String new_url, String new_version, Boolean new_call) {
-    baseUrl = new_url;
-    version = new_version;
-    call = new_call;
+  private String baseUrl;
+  private String version;
+
+  public ClientOptions(String baseUrl, String version) {
+    this.baseUrl = baseUrl;
+    this.version = version;
+  }
+
+  public String getBaseUrl() {
+    return this.baseUrl;
+  }
+
+  public String getVersion() {
+    return this.version;
   }
 
 }
