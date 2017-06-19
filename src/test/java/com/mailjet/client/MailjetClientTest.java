@@ -154,7 +154,7 @@ public class MailjetClientTest {
     public void testSendv31() throws MailjetException, MalformedURLException, UnsupportedEncodingException, MailjetSocketTimeoutException {
         MailjetClient client;
 
-        client = new MailjetClient("", "");
+        client = new MailjetClient("", "", new ClientOptions("https://api.mailjet.com", "v3.1"));
         client.setDebug(MailjetClient.NOCALL_DEBUG);
 
         System.out.println("TESTING: Send email with Send API v3.1");
@@ -176,6 +176,6 @@ public class MailjetClientTest {
         response = client.post(request);
 
         assertEquals(request.getBody(), "{\"HTMLPart\":\"&lt;h3&gt;Dear passenger, welcome to Mailjet!&lt;/h3&gt;&lt;br /&gt;May the delivery force be with you!\",\"TextPart\":\"Dear passenger, welcome to Mailjet! May the delivery force be with you!\",\"From\":{\"Email\":\"passenger@mailjet.com\",\"Name\":\"Mailjet Pilot\"},\"To\":[{\"Email\":\"passenger@mailjet.com\"}],\"Subject\":\"Your email flight plan!\"}");
-        assertEquals(response.getString("url"), "https://api.mailjet.com/v3/send");
+        assertEquals(response.getString("url"), "https://api.mailjet.com/v3.1/send");
     }
 }

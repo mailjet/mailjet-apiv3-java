@@ -3,9 +3,7 @@
  * This is a generated class.
  */
 
-package com.mailjet.client.resource;
-
-import com.mailjet.client.Resource;
+package com.mailjet.client;
 
 /**
  *
@@ -13,8 +11,16 @@ import com.mailjet.client.Resource;
  */
 public class ClientOptions {
 
+  private static String defaultBaseURL = "https://api.mailjet.com";
+  private static String defaultVersion = "v3";
+
   private String baseUrl;
   private String version;
+
+  public ClientOptions() {
+    this.baseUrl = ClientOptions.defaultBaseURL;
+    this.version = ClientOptions.defaultVersion;
+  }
 
   public ClientOptions(String baseUrl, String version) {
     this.baseUrl = baseUrl;

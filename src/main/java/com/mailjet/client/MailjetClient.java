@@ -30,7 +30,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import org.json.JSONObject;
-import com.mailjet.client.resource.ClientOptions;
+import com.mailjet.client.ClientOptions;
 
 /**
  *
@@ -42,8 +42,6 @@ public class MailjetClient {
     public static final int VERBOSE_DEBUG = 1;
     public static final int NOCALL_DEBUG = 2;
 
-    private static String _baseUrl = "https://api.mailjet.com";
-    private static String _version = "v3";
     private ClientOptions _options;
     private BasicHttpClient _client;
     private BasicRequestHandler _handler;
@@ -116,7 +114,7 @@ public class MailjetClient {
           setOptions(options);
         }
         else {
-          setOptions(new ClientOptions(MailjetClient._baseUrl, MailjetClient._version));
+          setOptions(new ClientOptions());
         }
     }
 
@@ -217,7 +215,7 @@ public class MailjetClient {
 
             if (_debug == NOCALL_DEBUG) {
                 return new MailjetResponse(new JSONObject()
-                        .put("url", _baseUrl + url)
+                        .put("url", url)
                         .put("payload", request.getBody()));
             }
 
@@ -245,7 +243,7 @@ public class MailjetClient {
 
             if (_debug == NOCALL_DEBUG) {
                return new MailjetResponse(new JSONObject()
-                       .put("url", _baseUrl + url));
+                       .put("url", url));
             }
 
             ParameterMap p = new ParameterMap();
