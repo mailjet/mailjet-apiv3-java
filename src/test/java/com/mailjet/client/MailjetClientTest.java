@@ -93,7 +93,6 @@ public class MailjetClientTest {
                         .filter(Contact.OFFSET, 2);
 
         response = client.get(contacts);
-        System.out.println(response);
         String url = response.getString("url");
         Boolean test = url.equals("https://api.mailjet.com/v3/REST/contact?Offset=2&Limit=10") ||
                 url.equals("https://api.mailjet.com/v3/REST/contact?Limit=10&Offset=2");
