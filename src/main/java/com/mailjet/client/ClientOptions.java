@@ -22,8 +22,13 @@ public class ClientOptions {
     this.version = ClientOptions.defaultVersion;
   }
 
-  public ClientOptions(String baseUrl, String version) {
+  public ClientOptions(String version, String baseUrl) {
     this.baseUrl = baseUrl;
+    this.version = version;
+  }
+
+  public ClientOptions(String version) {
+    this.baseUrl = ClientOptions.defaultBaseURL;
     this.version = version;
   }
 
