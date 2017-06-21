@@ -15,6 +15,8 @@ public class Emailv31 {
 
     public static Resource resource = new Resource("send", "");
 
+    public static String EMAIL = "Email";
+    public static String NAME = "Name";
     public static String FROM = "From";
     public static String SENDER = "Sender";
     public static String REPLY_TO = "ReplyTo";

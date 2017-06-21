@@ -15,6 +15,7 @@ public class Email {
 
     public static Resource resource = new Resource("send", "");
 
+    public static String EMAIL = "Email";
     public static String FROMEMAIL = "FromEmail";
     public static String FROMNAME = "FromName";
     public static String SENDER = "Sender";
