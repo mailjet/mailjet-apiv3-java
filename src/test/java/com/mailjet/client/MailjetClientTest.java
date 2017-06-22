@@ -138,7 +138,7 @@ public class MailjetClientTest {
                fromName = "Mailjet Pilot",
                subject = "Your email flight plan!",
                textPart = "Dear passenger, welcome to Mailjet! May the delivery force be with you!",
-               htmlPart = "&lt;h3&gt;Dear passenger, welcome to Mailjet!&lt;/h3&gt;&lt;br /&gt;May the delivery force be with you!",
+               htmlPart = "<h3>Dear passenger, welcome to Mailjet</h3><br/>May the delivery force be with you!",
                recipient = "passenger@mailjet.com";
 
         // Simple contact GET request
@@ -167,17 +167,19 @@ public class MailjetClientTest {
         MailjetRequest request;
         MailjetResponse response;
 
+        JSONObject message = new JSONObject();
+        message.put(Emailv31.Message.FROM, new JSONObject()
+        .put(Emailv31.Message.EMAIL, "pilot@mailjet.com")
+        .put(Emailv31.Message.NAME, "Mailjet Pilot"))
+        .put(Emailv31.Message.SUBJECT, "Your email flight plan!")
+        .put(Emailv31.Message.TEXTPART, "Dear passenger, welcome to Mailjet! May the delivery force be with you!")
+        .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger, welcome to Mailjet</h3><br/>May the delivery force be with you!")
+        .put(Emailv31.Message.TO, new JSONArray()
+        .put(new JSONObject()
+        .put(Emailv31.Message.EMAIL, "passenger@mailjet.com")));
+
         // Simple contact GET request
-        request = new MailjetRequest(Emailv31.resource)
-                        .property(Emailv31.FROM, new JSONObject()
-                        .put(Emailv31.EMAIL, "passenger@mailjet.com")
-                        .put(Emailv31.NAME, "Mailjet Pilot"))
-                        .property(Emailv31.SUBJECT, "Your email flight plan!")
-                        .property(Emailv31.TEXT_PART, "Dear passenger, welcome to Mailjet! May the delivery force be with you!")
-                        .property(Emailv31.HTML_PART, "&lt;h3&gt;Dear passenger, welcome to Mailjet!&lt;/h3&gt;&lt;br /&gt;May the delivery force be with you!")
-                        .property(Emailv31.TO, new JSONArray()
-                        .put(new JSONObject()
-                        .put(Emailv31.EMAIL, "passenger@mailjet.com")));
+        request = new MailjetRequest(Emailv31.resource).property(Emailv31.MESSAGES, (new JSONArray()).put(message));
         response = client.post(request);
 
         assertEquals(response.getString("url"), "https://api.mailjet.com/v3.1/send");
