@@ -43,6 +43,8 @@ public class Emailv31 {
       public static String DEDUPLICATECAMPAIGN = "DeduplicateCampaign";
       public static String EVENTPAYLOAD = "EventPayload";
       public static String HEADERS = "Headers";
+      public static String VARIABLES = "Variables";
+      public static String URLTAGS = "URLTags";
 
       public static String TRACKOPENS = "TrackOpens";
       public static String TRACKCLICKS = "TrackClicks";
