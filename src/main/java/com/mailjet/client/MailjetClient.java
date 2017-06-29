@@ -54,21 +54,38 @@ public class MailjetClient {
      * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET
      * @param apiKey
      * @param apiSecret
-     * @param handler
-     * @param options
      */
     public MailjetClient(String apiKey, String apiSecret) {
         init(apiKey, apiSecret, null, null);
     }
 
+    /**
+     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET. Use custom request handler.
+     * @param apiKey
+     * @param apiSecret
+     * @param handler
+     */
     public MailjetClient(String apiKey, String apiSecret, RequestHandler handler) {
         init(apiKey, apiSecret, handler, null);
     }
 
+    /**
+     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET. Use client options.
+     * @param apiKey
+     * @param apiSecret
+     * @param options
+     */
     public MailjetClient(String apiKey, String apiSecret, ClientOptions options) {
         init(apiKey, apiSecret, null, options);
     }
 
+    /**
+     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET. Use custom request handler. Use client options.
+     * @param apiKey
+     * @param apiSecret
+     * @param handler
+     * @param options
+     */
     public MailjetClient(String apiKey, String apiSecret, RequestHandler handler, ClientOptions options) {
         init(apiKey, apiSecret, handler, options);
     }
