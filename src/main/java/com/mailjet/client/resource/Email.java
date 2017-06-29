@@ -15,9 +15,10 @@ public class Email {
 
     public static Resource resource = new Resource("send", "");
 
+    public static String EMAIL = "Email";
     public static String FROMEMAIL = "FromEmail";
-    public static String MJTEMPLATEMPLATEID = "Mj-Template-ID";
     public static String FROMNAME = "FromName";
+    public static String SENDER = "Sender";
     public static String SUBJECT = "Subject";
     public static String TEXTPART = "Text-Part";
     public static String HTMLPART = "Html-Part";
@@ -38,8 +39,11 @@ public class Email {
     public static String MJCAMPAIGN = "Mj-campaign";
     public static String MJDEDUPLICATECAMPAIGN = "Mj-deduplicatecampaign";
     public static String MJEVENTPAYLOAD = "Mj-EventPayload";
+    public static String MJTRACK_OPENS = "Mj-trackopen";
+    public static String MJTRACK_CLICKS = "Mj-trackclick";
     public static String HEADERS = "Headers";
     public static String MESSAGE = "Message";
     public static String MESSAGES = "Messages";
-    public static String FROM = "From";
+    public static String MONITORING_CATEGORY = "MonitoringCategory";
+
 }

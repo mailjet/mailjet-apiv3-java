@@ -32,57 +32,57 @@ import org.json.JSONObject;
  * @author Guillaume Badi - Mailjet
  */
 public class MailjetRequest {
-    
+
     /**
     * REST/DATA/send API. By default, the constructor will initialize it with REST
-    * as most of the resources will use it 
+    * as most of the resources will use it
     */
     private String _path;
-    
+
     /**
      * Mailjet resource string
      */
     private String _resource;
-    
+
     /**
      * Mailjet resource action, if any
      */
     private String _action;
-    
+
     private String _alt;
-    
+
     /**
      * Resource ID
      */
     private Long _id;
-    
+
     /**
      * Resource action ID
      */
     private long _actionId;
-    
+
     private String _data;
-    
+
     /**
      * Filters HashMap.
      * Every filter should be string values. So Integer will be cast into
      * Strings
      */
     HashMap<String, String> _filters =  new HashMap<>();
-    
+
     /**
-     * The request body is a JSONObject that will be cast into a String before the 
+     * The request body is a JSONObject that will be cast into a String before the
      * call
      */
     JSONObject _body = new JSONObject();
- 
+
     /**
      * Depending on whether the client used the first, second or third constructor,
      * the configuration might differ after.
      * TODO: find a cleaner way to manage that.
      */
     private int _configuration;
-    
+
     /**
      * Make a Mailjet request with a single resource.
      * @param res
@@ -91,14 +91,14 @@ public class MailjetRequest {
         this._path = "/REST";
         _configuration = 1;
         _resource = res.getResource();
-        _action = res.getAction(); 
+        _action = res.getAction();
         _id = null;
-        
+
         if (_resource.equals("send")) {
             _path = "";
         }
     }
-    
+
     /**
      * In case of a simple view. Call a single resource with a single ID
      * @param res
@@ -109,14 +109,14 @@ public class MailjetRequest {
         _resource = res.getResource();
         _action = res.getAction();
         _id = id;
-        
+
         if (_action.equals("")) {
             _configuration = 2;
         } else {
             _configuration = 3;
         }
     }
-   
+
     /**
      * In case of a simple view. Call a single resource with a single ID
      * @param res
@@ -127,14 +127,14 @@ public class MailjetRequest {
         _resource = res.getResource();
         _action = res.getAction();
         _alt = id;
-        
+
         if (_action.equals("")) {
             _configuration = 2;
         } else {
             _configuration = 3;
         }
     }
-    
+
     /**
      * Build a Request with an actionID
      * @param res the resource object
@@ -149,13 +149,13 @@ public class MailjetRequest {
         _actionId = actionid;
         _configuration = 4;
     }
-  
+
     public MailjetRequest setData(String path) throws IOException {
         _data = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
         System.out.println(_data);
         return this;
     }
-    
+
     /**
      * Pass a String formatted json as the request body
      * @param json
@@ -165,7 +165,7 @@ public class MailjetRequest {
         _body = new JSONObject(json);
         return this;
     }
-    
+
         /**
      * Pass a JSONObject formatted json as the request body
      * @param json
@@ -174,7 +174,7 @@ public class MailjetRequest {
     public MailjetRequest setBody(JSONObject json) {
         return setBody(json.toString());
     }
-    
+
     /**
      * Use an HashMap to build the body
      * @param json
@@ -184,7 +184,7 @@ public class MailjetRequest {
         _body = new JSONObject(json);
         return this;
     }
-    
+
     /**
      * Body getter
      * @return the stringified body
@@ -192,7 +192,15 @@ public class MailjetRequest {
     public String getBody() {
         return _data == null ? _body.toString() : Base64.encode(_data.getBytes());
     }
-    
+
+    /**
+     * Body JSON getter
+     * @return the body as JSONObject
+     */
+    public JSONObject getBodyJSON() {
+        return _body;
+    }
+
     /**
      * Returns the appropriate Content-Type according to the resource/action
      * @return Content-Type
@@ -205,7 +213,7 @@ public class MailjetRequest {
         else
             return "application/json";
     }
-    
+
     /**
      * Build the call URL with query string parameters
      * @return url
@@ -215,8 +223,8 @@ public class MailjetRequest {
     public String buildUrl() throws MalformedURLException, UnsupportedEncodingException {
         String base = _path + '/' + _resource;
         String id = null;
-        String url = null;        
-        
+        String url = null;
+
         if (_alt != null || _id != null) {
             id = _alt != null ? _alt : _id.toString();
         }
@@ -233,10 +241,10 @@ public class MailjetRequest {
             url = base + '/' + id + '/' + _action;
         else if (_configuration == 4)
             url = base + '/' + id + '/' + _action + '/' + _actionId;
-        
+
         return url;
     }
-    
+
     /**
      * Append a value to the body[key]
      * @param key the key
@@ -247,7 +255,7 @@ public class MailjetRequest {
         _body.append(key, value);
         return this;
     }
-    
+
     /**
      * Add a String-String filter to the the _filters hash
      * @param key
@@ -258,7 +266,7 @@ public class MailjetRequest {
         _filters.put(key, value);
         return this;
     }
-    
+
     /**
      * Add a String/int filter to the _filters hash
      * @param key
@@ -268,8 +276,8 @@ public class MailjetRequest {
     public MailjetRequest filter(String key, int value) {
         return filter(key, String.valueOf(value));
     }
-    
-    
+
+
     /**
      * Build a query string using the _filters hash
      * @return a query string
@@ -277,7 +285,7 @@ public class MailjetRequest {
      */
     public String queryString () throws UnsupportedEncodingException {
         StringBuilder sb = new StringBuilder();
-        
+
         for (String key : _filters.keySet()) {
             String value = _filters.get(key);
             if(sb.length() > 0){
@@ -288,10 +296,10 @@ public class MailjetRequest {
             }
             sb.append(URLEncoder.encode(key, "UTF-8")).append('=').append(value.replace(' ', '+'));
         }
-        
+
         return sb.toString();
     }
-    
+
     /**
      * Add a property to the body JSONObject
      * @param key
@@ -302,7 +310,7 @@ public class MailjetRequest {
         _body.put(key, value);
         return this;
     }
-    
+
     @Override
     public String toString() {
         return new JSONObject()
