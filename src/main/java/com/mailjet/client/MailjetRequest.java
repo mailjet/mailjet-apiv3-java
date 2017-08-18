@@ -226,7 +226,7 @@ public class MailjetRequest {
         String url = null;
 
         if (_alt != null || _id != null) {
-            id = _alt != null ? _alt : _id.toString();
+            id = _alt != null ? URLEncoder.encode(_alt, "UTF-8") : _id.toString();
         }
 
         if (id == null && !_action.equals(""))
