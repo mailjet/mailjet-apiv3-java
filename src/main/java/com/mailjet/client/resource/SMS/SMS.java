@@ -1,14 +1,14 @@
-package com.mailjet.client.resource.smses;
+package com.mailjet.client.resource;
 
-import com.mailjet.client.Resource.SMSes;
+import com.mailjet.client.Resource;
 
 /**
  *
  * @author Ivaylo Ivanov
  */
-public class Send {
+public class SMS {
 
-    public static Resource resource = new Resource("sms-send", "", true);
+    public static Resource resource = new Resource("sms", "", true);
 
 	public static String From = "From";
     public static String To = "To";
@@ -19,5 +19,10 @@ public class Send {
     public static String SentTS = "SentTS";
     public static String Cost = "Cost";
     public static String Status = "Status";
+    public static String FromTS = "FromTS";
+    public static String ToTS = "ToTS";
+    public static String StatusCode = "StatusCode";
+    public static String Offset = "Offset";
+    public static String Limit = "Limit";
 
 }

@@ -1,6 +1,6 @@
-package com.mailjet.client.resource.smses;
+package com.mailjet.client.resource;
 
-import com.mailjet.client.Resource.SMSes;
+import com.mailjet.client.Resource;
 
 /**
  *
