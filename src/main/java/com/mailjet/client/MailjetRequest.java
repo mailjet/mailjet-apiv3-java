@@ -167,6 +167,7 @@ public class MailjetRequest {
     }
 
         /**
+
      * Pass a JSONObject formatted json as the request body
      * @param json
      * @return the request itself
@@ -221,7 +222,7 @@ public class MailjetRequest {
      * @throws UnsupportedEncodingException
      */
     public String buildUrl() throws MalformedURLException, UnsupportedEncodingException {
-        String base = _path + '/' + _resource;
+        String base = (_resource.getWithoutNamespace() ? "" : _path) + '/' + _resource;
         String id = null;
         String url = null;
 
