@@ -94,7 +94,7 @@ public class MailjetRequest {
         _configuration = 1;
         _resource = res.getResource();
         _action = res.getAction();
-		_withoutNamespace = getWithoutNamespace();
+		_withoutNamespace = res.getWithoutNamespace();
 
         _id = null;
 
@@ -112,7 +112,7 @@ public class MailjetRequest {
         this._path = "/REST";
         _resource = res.getResource();
         _action = res.getAction();
-		_withoutNamespace = getWithoutNamespace();
+		_withoutNamespace = res.getWithoutNamespace();
         _id = id;
 
         if (_action.equals("")) {
@@ -131,7 +131,7 @@ public class MailjetRequest {
         this._path = "/REST";
         _resource = res.getResource();
         _action = res.getAction();
-		_withoutNamespace = getWithoutNamespace();
+		_withoutNamespace = res.getWithoutNamespace();
         _alt = id;
 
         if (_action.equals("")) {
@@ -151,7 +151,7 @@ public class MailjetRequest {
         this._path = "/REST";
         _resource = res.getResource();
         _action = res.getAction();
-		_withoutNamespace = getWithoutNamespace();
+		_withoutNamespace = res.getWithoutNamespace();
         _id = id;
         _actionId = actionid;
         _configuration = 4;
