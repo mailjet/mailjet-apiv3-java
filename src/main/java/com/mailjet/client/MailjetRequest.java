@@ -51,6 +51,8 @@ public class MailjetRequest {
 
     private String _alt;
 
+	private Boolean _withoutNamespace;
+
     /**
      * Resource ID
      */
@@ -92,6 +94,8 @@ public class MailjetRequest {
         _configuration = 1;
         _resource = res.getResource();
         _action = res.getAction();
+		_withoutNamespace = getWithoutNamespace();
+
         _id = null;
 
         if (_resource.equals("send")) {
@@ -108,6 +112,7 @@ public class MailjetRequest {
         this._path = "/REST";
         _resource = res.getResource();
         _action = res.getAction();
+		_withoutNamespace = getWithoutNamespace();
         _id = id;
 
         if (_action.equals("")) {
@@ -126,6 +131,7 @@ public class MailjetRequest {
         this._path = "/REST";
         _resource = res.getResource();
         _action = res.getAction();
+		_withoutNamespace = getWithoutNamespace();
         _alt = id;
 
         if (_action.equals("")) {
@@ -145,6 +151,7 @@ public class MailjetRequest {
         this._path = "/REST";
         _resource = res.getResource();
         _action = res.getAction();
+		_withoutNamespace = getWithoutNamespace();
         _id = id;
         _actionId = actionid;
         _configuration = 4;
@@ -222,7 +229,7 @@ public class MailjetRequest {
      * @throws UnsupportedEncodingException
      */
     public String buildUrl() throws MalformedURLException, UnsupportedEncodingException {
-        String base = (_resource.getWithoutNamespace() ? "" : _path) + '/' + _resource;
+        String base = (_withoutNamespace ? "" : _path) + '/' + _resource;
         String id = null;
         String url = null;
 
