@@ -190,7 +190,7 @@ public class MailjetClientTest {
     public void testSendSMS() throws MailjetException, MalformedURLException, UnsupportedEncodingException, MailjetSocketTimeoutException {
         MailjetClient client;
 
-        client = new MailjetClient("", "", new ClientOptions("v4"));
+        client = new MailjetClient("", new ClientOptions("v4"));
         client.setDebug(MailjetClient.NOCALL_DEBUG);
 
         System.out.println("TESTING: Send SMS with Send SMS API v4.");
