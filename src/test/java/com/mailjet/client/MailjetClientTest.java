@@ -11,7 +11,7 @@ import com.mailjet.client.resource.Contact;
 import com.mailjet.client.resource.ContactGetcontactslists;
 import com.mailjet.client.resource.Email;
 import com.mailjet.client.resource.Emailv31;
-import com.mailjet.client.resource.sms.SMS;
+import com.mailjet.client.resource.sms.Send;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import org.junit.Test;
