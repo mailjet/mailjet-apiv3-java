@@ -1,4 +1,4 @@
-package com.mailjet.client.resource;
+package com.mailjet.client.resource.sms;
 
 import com.mailjet.client.Resource;
 
