@@ -40,7 +40,7 @@ public class MailjetResponse {
         } else if (_rawResponse.has("Messages")) {
             return _rawResponse.getJSONArray("Messages");
         } else {
-            return new JSONArray();
+            return (new JSONArray()).add(_rawResponse);
         }
     }
     
