@@ -47,6 +47,10 @@ public class Listrecipientstatistics {
 	public static String LIMIT = "Limit";
 	public static String OFFSET = "Offset";
 	public static String COUNTONLY = "CountOnly";
+	public static final String SOFTBOUNCEDCOUNT = "SoftbouncedCount";
+	public static final String HARDBOUNCEDCOUNT = "HardbouncedCount";
+	public static final String DEFERREDCOUNT = "DeferredCount";
+	public static final String WORKFLOWEXITEDCOUNT = "WorkflowExitedCount";
 
 }
 
