@@ -159,12 +159,10 @@ public class MailjetClient {
     private void initTokenAuth(String token) {
         _token = token;
 
-        String authEncBytes = Base64.encode(token.getBytes());
-
         _client
               .addHeader("Accept", "application/json")
               .addHeader("user-agent", "mailjet-apiv3-java/v4.1.0")
-              .addHeader("Authorization", "Bearer " + authEncBytes);
+              .addHeader("Authorization", "Bearer " + token);
         
     }
 

@@ -58,4 +58,18 @@ public class MJEasyClientTest {
         // Response: {"Status":200,"Sent":[{"Email":"abreton@mailjet.com","MessageID":18014415886981635}]}
         // Response: {"Status":200,"Sent":[{"Email":"florent@mailjet.com","MessageID":18014415886982635}]}
     }
+    
+    @Test
+    public void testSmsSend() throws MailjetException, MailjetSocketTimeoutException {
+
+        // We create a client
+        MJEasyClient client = new MJEasyClient("");
+        client.setDebug(MJEasyClient.NOCALL_DEBUG);
+
+        client.sms()
+                .from("MJPilot")
+                .to("+33000000")
+                .text("Demo")
+                .send(); // And send it
+    }
 }

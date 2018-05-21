@@ -11,7 +11,8 @@ import com.mailjet.client.resource.Contact;
 import com.mailjet.client.resource.ContactGetcontactslists;
 import com.mailjet.client.resource.Email;
 import com.mailjet.client.resource.Emailv31;
-import com.mailjet.client.resource.sms.Send;
+import com.mailjet.client.resource.sms.SmsCount;
+import com.mailjet.client.resource.sms.SmsSend;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
 import org.junit.Test;
@@ -199,10 +200,10 @@ public class MailjetClientTest {
         MailjetResponse response;
 
         // Simple post request
-        request = new MailjetRequest(Send.resource)
-			.property(Send.From, "MJPilot")
-        	.property(Send.To, "+33600000000")
-			.property(Send.Text, "Have a nice SMS flight with Mailjet!");
+        request = new MailjetRequest(SmsSend.resource)
+			.property(SmsSend.FROM, "MJPilot")
+        	.property(SmsSend.TO, "+336000000")
+			.property(SmsSend.TEXT, "Have a nice SMS flight with Mailjet!");
 		response = client.post(request);
 
         assertEquals(response.getString("url"), "https://api.mailjet.com/v4/sms-send");
