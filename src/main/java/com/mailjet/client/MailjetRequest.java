@@ -16,6 +16,8 @@
 
 package com.mailjet.client;
 
+import static com.mailjet.client.MailjetRequestUtil.decodeDecimals;
+
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -198,7 +200,7 @@ public class MailjetRequest {
      * @return the stringified body
      */
     public String getBody() {
-        return _data == null ? _body.toString() : Base64.encode(_data.getBytes());
+        return _data == null ? decodeDecimals(_body.toString()) : Base64.encode(_data.getBytes());
     }
 
     /**

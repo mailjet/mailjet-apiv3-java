@@ -282,7 +282,7 @@ public class MailjetClient {
                 throw new MailjetSocketTimeoutException("Socket Timeout");
             }
 
-            json = (response.getBodyAsString() != null ?
+            json = (response.getBodyAsString() != null && !(response.getBodyAsString().equals("")) ?
                     response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString());
             return new MailjetResponse(response.getStatus(), new JSONObject(json));
         } catch (MalformedURLException ex) {
