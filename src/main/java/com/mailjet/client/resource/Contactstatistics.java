@@ -35,6 +35,7 @@ public class Contactstatistics {
 	public static String MINLASTACTIVITYAT = "MinLastActivityAt";
 	public static String OPEN = "Open";
 	public static String QUEUED = "Queued";
+	@Deprecated
 	public static String RECALCULATE = "Recalculate";
 	public static String SENT = "Sent";
 	public static String SPAM = "Spam";
@@ -42,6 +43,10 @@ public class Contactstatistics {
 	public static String LIMIT = "Limit";
 	public static String OFFSET = "Offset";
 	public static String COUNTONLY = "CountOnly";
+	public static final String SOFTBOUNCEDCOUNT = "SoftbouncedCount";
+	public static final String HARDBOUNCEDCOUNT = "HardbouncedCount";
+	public static final String DEFERREDCOUNT = "DeferredCount";
+	public static final String WORKFLOWEXITEDCOUNT = "WorkflowExitedCount";
 
 }
 

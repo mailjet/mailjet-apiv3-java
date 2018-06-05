@@ -27,6 +27,7 @@ public class Domainstatistics {
 	public static String SPAMCOMPLAINTCOUNT = "SpamComplaintCount";
 	public static String UNSUBSCRIBEDCOUNT = "UnsubscribedCount";
 	public static String CAMPAIGNID = "CampaignID";
+	@Deprecated
 	public static String CAMPAIGNSTATUS = "CampaignStatus";
 	public static String CONTACTSLIST = "ContactsList";
 	public static String CUSTOMCAMPAIGN = "CustomCampaign";

@@ -8,9 +8,11 @@ package com.mailjet.client.resource;
 import com.mailjet.client.Resource;
 
 /**
- *
+ * This endpoint will be deprecated as of 1st of july 2018. We advise to implement /statcounters endpoint instead.
+ * 
  * @author Guillaume Badi
  */
+@Deprecated
 public class Messagesentstatistics {
 
     public static Resource resource = new Resource("messagesentstatistics", "");
