@@ -14,15 +14,24 @@ public class Resource {
     
     private String _resource;
     private String _action;
+	private Boolean _withoutNamespace;
+
+	public Resource(String resource, String action, Boolean withoutNamespace) {
+        _resource = resource;
+        _action = action;
+		_withoutNamespace = withoutNamespace;
+	}
     
     public Resource(String resource, String action) {
         _resource = resource;
         _action = action;
+		_withoutNamespace = false;
     }
     
     public Resource(String resource) {
         _resource = resource;
         _action = "";
+		_withoutNamespace = false;
     }
     
     public String getResource() {
@@ -32,4 +41,8 @@ public class Resource {
     public String getAction() {
         return _action;
     }
+
+	public Boolean getWithoutNamespace() {
+		return _withoutNamespace;
+	}
 }

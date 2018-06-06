@@ -1,8 +1,10 @@
 package com.mailjet.client.easy;
 
+import com.mailjet.client.ClientOptions;
 import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.resource.Email;
+import com.mailjet.client.resource.sms.SmsSend;
 
 /**
  * Mailjet easy client
@@ -21,6 +23,14 @@ public class MJEasyClient {
      */
     public MJEasyClient(String apiKeyPublic, String apiKeyPrivate) {
         client = new MailjetClient(apiKeyPublic, apiKeyPrivate);
+    }
+    
+    /**
+     * Constructor with token
+     * @param token V4 api token
+     */
+    public MJEasyClient(String token) {
+        client = new MailjetClient(token, new ClientOptions("v4"));
     }
 
     /**
@@ -49,5 +59,13 @@ public class MJEasyClient {
      */
     public MJEasyEmail email() {
         return new MJEasyEmail(this, new MailjetRequest(Email.resource));
+    }
+    
+    /**
+     * Create an {@link MJEasySms} instance to prepare an email to send.
+     * @return {@link MJEasyClient} instance
+     */
+    public MJEasySms sms() {
+        return new MJEasySms(this, new MailjetRequest(SmsSend.resource));
     }
 }

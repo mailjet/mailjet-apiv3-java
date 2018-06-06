@@ -48,6 +48,7 @@ public class MailjetClient {
 
     private String _apiKey;
     private String _apiSecret;
+    private String _token;
     private int _debug = 0;
 
     /**
@@ -56,7 +57,9 @@ public class MailjetClient {
      * @param apiSecret
      */
     public MailjetClient(String apiKey, String apiSecret) {
-        init(apiKey, apiSecret, null, null);
+		initLogger(null);
+        initBasicAuth(apiKey, apiSecret);
+		initOptions(null);
     }
 
     /**
@@ -66,7 +69,9 @@ public class MailjetClient {
      * @param handler
      */
     public MailjetClient(String apiKey, String apiSecret, RequestHandler handler) {
-        init(apiKey, apiSecret, handler, null);
+		initLogger(handler);
+        initBasicAuth(apiKey, apiSecret);
+		initOptions(null);
     }
 
     /**
@@ -76,7 +81,9 @@ public class MailjetClient {
      * @param options
      */
     public MailjetClient(String apiKey, String apiSecret, ClientOptions options) {
-        init(apiKey, apiSecret, null, options);
+		initLogger(null);
+        initBasicAuth(apiKey, apiSecret);
+		initOptions(options);
     }
 
     /**
@@ -87,14 +94,80 @@ public class MailjetClient {
      * @param options
      */
     public MailjetClient(String apiKey, String apiSecret, RequestHandler handler, ClientOptions options) {
-        init(apiKey, apiSecret, handler, options);
+		initLogger(handler);
+        initBasicAuth(apiKey, apiSecret);
+		initOptions(options);
     }
 
-    private void init(String apiKey, String apiSecret, RequestHandler handler, ClientOptions options) {
-        _apiKey = apiKey;
-        _apiSecret = apiSecret;
+    /**
+     * Create a new Instance of the MailjetClient class and register the Token
+     * @param token
+     */
+    public MailjetClient(String token) {
+		initLogger(null);
+        initTokenAuth(token);
+		initOptions(null);
+    }
 
-        if (handler == null) {
+    /**
+     * Create a new Instance of the MailjetClient class and register the Token. Use custom request handler.
+     * @param token
+     * @param handler
+     */
+    public MailjetClient(String token, RequestHandler handler) {
+		initLogger(handler);
+        initTokenAuth(token);
+		initOptions(null);
+    }
+
+    /**
+     * Create a new Instance of the MailjetClient class and register the Token. Use client options.
+     * @param token
+     * @param options
+     */
+    public MailjetClient(String token, ClientOptions options) {
+		initLogger(null);
+        initTokenAuth(token);
+		initOptions(options);
+    }
+
+    /**
+     * Create a new Instance of the MailjetClient class and register the Token. Use custom request handler. Use client options.
+     * @param token
+     * @param handler
+     * @param options
+     */
+    public MailjetClient(String token, RequestHandler handler, ClientOptions options) {
+		initLogger(handler);
+        initTokenAuth(token);
+		initOptions(options);
+    }
+
+    private void initBasicAuth(String apiKey, String apiSecret) {
+        _apiKey = apiKey;
+        _apiSecret = apiSecret;        
+
+        String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
+
+        _client
+              .addHeader("Accept", "application/json")
+              .addHeader("user-agent", "mailjet-apiv3-java/v4.1.0")
+              .addHeader("Authorization", "Basic " + authEncBytes);
+        
+    }
+
+    private void initTokenAuth(String token) {
+        _token = token;
+
+        _client
+              .addHeader("Accept", "application/json")
+              .addHeader("user-agent", "mailjet-apiv3-java/v4.1.0")
+              .addHeader("Authorization", "Bearer " + token);
+        
+    }
+
+	private void initLogger(RequestHandler handler) {
+		if (handler == null) {
             /**
             * Provide an Empty logger to the client.
             * The user can enable it with .setDebug()
@@ -120,20 +193,16 @@ public class MailjetClient {
         } else {
             _client = new BasicHttpClient("", handler);
         }
+	}
 
-        String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
-
-        _client
-              .addHeader("Accept", "application/json")
-              .addHeader("user-agent", "mailjet-apiv3-java/v4.1.0")
-              .addHeader("Authorization", "Basic " + authEncBytes);
-        if (options != null) {
+	private void initOptions(ClientOptions options) {
+		if (options != null) {
           setOptions(options);
         }
         else {
           setOptions(new ClientOptions());
         }
-    }
+	}
 
     /**
      * Set the debug level

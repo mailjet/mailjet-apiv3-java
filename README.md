@@ -1,6 +1,8 @@
 
 [api_credential]: https://app.mailjet.com/account/api_keys
 [doc]: http://dev.mailjet.com/guides/?java#
+[smsDashboard]:https://app.mailjet.com/sms?_ga=2.81581655.1972348350.1522654521-1279766791.1506937572
+[smsInfo]:https://app.mailjet.com/docs/transactional-sms?_ga=2.183303910.1972348350.1522654521-1279766791.1506937572#sms-token
 
 ![alt text](http://cdn.appstorm.net/web.appstorm.net/files/2012/02/mailjet_logo_200x200.png "Mailjet")
 
@@ -29,10 +31,20 @@ Add the following in your `pom.xml`
 ```
 
 Grab your keys [here][api_credential]
+Alternatively for V4 namespace you will need a Bearer token. To generate a new token, please go Mailjet's [SMS Dashboard][smsDashboard] and click on 'Generate a token'. 
+Any additional information can be found [here][smsInfo].
 
 ``` java
 
 MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+
+```
+
+For V4 namespace the authorization method is changed - now it is based on Bearer token. 
+
+``` java
+
+MailjetClient client = new MailjetClient(System.getenv("MJ_TOKEN"), new ClientOptions("v4"));
 
 ```
 
@@ -164,6 +176,25 @@ MailjetRequest update = new MailjetRequest(Sender.resource, sender.getLong("ID")
                     .setBody(sender.put(Sender.NAME, "new name"));
 
 System.out.println(client.put(update));
+
+```
+
+### Send an SMS with Send SMS API 
+``` java
+
+MailjetClient client;
+MailjetRequest request;
+MailjetResponse response;
+
+// Note how we set the version to v4 using ClientOptions and use already generated token
+MailjetClient client = new MailjetClient(System.getenv("MJ_TOKEN"), new ClientOptions("v4"));
+
+request = new MailjetRequest(Send.resource)
+			.property(Send.From, "MJPilot")
+        	.property(Send.To, "+33600000000")
+			.property(Send.Text, "Have a nice SMS flight with Mailjet!");
+		
+response = client.post(request);
 
 ```
 
