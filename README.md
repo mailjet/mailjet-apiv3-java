@@ -178,7 +178,22 @@ MailjetRequest update = new MailjetRequest(Sender.resource, sender.getLong("ID")
 System.out.println(client.put(update));
 
 ```
+## Use HTTP proxy
+The proxy can be set using the following system properties:
 
+``` java
+HTTP proxy
+-Dhttp.proxyHost=
+-Dhttp.proxyPort=
+
+HTTPS proxy
+-Dhttps.proxyHost=
+-Dhttps.proxyPort=
+```
+If you communicate with other endpoints using java.net.HttpURLConnection and you don't need proxy for them:
+``` java
+-Dhttp.nonProxyHosts=<any host you don't want to be proxied>
+```
 ### Send an SMS with Send SMS API 
 ``` java
 
