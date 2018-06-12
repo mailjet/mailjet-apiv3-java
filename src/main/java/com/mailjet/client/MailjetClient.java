@@ -16,6 +16,15 @@
 
 package com.mailjet.client;
 
+import static com.mailjet.client.MailjetResponseUtil.validateMailjetResponse;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+
+import org.json.JSONObject;
+
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.turbomanage.httpclient.BasicHttpClient;
@@ -23,14 +32,8 @@ import com.turbomanage.httpclient.BasicRequestHandler;
 import com.turbomanage.httpclient.ConsoleRequestLogger;
 import com.turbomanage.httpclient.HttpResponse;
 import com.turbomanage.httpclient.ParameterMap;
-import com.turbomanage.httpclient.RequestLogger;
 import com.turbomanage.httpclient.RequestHandler;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import org.json.JSONObject;
-import com.mailjet.client.ClientOptions;
+import com.turbomanage.httpclient.RequestLogger;
 
 /**
  *
@@ -237,9 +240,7 @@ public class MailjetClient {
             p.putAll(request._filters);
             HttpResponse response = _client.get(url, p);
 
-            if (response == null) {
-                throw new MailjetSocketTimeoutException("Socket Timeout");
-            }
+            validateMailjetResponse(response);
 
             String json = (response.getBodyAsString() != null && !(response.getBodyAsString().equals("")) ?
                     response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString());
@@ -278,9 +279,7 @@ public class MailjetClient {
 
             response = _client.post(url, request.getContentType(), request.getBody().getBytes("UTF8"));
 
-            if (response == null) {
-                throw new MailjetSocketTimeoutException("Socket Timeout");
-            }
+            validateMailjetResponse(response);
 
             json = (response.getBodyAsString() != null && !(response.getBodyAsString().equals("")) ?
                     response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString());
@@ -307,11 +306,12 @@ public class MailjetClient {
 
             response = _client.put(url, request.getContentType(), request.getBody().getBytes("UTF8"));
 
-            if (response == null) {
-                throw new MailjetSocketTimeoutException("Socket Timeout");
-            }
+            validateMailjetResponse(response);
+            
+            String json = (response.getBodyAsString() != null && !response.getBodyAsString().trim().equals("") ?
+                    response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString());
 
-            return new MailjetResponse(response.getStatus(), new JSONObject(response.getBodyAsString()));
+            return new MailjetResponse(response.getStatus(), new JSONObject(json));
         } catch (MalformedURLException ex) {
             throw new MailjetException("Internal Exception: Malformed Url");
         } catch (UnsupportedEncodingException ex) {
@@ -336,12 +336,11 @@ public class MailjetClient {
             p.putAll(request._filters);
             response = _client.delete(url, p);
 
-            if (response == null) {
-                throw new MailjetSocketTimeoutException("Socket Timeout");
-            }
-
+            validateMailjetResponse(response);
+            
             json = (response.getBodyAsString() != null && !response.getBodyAsString().trim().equals("") ?
                     response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString());
+            
             return new MailjetResponse(response.getStatus(), new JSONObject(json));
         } catch (MalformedURLException ex) {
             throw new MailjetException("Internal Exception: Malformed Url");
