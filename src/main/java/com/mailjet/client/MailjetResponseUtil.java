@@ -2,6 +2,8 @@ package com.mailjet.client;
 
 import org.json.JSONObject;
 
+import com.mailjet.client.errors.MailjetClientException;
+import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetRateLimitException;
 import com.mailjet.client.errors.MailjetServerException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
@@ -26,11 +28,16 @@ public final class MailjetResponseUtil {
 	}
 
 	public static void validateMailjetResponse(HttpResponse response)
-			throws MailjetSocketTimeoutException, MailjetRateLimitException, MailjetServerException {
+			throws MailjetSocketTimeoutException, MailjetRateLimitException, MailjetServerException, MailjetClientException {
 		if (response == null) {
 			throw new MailjetSocketTimeoutException(SOCKET_TIMEOUT_EXCEPTION);
-		} else if (response.getStatus() == TOO_MANY_REQUEST_STATUS) {
-			throw new MailjetRateLimitException(TOO_MANY_REQUESTS_EXCEPTION);
+		} else if (response.getStatus() >= 400 &&  response.getStatus() < INTERNAL_SERVER_ERROR_STATUS) {
+			if (response.getStatus() == TOO_MANY_REQUEST_STATUS) {
+				throw new MailjetRateLimitException(TOO_MANY_REQUESTS_EXCEPTION);
+			}
+			
+			throw new MailjetClientException(String.format("%d", response.getStatus()));
+			
 		} else if (response.getStatus() >= INTERNAL_SERVER_ERROR_STATUS) {
 			if (!isValidJSON(response.getBodyAsString())) {
 				throw new MailjetServerException(INTERNAL_SERVER_ERROR_GENERAL_EXCEPTION);
