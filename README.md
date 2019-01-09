@@ -2,17 +2,19 @@
 [api_credential]: https://app.mailjet.com/account/api_keys
 [doc]: http://dev.mailjet.com/guides/?java#
 [smsDashboard]:https://app.mailjet.com/sms?_ga=2.81581655.1972348350.1522654521-1279766791.1506937572
-[smsInfo]:https://app.mailjet.com/docs/transactional-sms?_ga=2.183303910.1972348350.1522654521-1279766791.1506937572#sms-token
+[smsInfo]:https://app.mailjet.com/docs/transactional-sms?_ga=2.183303910.1972348350.1522654521-1279766791.1506937572#trans-sms-token
 
 ![alt text](https://www.mailjet.com/images/email/transac/logo_header.png "Mailjet")
 
-# Official Mailjet Java Client
+# Official Mailjet Java Wrapper
 
 
 [![Build Status](https://travis-ci.org/mailjet/mailjet-apiv3-java.svg?branch=master)](https://travis-ci.org/mailjet/mailjet-apiv3-java)
 
 
-This repo features the Brand new Java wrapper for the Mailjet API. Check out the [Offical Documentation][doc]
+This repo features the Java wrapper for the Mailjet API. 
+
+Check out all the resources and all the PHP code examples on the [Offical Documentation][doc].
 
 ## Getting Started
 
@@ -30,9 +32,7 @@ Add the following in your `pom.xml`
     </dependencies>
 ```
 
-Grab your keys [here][api_credential]
-Alternatively for V4 namespace you will need a Bearer token. To generate a new token, please go Mailjet's [SMS Dashboard][smsDashboard] and click on 'Generate a token'. 
-Any additional information can be found [here][smsInfo].
+Grab your API and Secret Keys [here][api_credential]. You need them for authentication when using the Email API:
 
 ``` java
 
@@ -40,7 +40,7 @@ MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), Syst
 
 ```
 
-For V4 namespace the authorization method is changed - now it is based on Bearer token. 
+For the V4 namespace (SMS API) the authorization method is based on a Bearer token. To generate a new token, please go Mailjet's [SMS Dashboard][smsDashboard] and click on 'Generate a token'. Additional information can be found [here][smsInfo].
 
 ``` java
 
@@ -48,12 +48,30 @@ MailjetClient client = new MailjetClient(System.getenv("MJ_TOKEN"), new ClientOp
 
 ```
 
-Requests are easy to understand
+Requests are easy to understand:
 ``` java
 
 MailjetRequest request = MailjetRequest(resource, id, actionId)
 
 ```
+
+## API Versioning
+
+The Mailjet API is spread among three distinct versions:
+
+- `v3` - The Email API
+- `v3.1` - Email Send API v3.1, which is the latest version of our Send API
+- `v4` - SMS API
+
+Since most Email API endpoints are located under `v3`, it is set as the default one and does not need to be specified when making your request. For the others you need to specify the version using `ClientOptions`. For example, if using Send API `v3.1`:
+
+``` java
+
+MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"), new ClientOptions("v3.1"));
+
+```
+
+For additional information refer to our [API Reference](https://dev.preprod.mailjet.com/reference/overview/versioning/).
 
 ## `GET` requests
 
@@ -108,7 +126,7 @@ response = client.post(sender);
 
 ```
 
-### Send an Email with Send API v3.1
+### Send an Email
 ``` java
 
 MailjetClient client;
@@ -136,29 +154,7 @@ response = client.post(email);
 
 ```
 
-### Send an Email with Send API v3.0
-``` java
-
-MailjetRequest email;
-JSONArray recipients;
-MailjetResponse response;
-
-recipients = new JSONArray()
-                .put(new JSONObject().put(Contact.EMAIL, "roger@mailjet.com"))
-                .put(new JSONObject().put(Contact.EMAIL, "stan@mailjet.com"))
-                .put(new JSONObject().put(Contact.EMAIL, "francine@mailjet.com"));
-
-email = new MailjetRequest(Email.resource)
-                    .property(Email.FROMNAME, "Guillaume")
-                    .property(Email.FROMEMAIL, "dummy@email.fr")
-                    .property(Email.SUBJECT, "Subject")
-                    .property(Email.TEXTPART, "Java is coming!...")
-                    .property(Email.RECIPIENTS, recipients)
-                    .property(Email.MJCUSTOMID, "JAVA-Email");
-
-response = client.post(email);
-
-```
+You can also use the previous version of Mailjet's Send API (v3). You can find the documentation explaining the overall differences and code samples [here](https://dev.mailjet.com/guides/?java#send-api-v3).
 
 ## Get and update a Sender
 ``` java
@@ -212,7 +208,3 @@ request = new MailjetRequest(Send.resource)
 response = client.post(request);
 
 ```
-
-## TODO:
-
- - head
