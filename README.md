@@ -2,7 +2,7 @@
 [api_credential]: https://app.mailjet.com/account/api_keys
 [doc]: http://dev.mailjet.com/guides/?java#
 [smsDashboard]:https://app.mailjet.com/sms?_ga=2.81581655.1972348350.1522654521-1279766791.1506937572
-[smsInfo]:https://app.mailjet.com/docs/transactional-sms?_ga=2.183303910.1972348350.1522654521-1279766791.1506937572#sms-token
+[smsInfo]:https://app.mailjet.com/docs/transactional-sms?_ga=2.183303910.1972348350.1522654521-1279766791.1506937572#trans-sms-token
 
 ![alt text](https://www.mailjet.com/images/email/transac/logo_header.png "Mailjet")
 
