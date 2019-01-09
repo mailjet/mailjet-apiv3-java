@@ -55,6 +55,24 @@ MailjetRequest request = MailjetRequest(resource, id, actionId)
 
 ```
 
+## API Versioning
+
+The Mailjet API is spread among three distinct versions:
+
+- `v3` - The Email API, containing most of 
+- `v3.1` - Email Send API v3.1, which is the latest version of our Send API
+- `v4` - SMS API
+
+Since most Email API endpoints are located under `v3`, it is set as the default one and does not need to be specified when making your request. For the others you need to specify the version using `ClientOptions`. For example, if using Send API v3.1:
+
+``` java
+
+MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"), new ClientOptions("v3.1"));
+
+```
+
+For additional information refer to our [API Reference](https://dev.preprod.mailjet.com/reference/overview/versioning/).
+
 ## `GET` requests
 
 ### List all your contacts
