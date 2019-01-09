@@ -32,7 +32,7 @@ Add the following in your `pom.xml`
     </dependencies>
 ```
 
-Grab your API and Secret Keys [here][api_credential]. Authentication for the Email API is done 
+Grab your API and Secret Keys [here][api_credential]. You need them for authentication when using the Email API:
 
 ``` java
 
@@ -40,7 +40,7 @@ MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), Syst
 
 ```
 
-For V4 namespace the authorization method is changed - now it is based on Bearer token. 
+For the V4 namespace (SMS API) the authorization method is based on a Bearer token. To generate a new token, please go Mailjet's [SMS Dashboard][smsDashboard] and click on 'Generate a token'. Additional information can be found [here][smsInfo].
 
 ``` java
 
@@ -48,7 +48,7 @@ MailjetClient client = new MailjetClient(System.getenv("MJ_TOKEN"), new ClientOp
 
 ```
 
-Requests are easy to understand
+Requests are easy to understand:
 ``` java
 
 MailjetRequest request = MailjetRequest(resource, id, actionId)
@@ -136,7 +136,7 @@ response = client.post(email);
 
 ```
 
-In case you wish to use Mailjet's Send API v3, you can find the legacy documentation and code samples [here](https://dev.mailjet.com/guides/?java#send-api-v3).
+You can also use the previous version of Mailjet's Send API (v3). You can find the documentation explaining the overall differences and code samples [here](https://dev.mailjet.com/guides/?java#send-api-v3).
 
 ## Get and update a Sender
 ``` java
