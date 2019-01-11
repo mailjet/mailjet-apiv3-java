@@ -14,7 +14,7 @@
 
 This repo features the Java wrapper for the Mailjet API. 
 
-Check out all the resources and all the PHP code examples on the [Offical Documentation][doc].
+Check out all the resources and all the Java code examples on the [Offical Documentation][doc].
 
 ## Getting Started
 
