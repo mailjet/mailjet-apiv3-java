@@ -16,20 +16,46 @@ public class ClientOptions {
 
   private String baseUrl;
   private String version;
+  private Integer connectionTimeout;
+  private Integer readTimeout;
 
   public ClientOptions() {
     this.baseUrl = ClientOptions.defaultBaseURL;
     this.version = ClientOptions.defaultVersion;
+    this.readTimeout = null;
+    this.connectionTimeout = null;
   }
 
   public ClientOptions(String version, String baseUrl) {
     this.baseUrl = baseUrl;
     this.version = version;
+    this.readTimeout = null;
+    this.connectionTimeout = null;
   }
 
   public ClientOptions(String version) {
     this.baseUrl = ClientOptions.defaultBaseURL;
     this.version = version;
+    this.readTimeout = null;
+    this.connectionTimeout = null;
+  }
+
+  public ClientOptions(String version, Integer connectionTimeout, Integer readTimeout) {
+    this.version = version;
+    this.connectionTimeout = connectionTimeout;
+    this.readTimeout = readTimeout;
+  }
+
+  public ClientOptions( String version, String baseUrl,Integer connectionTimeout, Integer readTimeout) {
+    this.baseUrl = baseUrl;
+    this.version = version;
+    this.connectionTimeout = connectionTimeout;
+    this.readTimeout = readTimeout;
+  }
+
+  public ClientOptions(Integer connectionTimeout, Integer readTimeout) {
+    this.connectionTimeout = connectionTimeout;
+    this.readTimeout = readTimeout;
   }
 
   public String getBaseUrl() {
@@ -40,4 +66,11 @@ public class ClientOptions {
     return this.version;
   }
 
+  public Integer getConnectionTimeout() {
+    return connectionTimeout;
+  }
+
+  public Integer getReadTimeout() {
+    return readTimeout;
+  }
 }

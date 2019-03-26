@@ -353,6 +353,15 @@ public class MailjetClient {
 
     private void setOptions(ClientOptions options) {
         this._options = options;
+
+        final Integer connectionTimeout = options.getConnectionTimeout();
+        if (connectionTimeout != null) {
+            this._client.setConnectionTimeout(connectionTimeout.intValue());
+        }
+        final Integer readTimeout = options.getReadTimeout();
+        if (readTimeout != null) {
+            this._client.setReadTimeout(readTimeout.intValue());
+        }
     }
 
     private String createUrl() {
