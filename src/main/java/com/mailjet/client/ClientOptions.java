@@ -41,6 +41,7 @@ public class ClientOptions {
   }
 
   public ClientOptions(String version, Integer connectionTimeout, Integer readTimeout) {
+    this.baseUrl = ClientOptions.defaultBaseURL;
     this.version = version;
     this.connectionTimeout = connectionTimeout;
     this.readTimeout = readTimeout;
@@ -54,6 +55,8 @@ public class ClientOptions {
   }
 
   public ClientOptions(Integer connectionTimeout, Integer readTimeout) {
+    this.baseUrl = ClientOptions.defaultBaseURL;
+    this.version = ClientOptions.defaultVersion;
     this.connectionTimeout = connectionTimeout;
     this.readTimeout = readTimeout;
   }
