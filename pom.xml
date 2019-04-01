@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mailjet</groupId>
     <artifactId>mailjet-client</artifactId>
-    <version>4.3.2-SNAPSHOT</version>
+    <version>4.2.0</version>
     <packaging>jar</packaging>
     <name>Mailjet Client</name>
     <description>A Mailjet API Client</description>
@@ -104,7 +104,7 @@
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-javadoc-plugin</artifactId>
               <configuration>
-                  <additionalparam>-Xdoclint:none</additionalparam>
+                  <doclint>none</doclint>
               </configuration>
               <executions>
                 <execution>

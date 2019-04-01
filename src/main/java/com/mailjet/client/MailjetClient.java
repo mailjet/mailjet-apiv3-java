@@ -154,7 +154,7 @@ public class MailjetClient {
 
         _client
               .addHeader("Accept", "application/json")
-              .addHeader("user-agent", "mailjet-apiv3-java/v4.1.0")
+              .addHeader("user-agent", "mailjet-apiv3-java/v4.2.0")
               .addHeader("Authorization", "Basic " + authEncBytes);
         
     }
@@ -164,7 +164,7 @@ public class MailjetClient {
 
         _client
               .addHeader("Accept", "application/json")
-              .addHeader("user-agent", "mailjet-apiv3-java/v4.1.0")
+              .addHeader("user-agent", "mailjet-apiv3-java/v4.2.0")
               .addHeader("Authorization", "Bearer " + token);
         
     }
