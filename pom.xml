@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.mailjet</groupId>
     <artifactId>mailjet-client</artifactId>
-    <version>4.2.0</version>
+    <version>4.2.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <name>Mailjet Client</name>
     <description>A Mailjet API Client</description>
@@ -44,11 +44,11 @@
   <version>9</version>
     </parent>
     <dependencies>
-    <dependency>
-        <groupId>com.turbomanage.basic-http-client</groupId>
-        <artifactId>http-client-java</artifactId>
-        <version>0.89</version>
-    </dependency>
+        <dependency>
+            <groupId>com.turbomanage.basic-http-client</groupId>
+            <artifactId>http-client-java</artifactId>
+            <version>0.89</version>
+        </dependency>
         <dependency>
           <groupId>org.json</groupId>
           <artifactId>json</artifactId>
@@ -59,6 +59,12 @@
             <artifactId>junit</artifactId>
             <version>4.11</version>
             <type>jar</type>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <properties>
@@ -120,7 +126,7 @@
             <plugin>
               <groupId>org.sonatype.plugins</groupId>
               <artifactId>nexus-staging-maven-plugin</artifactId>
-              <version>1.6.3</version>
+              <version>1.6.7</version>
               <extensions>true</extensions>
               <configuration>
                 <serverId>ossrh</serverId>
