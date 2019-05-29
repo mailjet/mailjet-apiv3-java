@@ -73,6 +73,16 @@ MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), Syst
 
 For additional information refer to our [API Reference](https://dev.preprod.mailjet.com/reference/overview/versioning/).
 
+### Base URL
+
+The default base domain name for the Mailjet API is api.mailjet.com. You can modify this base URL by adding a different URL in `ClientOptions`:
+
+```java
+MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"), new ClientOptions("v3","https://api.us.mailjet.com"));
+```
+
+If your account has been moved to Mailjet's **US architecture**, the URL you need to add is `https://api.us.mailjet.com`.
+
 ## `GET` requests
 
 ### List all your contacts
