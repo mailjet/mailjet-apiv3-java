@@ -201,9 +201,6 @@ Use the `Post` method of the Mailjet CLient (i.e. `response = client.post(reques
 #### Simple POST request
 
 ```java
-/**
-* Create a contact
-*/
 package com.my.project;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.errors.MailjetSocketTimeoutException;
@@ -214,7 +211,7 @@ import com.mailjet.client.resource.Contact;
 
 public class MyClass {
     /**
-     * Create : Manage the details of a Contact.
+     * Create a contact
      */
     public static void main(String[] args) throws MailjetException, MailjetSocketTimeoutException {
       MailjetClient client;
