@@ -195,93 +195,219 @@ You can find the list of all available resources for this library, as well as th
 
 ### POST Request
 
+Use the `Post` method of the Mailjet CLient (i.e. `response = client.post(request);`).
+`request` will be a `MailjetRequest` object.
+
 #### Simple POST request
 
 ```java
 /**
 * Create a contact
 */
-MailjetClient client;
-MailjetRequest request;
-MailjetResponse response;
-client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
-request = new MailjetRequest(Contact.resource)
-     .property(Contact.EMAIL, "Mister@mailjet.com");
-response = client.post(request);
+package com.my.project;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.resource.Contact;
+
+public class MyClass {
+    /**
+     * Create : Manage the details of a Contact.
+     */
+    public static void main(String[] args) throws MailjetException, MailjetSocketTimeoutException {
+      MailjetClient client;
+      MailjetRequest request;
+      MailjetResponse response;
+      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      request = new MailjetRequest(Contact.resource)
+            .property(Contact.EMAIL, "Mister@mailjet.com");
+      response = client.post(request);
+      System.out.println(response.getStatus());
+      System.out.println(response.getData());
+    }
+}
+
 ```
 
 #### Using actions
 
+To access endpoints with action, you will be able to find Resources object definition. For example, the `/Contact/$ID/Managecontactslists` endpoint can be used with the object `ContactManagecontactslists` available in `com.mailjet.client.resource` 
+
 ```java
-/**
-* Manage the subscription status of a contact to multiple lists
-*/
-client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
-request = new MailjetRequest(ContactManagecontactslists.resource, ID)
-      .property(ContactManagecontactslists.CONTACTSLISTS, new JSONArray()
-          .put(new JSONObject()
-              .put("ListID", "$ListID_1")
-              .put("Action", "addnoforce"))
-          .put(new JSONObject()
-              .put("ListID", "$ListID_2")
-              .put("Action", "addforce")));
-response = client.post(request);
+package com.my.project;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.resource.ContactManagecontactslists;
+import org.json.JSONArray;
+import org.json.JSONObject;
+public class MyClass {
+    /**
+     * Create : Manage a contact subscription to a list
+     */
+    public static void main(String[] args) throws MailjetException, MailjetSocketTimeoutException {
+      MailjetClient client;
+      MailjetRequest request;
+      MailjetResponse response;
+      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      request = new MailjetRequest(ContactManagecontactslists.resource, ID)
+            .property(ContactManagecontactslists.CONTACTSLISTS, new JSONArray()
+                .put(new JSONObject()
+                    .put("ListID", "$ListID_1")
+                    .put("Action", "addnoforce"))
+                .put(new JSONObject()
+                    .put("ListID", "$ListID_2")
+                    .put("Action", "addforce")));
+      response = client.post(request);
+      System.out.println(response.getStatus());
+      System.out.println(response.getData());
+    }
+}
 ```
 
 ### GET Request
 
+Use the `get` method of the Mailjet CLient (i.e. `response = client.get(request);`).
+`request` will be a `MailjetRequest` object.
+
 #### Retrieve all objects
 
 ```java
-/**
-* Retrieve all contacts:
-*/
-client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
-request = new MailjetRequest(Contact.resource);
-response = client.get(request);
+package com.my.project;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.resource.Contact;
+import org.json.JSONArray;
+import org.json.JSONObject;
+public class MyClass {
+    /**
+     * Run :
+     */
+    public static void main(String[] args) throws MailjetException, MailjetSocketTimeoutException {
+      MailjetClient client;
+      MailjetRequest request;
+      MailjetResponse response;
+      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      request = new MailjetRequest(Contact.resource);
+      response = client.get(request);
+      System.out.println(response.getStatus());
+      System.out.println(response.getData());
+    }
+}
 ```
 
 #### Use filtering
 
+You can add filter for your API call on the `MailjetRequest` by using the `filter` method. 
+Example: `.filter(Contact.ISEXCLUDEDFROMCAMPAIGNS, "false");`
+
 ```java
-/**
-* Retrieve all contacts that are not in the campaign exclusion list :
-*/
-client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
-request = new MailjetRequest(Contact.resource)
+package com.my.project;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.resource.Message;
+import org.json.JSONArray;
+import org.json.JSONObject;
+public class MyClass {
+    /**
+     * Run :
+     */
+    public static void main(String[] args) throws MailjetException, MailjetSocketTimeoutException {
+      MailjetClient client;
+      MailjetRequest request;
+      MailjetResponse response;
+      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      request = new MailjetRequest(Contact.resource)
             .filter(Contact.ISEXCLUDEDFROMCAMPAIGNS, "false");
-response = client.get(request);
+      response = client.get(request);
+      System.out.println(response.getStatus());
+      System.out.println(response.getData());
+    }
+}
 ```
 
 #### Retrieve a single object
 
+When instantiating the `MailjetRequest`, you can specify the Id of the resource you want to access.
+(example: `request = new MailjetRequest(Contact.resource, ID);`).
+
+
 ```java
-/**
-* Retrieve a specific contact ID:
-*/
-client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
-request = new MailjetRequest(Contact.resource)
-            .filter(Contact.CONTACTID, "$Contact_ID");
-response = client.get(request);
+package com.my.project;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.resource.Contact;
+import org.json.JSONArray;
+import org.json.JSONObject;
+public class MyClass {
+    /**
+     * Run :
+     */
+    public static void main(String[] args) throws MailjetException, MailjetSocketTimeoutException {
+      MailjetClient client;
+      MailjetRequest request;
+      MailjetResponse response;
+      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      request = new MailjetRequest(Contact.resource, ID);
+      response = client.get(request);
+      System.out.println(response.getStatus());
+      System.out.println(response.getData());
+    }
+}
 ```
 
 ### PUT Request
 
 A `PUT` request in the Mailjet API will work as a `PATCH` request - the update will affect only the specified properties. The other properties of an existing resource will neither be modified, nor deleted. It also means that all non-mandatory properties can be omitted from your payload.
 
-Here's an example of a PUT request:
+Use the `put` method of the Mailjet CLient (i.e. `response = client.put(request);`).
+`request` will be a `MailjetRequest` object.
 
 ```java
-client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
-request = new MailjetRequest(Contactdata.resource, ID)
-      .property(Contactdata.DATA, new JSONArray()
-          .put(new JSONObject()
-              .put("Name", "Age")
-              .put("value", "30"))
-          .put(new JSONObject()
-              .put("Name", "Country")
-              .put("value", "US")));
-response = client.put(request);
+package com.my.project;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.resource.Contactdata;
+import org.json.JSONArray;
+import org.json.JSONObject;
+public class MyClass {
+    /**
+     * Modify : Modify the static custom contact data
+     */
+    public static void main(String[] args) throws MailjetException, MailjetSocketTimeoutException {
+      MailjetClient client;
+      MailjetRequest request;
+      MailjetResponse response;
+      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      request = new MailjetRequest(Contactdata.resource, ID)
+            .property(Contactdata.DATA, new JSONArray()
+                .put(new JSONObject()
+                    .put("Name", "Age")
+                    .put("value", "30"))
+                .put(new JSONObject()
+                    .put("Name", "Country")
+                    .put("value", "US")));
+      response = client.put(request);
+      System.out.println(response.getStatus());
+      System.out.println(response.getData());
+    }
+}
 ```
 
 ### DELETE Request
@@ -291,9 +417,30 @@ Upon a successful `DELETE` request the response will not include a response body
 Here's an example of a `DELETE` request:
 
 ```java
-client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
-request = new MailjetRequest(Template.resource, ID);
-response = client.delete(request);
+package com.my.project;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.resource.Template;
+import org.json.JSONArray;
+import org.json.JSONObject;
+public class MyClass {
+    /**
+     * Delete a Template
+     */
+    public static void main(String[] args) throws MailjetException, MailjetSocketTimeoutException {
+      MailjetClient client;
+      MailjetRequest request;
+      MailjetResponse response;
+      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      request = new MailjetRequest(Template.resource, ID);
+      response = client.delete(request);
+      System.out.println(response.getStatus());
+      System.out.println(response.getData());
+    }
+}
 ```
 
 ## SMS API
@@ -325,6 +472,36 @@ request = new MailjetRequest(Send.resource)
 			.property(Send.Text, "Have a nice SMS flight with Mailjet!");
 
 response = client.post(request);
+
+package com.my.project;
+import com.mailjet.client.errors.MailjetException;
+import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.MailjetClient;
+import com.mailjet.client.MailjetRequest;
+import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.ClientOptions;
+import com.mailjet.client.resource.sms.SmsSend;
+import org.json.JSONArray;
+import org.json.JSONObject;
+public class MyClass {
+    /**
+     * Run:
+     */
+    public static void main(String[] args) throws MailjetException, MailjetSocketTimeoutException {
+      MailjetClient client;
+      MailjetRequest request;
+      MailjetResponse response;
+      client = new MailjetClient(System.getenv("MJ_TOKEN"), new ClientOptions("v4"));
+      request = new MailjetRequest(SmsSend.resource)
+		.property(SmsSend.FROM, "MJPilot")
+        	.property(SmsSend.TO, "+33600000000")
+		.property(SmsSend.TEXT, "Have a nice SMS flight with Mailjet!")
+      response = client.post(request);
+      System.out.println(response.getStatus());
+      System.out.println(response.getData());
+    }
+}
+
 
 ```
 
