@@ -208,6 +208,14 @@ public class MailjetClient {
 	}
 
     /**
+     * Set the request logger
+     * @param logger
+     */
+	public void setRequestLogger(RequestLogger logger) {
+        _client.setRequestLogger(logger);
+    }
+
+    /**
      * Set the debug level
      * @param debug:
      *  VERBOSE_DEBUG: prints every URL/payload.
