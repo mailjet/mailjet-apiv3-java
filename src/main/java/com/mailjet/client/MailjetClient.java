@@ -52,7 +52,6 @@ public class MailjetClient {
     private String _apiKey;
     private String _apiSecret;
     private String _token;
-    private static final String userAgent = "mailjet-apiv3-java/v4.4.0";
     private int _debug = 0;
 
     /**
@@ -155,7 +154,7 @@ public class MailjetClient {
 
         _client
               .addHeader("Accept", "application/json")
-              .addHeader("User-Agent", this.userAgent)
+              .addHeader("user-agent", "mailjet-apiv3-java/v4.2.1")
               .addHeader("Authorization", "Basic " + authEncBytes);
         
     }
@@ -165,7 +164,7 @@ public class MailjetClient {
 
         _client
               .addHeader("Accept", "application/json")
-              .addHeader("User-Agent", this.userAgent)
+              .addHeader("user-agent", "mailjet-apiv3-java/v4.2.1")
               .addHeader("Authorization", "Bearer " + token);
         
     }
@@ -354,7 +353,6 @@ public class MailjetClient {
 
     private void setOptions(ClientOptions options) {
         this._options = options;
-        this._client.setReadTimeout(options.getTimeout());
     }
 
     private String createUrl() {
