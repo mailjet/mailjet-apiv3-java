@@ -1,7 +1,8 @@
 package com.mailjet.client.errors;
 
 /**
- * MailjetServerException handles http status code >= 500 (Internal Server Error)
+ * MailjetServerException handles http status code is greater than or equal to
+ * 500 (Internal Server Error)
  * 
  * @author y.vanov
  *

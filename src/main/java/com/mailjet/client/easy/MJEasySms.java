@@ -22,7 +22,7 @@ public class MJEasySms {
 
     /**
      * Set the sender
-     * @param sms sender name
+     * @param number sender name
      * @return Current instance
      */
     public MJEasySms from(String number) {
