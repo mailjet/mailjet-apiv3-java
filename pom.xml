@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--Schema definition-->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <!--General configuration -->
     <groupId>com.mailjet</groupId>
     <artifactId>mailjet-client</artifactId>
-    <version>4.2.1-SNAPSHOT</version>
+    <version>4.4.0</version>
     <packaging>jar</packaging>
     <name>Mailjet Client</name>
     <description>A Mailjet API Client</description>
     <url>https://github.com/mailjet/mailjet-apiv3-java/</url>
+    <!--Distribution-->
     <distributionManagement>
       <snapshotRepository>
         <id>ossrh-snapshot</id>
@@ -18,18 +21,21 @@
         <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
       </repository>
     </distributionManagement>
+    <!--Source Control Management-->
     <scm>
         <connection>scm:git:https://github.com/mailjet/mailjet-apiv3-java.git</connection>
         <developerConnection>scm:git:https://github.com/mailjet/mailjet-apiv3-java.git</developerConnection>
         <url>git@github.com:mailjet/mailjet-apiv3-java.git</url>
-        <tag>mailjet-client-4.2.1</tag>
+        <tag>mailjet-client-4.4.0</tag>
     </scm>
+    <!--License-->
     <licenses>
         <license>
             <name>MIT License</name>
             <url>http://www.opensource.org/licenses/mit-license.php</url>
         </license>
     </licenses>
+    <!--Developer-->
     <developers>
         <developer>
             <name>Mailjet</name>
@@ -38,11 +44,13 @@
             <organizationUrl>http://www.mailjet.com</organizationUrl>
         </developer>
     </developers>
-    <parent>
-  <groupId>org.sonatype.oss</groupId>
-  <artifactId>oss-parent</artifactId>
-  <version>9</version>
-    </parent>
+    <!--Properties-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+    </properties>
+    <!--Dependencies-->
     <dependencies>
         <dependency>
             <groupId>com.turbomanage.basic-http-client</groupId>
@@ -52,12 +60,12 @@
         <dependency>
           <groupId>org.json</groupId>
           <artifactId>json</artifactId>
-          <version>20140107</version>
+          <version>20190722</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.13</version>
             <type>jar</type>
         </dependency>
         <dependency>
@@ -67,66 +75,36 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>1.7</maven.compiler.source>
-        <maven.compiler.target>1.7</maven.compiler.target>
-    </properties>
+    <!--Build Steps-->
     <build>
         <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-release-plugin</artifactId>
-            <version>2.5.3</version>
-            <dependencies>
-                <dependency>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-scm-plugin</artifactId>
-                    <version>1.8.1</version>
-                </dependency>
-            </dependencies>
-            <configuration>
-              <pushChanges>false</pushChanges>
-              <checkModificationExcludes>
-                  <checkModificationExclude>pom.xml</checkModificationExclude>
-              </checkModificationExcludes>
-              <autoVersionSubmodules>true</autoVersionSubmodules>
-              <goals>deploy</goals>
-              <releaseProfiles>release</releaseProfiles>
-            </configuration>
-          </plugin>
+            <!--Maven Release Plugin-->
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-source-plugin</artifactId>
-              <executions>
-                <execution>
-                  <id>attach-sources</id>
-                  <goals>
-                    <goal>jar</goal>
-                  </goals>
-                </execution>
-              </executions>
-            </plugin>
-            <plugin>
-              <groupId>org.apache.maven.plugins</groupId>
-              <artifactId>maven-javadoc-plugin</artifactId>
-              <version>3.0.1</version>
+              <artifactId>maven-release-plugin</artifactId>
+              <version>2.5.3</version>
+              <dependencies>
+                  <dependency>
+                      <groupId>org.apache.maven.plugins</groupId>
+                      <artifactId>maven-scm-plugin</artifactId>
+                      <version>1.8.1</version>
+                  </dependency>
+              </dependencies>
               <configuration>
-                  <doclint>none</doclint>
+                <pushChanges>false</pushChanges>
+                <checkModificationExcludes>
+                    <checkModificationExclude>pom.xml</checkModificationExclude>
+                </checkModificationExcludes>
+                <autoVersionSubmodules>true</autoVersionSubmodules>
+                <goals>deploy</goals>
+                <releaseProfiles>release</releaseProfiles>
               </configuration>
-              <executions>
-                <execution>
-                  <id>attach-javadocs</id>
-                  <goals>
-                    <goal>jar</goal>
-                  </goals>
-                </execution>
-              </executions>
             </plugin>
+            <!--Sona Type Plugin-->
             <plugin>
               <groupId>org.sonatype.plugins</groupId>
               <artifactId>nexus-staging-maven-plugin</artifactId>
-              <version>1.6.7</version>
+              <version>1.6.8</version>
               <extensions>true</extensions>
               <configuration>
                 <serverId>ossrh</serverId>
@@ -134,6 +112,7 @@
                 <autoReleaseAfterClose>true</autoReleaseAfterClose>
               </configuration>
             </plugin>
+            <!--GPG Plugin-->
             <plugin>
               <groupId>org.apache.maven.plugins</groupId>
               <artifactId>maven-gpg-plugin</artifactId>
@@ -141,12 +120,43 @@
               <executions>
                 <execution>
                   <id>sign-artifacts</id>
-                  <phase>deploy</phase>
+                  <phase>verify</phase>
                   <goals>
                     <goal>sign</goal>
                   </goals>
                 </execution>
               </executions>
+            </plugin>
+            <!--Source Plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--JavaDoc Plugin-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.2.0</version>
+                <configuration>
+                    <doclint>none</doclint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
