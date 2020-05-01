@@ -52,7 +52,7 @@ public class MailjetClient {
     private String _apiKey;
     private String _apiSecret;
     private String _token;
-    private static final String userAgent = "mailjet-apiv3-java/v4.4.0";
+    private static final String userAgent = "mailjet-apiv3-java/v4.5.0";
     private int _debug = 0;
 
     /**
@@ -354,6 +354,7 @@ public class MailjetClient {
 
     private void setOptions(ClientOptions options) {
         this._options = options;
+        this._client.setReadTimeout(options.getTimeout());
     }
 
     private String createUrl() {
