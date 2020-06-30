@@ -13,7 +13,7 @@ public class ClientOptions {
 
   private static String defaultBaseURL = "https://api.mailjet.com";
   private static String defaultVersion = "v3";
-  private static Integer defaultTimeout = 10000;
+  private static Integer defaultTimeout = 8000;
 
   private String baseUrl;
   private String version;
