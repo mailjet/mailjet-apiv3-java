@@ -44,7 +44,7 @@ public class MailjetClient {
     public static final int NO_DEBUG = 0;
     public static final int VERBOSE_DEBUG = 1;
     public static final int NOCALL_DEBUG = 2;
-
+    
     private ClientOptions _options;
     private BasicHttpClient _client;
     private BasicRequestHandler _handler;
@@ -52,6 +52,7 @@ public class MailjetClient {
     private String _apiKey;
     private String _apiSecret;
     private String _token;
+    private static final String userAgent = "mailjet-apiv3-java/v4.5.0";
     private int _debug = 0;
 
     /**
@@ -154,7 +155,7 @@ public class MailjetClient {
 
         _client
               .addHeader("Accept", "application/json")
-              .addHeader("user-agent", "mailjet-apiv3-java/v4.2.1")
+              .addHeader("user-agent", this.userAgent)
               .addHeader("Authorization", "Basic " + authEncBytes);
         
     }
@@ -164,7 +165,7 @@ public class MailjetClient {
 
         _client
               .addHeader("Accept", "application/json")
-              .addHeader("user-agent", "mailjet-apiv3-java/v4.2.1")
+              .addHeader("user-agent", this.userAgent)
               .addHeader("Authorization", "Bearer " + token);
         
     }
@@ -206,6 +207,14 @@ public class MailjetClient {
           setOptions(new ClientOptions());
         }
 	}
+
+    /**
+     * Set the request logger
+     * @param logger
+     */
+	public void setRequestLogger(RequestLogger logger) {
+        _client.setRequestLogger(logger);
+    }
 
     /**
      * Set the debug level
@@ -353,6 +362,7 @@ public class MailjetClient {
 
     private void setOptions(ClientOptions options) {
         this._options = options;
+        this._client.setReadTimeout(options.getTimeout());
     }
 
     private String createUrl() {
