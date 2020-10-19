@@ -8,7 +8,7 @@ import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.turbomanage.httpclient.HttpResponse;
 
 /**
- * 
+ *
  * @author y.vanov
  *
  */
@@ -37,7 +37,9 @@ public final class MailjetResponseUtil {
 				throw new MailjetServerException(INTERNAL_SERVER_ERROR_GENERAL_EXCEPTION);
 			}
 		} else if (response.getStatus() >= BAD_REQUEST_ERROR_STATUS) { // Errors between 400 and 500, exclude 429
-			throw new MailjetServerException(response.getBodyAsString());
+			if (!isValidJSON(response.getBodyAsString())) {
+				throw new MailjetServerException(response.getBodyAsString());
+			}
 		}
 	}
 
