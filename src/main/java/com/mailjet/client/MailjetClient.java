@@ -16,19 +16,16 @@
 
 package com.mailjet.client;
 
-import static com.mailjet.client.MailjetResponseUtil.validateMailjetResponse;
-
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 
+import com.mailjet.client.errors.MailjetClientCommunicationException;
 import org.json.JSONObject;
 
 import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.turbomanage.httpclient.BasicHttpClient;
-import com.turbomanage.httpclient.BasicRequestHandler;
 import com.turbomanage.httpclient.ConsoleRequestLogger;
 import com.turbomanage.httpclient.HttpResponse;
 import com.turbomanage.httpclient.ParameterMap;
@@ -47,7 +44,6 @@ public class MailjetClient {
     
     private ClientOptions _options;
     private BasicHttpClient _client;
-    private BasicRequestHandler _handler;
 
     private String _apiKey;
     private String _apiSecret;
@@ -149,7 +145,7 @@ public class MailjetClient {
 
     private void initBasicAuth(String apiKey, String apiSecret) {
         _apiKey = apiKey;
-        _apiSecret = apiSecret;        
+        _apiSecret = apiSecret;
 
         String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
 
@@ -213,7 +209,7 @@ public class MailjetClient {
      * @param logger
      */
 	public void setRequestLogger(RequestLogger logger) {
-        _client.setRequestLogger(logger);
+	    _client.setRequestLogger(logger);
     }
 
     /**
@@ -237,9 +233,11 @@ public class MailjetClient {
      * @return MailjetResponse
      * @throws MailjetException
      */
-     public MailjetResponse get(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
+     public MailjetResponse get(MailjetRequest request) throws MailjetException {
         try {
             String url = createUrl() + request.buildUrl();
+            // TODO move API version from the client to the request itself to be able configuring it dynamically
+            request.setApiVersion(this._options.getVersion());
 
             if (this._debug == NOCALL_DEBUG) {
                 return new MailjetResponse(new JSONObject().put("url", url + request.queryString()));
@@ -249,21 +247,17 @@ public class MailjetClient {
             p.putAll(request._filters);
             HttpResponse response = _client.get(url, p);
 
-            validateMailjetResponse(response);
+            MailjetResponseUtil.validateMailjetResponse(request, response);
 
-            String json = (response.getBodyAsString() != null && !(response.getBodyAsString().equals("")) ?
-                    response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString());
+            String json = MailjetResponseUtil.isValidJSON(response.getBodyAsString()) ?
+                    response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString();
 
-            return new MailjetResponse(
-                    response.getStatus(),
-                    new JSONObject(json)
-            );
-        } catch (MalformedURLException ex) {
-            throw new MailjetException("Internal Exception: Malformed URL");
+            return new MailjetResponse(response.getStatus(), new JSONObject(json));
+
         } catch (UnsupportedEncodingException ex) {
-            throw new MailjetException("Internal Exception: Unsupported Encoding");
-        } catch (NullPointerException e) {
-            throw new MailjetException("Connection Exception");
+            throw new MailjetClientCommunicationException("Internal Exception: Unsupported Encoding", ex);
+        } catch (IOException | NullPointerException ex) {
+            throw new MailjetClientCommunicationException("Connection Exception", ex);
         }
     }
 
@@ -273,9 +267,11 @@ public class MailjetClient {
      * @return
      * @throws com.mailjet.client.errors.MailjetException
      */
-    public MailjetResponse post(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
+    public MailjetResponse post(MailjetRequest request) throws MailjetException {
         try {
             String url = createUrl() + request.buildUrl();
+            // TODO move API version from the client to the request itself to be able configuring it dynamically
+            request.setApiVersion(this._options.getVersion());
 
             if (_debug == NOCALL_DEBUG) {
                 return new MailjetResponse(new JSONObject()
@@ -283,29 +279,27 @@ public class MailjetClient {
                         .put("payload", request.getBody()));
             }
 
-            HttpResponse response;
-            String json;
+            HttpResponse response = _client.post(url, request.getContentType(), request.getBody().getBytes("UTF8"));
 
-            response = _client.post(url, request.getContentType(), request.getBody().getBytes("UTF8"));
+            MailjetResponseUtil.validateMailjetResponse(request, response);
 
-            validateMailjetResponse(response);
+            String json = MailjetResponseUtil.isValidJSON(response.getBodyAsString()) ?
+                    response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString();
 
-            json = (response.getBodyAsString() != null && !(response.getBodyAsString().equals("")) ?
-                    response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString());
             return new MailjetResponse(response.getStatus(), new JSONObject(json));
-        } catch (MalformedURLException ex) {
-            throw new MailjetException("Internal Exception: Malformed Url");
+
         } catch (UnsupportedEncodingException ex) {
-            throw new MailjetException("Internal Exception: Unsupported Encoding");
-        } catch (NullPointerException e) {
-            throw new MailjetException("Connection Exception");
+            throw new MailjetClientCommunicationException("Internal Exception: Unsupported Encoding", ex);
+        } catch (IOException | NullPointerException ex) {
+            throw new MailjetClientCommunicationException("Connection Exception", ex);
         }
     }
 
-    public MailjetResponse put(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
+    public MailjetResponse put(MailjetRequest request) throws MailjetException {
         try {
             String url = createUrl() + request.buildUrl();
-            HttpResponse response;
+            // TODO move API version from the client to the request itself to be able configuring it dynamically
+            request.setApiVersion(this._options.getVersion());
 
             if (_debug == NOCALL_DEBUG) {
                 return new MailjetResponse(new JSONObject()
@@ -313,28 +307,27 @@ public class MailjetClient {
                         .put("payload", request.getBody()));
             }
 
-            response = _client.put(url, request.getContentType(), request.getBody().getBytes("UTF8"));
+            HttpResponse response = _client.put(url, request.getContentType(), request.getBody().getBytes("UTF8"));
 
-            validateMailjetResponse(response);
-            
-            String json = (response.getBodyAsString() != null && !response.getBodyAsString().trim().equals("") ?
-                    response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString());
+            MailjetResponseUtil.validateMailjetResponse(request, response);
+
+            String json = MailjetResponseUtil.isValidJSON(response.getBodyAsString()) ?
+                    response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString();
 
             return new MailjetResponse(response.getStatus(), new JSONObject(json));
-        } catch (MalformedURLException ex) {
-            throw new MailjetException("Internal Exception: Malformed Url");
+
         } catch (UnsupportedEncodingException ex) {
-            throw new MailjetException("Internal Exception: Unsupported Encoding");
-        } catch (NullPointerException e) {
-            throw new MailjetException("Connection Exception");
+            throw new MailjetClientCommunicationException("Internal Exception: Unsupported Encoding", ex);
+        } catch (IOException | NullPointerException ex) {
+            throw new MailjetClientCommunicationException("Connection Exception", ex);
         }
     }
 
-    public MailjetResponse delete(MailjetRequest request) throws MailjetException, MailjetSocketTimeoutException {
+    public MailjetResponse delete(MailjetRequest request) throws MailjetException {
         try {
             String url = createUrl() + request.buildUrl();
-            HttpResponse response;
-            String json;
+            // TODO move API version from the client to the request itself to be able configuring it dynamically
+            request.setApiVersion(this._options.getVersion());
 
             if (_debug == NOCALL_DEBUG) {
                return new MailjetResponse(new JSONObject()
@@ -343,20 +336,19 @@ public class MailjetClient {
 
             ParameterMap p = new ParameterMap();
             p.putAll(request._filters);
-            response = _client.delete(url, p);
+            HttpResponse response = _client.delete(url, p);
 
-            validateMailjetResponse(response);
+            MailjetResponseUtil.validateMailjetResponse(request, response);
             
-            json = (response.getBodyAsString() != null && !response.getBodyAsString().trim().equals("") ?
-                    response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString());
+            String json = MailjetResponseUtil.isValidJSON(response.getBodyAsString()) ?
+                    response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString();
             
             return new MailjetResponse(response.getStatus(), new JSONObject(json));
-        } catch (MalformedURLException ex) {
-            throw new MailjetException("Internal Exception: Malformed Url");
+
         } catch (UnsupportedEncodingException ex) {
-            throw new MailjetException("Internal Exception: Unsupported Encoding");
-        } catch (NullPointerException e) {
-            throw new MailjetException("Connection Exception");
+            throw new MailjetClientCommunicationException("Internal Exception: Unsupported Encoding", ex);
+        } catch (IOException | NullPointerException ex) {
+            throw new MailjetClientCommunicationException("Connection Exception", ex);
         }
     }
 

@@ -6,17 +6,17 @@
 package com.mailjet.client.errors;
 
 /**
- *
+ * Base exception class for the all exceptions thrown by MailJet client
  * @author guillaume
  */
 public class MailjetException extends Exception {
     
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	public MailjetException(String error) {
-        super(error);
+	public MailjetException(String message) {
+        super(message);
     }
+	public MailjetException(String message, Exception cause) {
+		super(message, cause);
+	}
 }

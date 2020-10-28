@@ -1,9 +1,12 @@
 package com.mailjet.client.errors;
 
 /**
- * MailjetServerException handles http status code is greater than or equal to
- * 500 (Internal Server Error)
- * 
+ * MailjetServerException indicates that something went wrong on our side
+ *
+ * When such error occurs, it will contain an error identifier in its description
+ * (e.g. "ErrorIdentifier" : "D4DF574C-0C5F-45C7-BA52-7AA8E533C3DE"), which is crucial for us to track the problem and identify the root cause.
+ * Please contact our support team, providing the error identifier and we will do our best to help.
+ *
  * @author y.vanov
  *
  */

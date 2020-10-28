@@ -5,6 +5,8 @@
 
 package com.mailjet.client;
 
+import com.mailjet.client.resource.ApiVersion;
+
 /**
  *
  * @author Guillaume Badi
@@ -12,7 +14,7 @@ package com.mailjet.client;
 public class ClientOptions {
 
   private static String defaultBaseURL = "https://api.mailjet.com";
-  private static String defaultVersion = "v3";
+  private static String defaultVersion = ApiVersion.V3;
   private static Integer defaultTimeout = 8000;
 
   private String baseUrl;

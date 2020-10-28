@@ -293,7 +293,7 @@ public class MailjetRequest {
      * @return a query string
      * @throws UnsupportedEncodingException
      */
-    public String queryString () throws UnsupportedEncodingException {
+    public String queryString() throws UnsupportedEncodingException {
         StringBuilder sb = new StringBuilder();
 
         for (String key : _filters.keySet()) {
@@ -331,5 +331,18 @@ public class MailjetRequest {
                 .put("Filters", _filters.toString())
                 .put("Body", _body.toString())
                 .toString();
+    }
+
+    private String apiVersion;
+    protected String getApiVersion(){
+        return apiVersion;
+    }
+
+    protected void setApiVersion(String apiVersion) {
+        this.apiVersion = apiVersion;
+    }
+
+    protected String getResource() {
+        return _resource;
     }
 }

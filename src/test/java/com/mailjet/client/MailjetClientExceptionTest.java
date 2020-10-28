@@ -1,9 +1,6 @@
 package com.mailjet.client;
 
-import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.errors.MailjetRateLimitException;
-import com.mailjet.client.errors.MailjetServerException;
-import com.mailjet.client.errors.MailjetSocketTimeoutException;
+import com.mailjet.client.errors.*;
 import com.mailjet.client.resource.Email;
 import com.turbomanage.httpclient.BasicHttpClient;
 import com.turbomanage.httpclient.HttpResponse;
@@ -36,7 +33,6 @@ public class MailjetClientExceptionTest {
     private static final String FORBIDDEN_MESSAGE = "Forbidden";
     private static final String GENERAL_EXCEPTION_FIELD_NAME = "INTERNAL_SERVER_ERROR_GENERAL_EXCEPTION";
     private static final String TOO_MANY_REQUESTS_FIELD_NAME = "TOO_MANY_REQUESTS_EXCEPTION";
-    private static final String SOCKET_TIMEOUT_FIELD_NAME = "SOCKET_TIMEOUT_EXCEPTION";
     private static final String CLIENT_FIELD_NAME = "_client";
     private static final String URL = "https://api.mailjet.com/v3/send";
     private static final String FROM_EMAIL =  "pilot@mailjet.com";
@@ -78,23 +74,21 @@ public class MailjetClientExceptionTest {
     public ExpectedException expectedEx = ExpectedException.none();
 
     @Test
-    public void testNullResponse() throws MailjetException, MailjetSocketTimeoutException, NoSuchFieldException, IllegalAccessException {
+    public void testNullResponse() throws MailjetException, NoSuchFieldException, IllegalAccessException {
         // arrange, override values set in @Before
         response = null;
         when(_client.post(URL, request.getContentType(), request.getBody().getBytes(StandardCharsets.UTF_8))).thenReturn(response);
-        // get expected error message with reflection
-        Field f = MailjetResponseUtil.class.getDeclaredField(SOCKET_TIMEOUT_FIELD_NAME);
-        f.setAccessible(true);
-        String expectedMessage = f.get(String.class).toString();
+
         // assert
-         expectedEx.expect(MailjetSocketTimeoutException.class);
-         expectedEx.expectMessage(expectedMessage);
+        expectedEx.expect(MailjetClientCommunicationException.class);
+        expectedEx.expectMessage("Unexpected response from the server");
+
         // act
         client.post(request);
     }
 
     @Test
-    public void testTooManyRequestsResponse() throws MailjetException, MailjetSocketTimeoutException, NoSuchFieldException, IllegalAccessException {
+    public void testTooManyRequestsResponse() throws MailjetException, NoSuchFieldException, IllegalAccessException {
         // arrange
         when(response.getStatus()).thenReturn(TOO_MANY_REQUEST_STATUS);
         // get expected error message with reflection
@@ -109,7 +103,7 @@ public class MailjetClientExceptionTest {
     }
 
     @Test
-    public void testInternalServerErrorResponse() throws MailjetException, MailjetSocketTimeoutException, NoSuchFieldException, IllegalAccessException {
+    public void testInternalServerErrorResponse() throws MailjetException, NoSuchFieldException, IllegalAccessException {
         // arrange
         when(response.getStatus()).thenReturn(INTERNAL_SERVER_ERROR_STATUS);
         // get expected error message with reflection
@@ -124,36 +118,36 @@ public class MailjetClientExceptionTest {
     }
 
     @Test
-    public void testBadRequestResponse() throws MailjetException, MailjetSocketTimeoutException {
+    public void testBadRequestResponse() throws MailjetException {
         // arrange
         when(response.getStatus()).thenReturn(BAD_REQUEST_STATUS);
         when(response.getBodyAsString()).thenReturn(BAD_REQUEST_MESSAGE);
         // assert
-        expectedEx.expect(MailjetServerException.class);
+        expectedEx.expect(MailjetClientRequestException.class);
         expectedEx.expectMessage(BAD_REQUEST_MESSAGE);
         // act
         client.post(request);
     }
 
     @Test
-    public void testUnauthorizedResponse() throws MailjetException, MailjetSocketTimeoutException {
+    public void testUnauthorizedResponse() throws MailjetException {
         // arrange
         when(response.getStatus()).thenReturn(UNAUTHORIZED_STATUS);
         when(response.getBodyAsString()).thenReturn(UNAUTHORIZED_MESSAGE);
         // assert
-        expectedEx.expect(MailjetServerException.class);
-        expectedEx.expectMessage(UNAUTHORIZED_MESSAGE);
+        expectedEx.expect(MailjetUnauthorizedException.class);
+        expectedEx.expectMessage("Unauthorized. Please,verify your access key or token for the given account");
         // act
         client.post(request);
     }
 
     @Test
-    public void testForbiddenResponse() throws MailjetException, MailjetSocketTimeoutException {
+    public void testForbiddenResponse() throws MailjetException {
         // arrange
         when(response.getStatus()).thenReturn(FORBIDDEN_STATUS);
         when(response.getBodyAsString()).thenReturn(FORBIDDEN_MESSAGE);
         // assert
-        expectedEx.expect(MailjetServerException.class);
+        expectedEx.expect(MailjetClientRequestException.class);
         expectedEx.expectMessage(FORBIDDEN_MESSAGE);
         // act
         client.post(request);

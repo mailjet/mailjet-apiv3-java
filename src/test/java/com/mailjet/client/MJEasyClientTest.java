@@ -2,7 +2,6 @@ package com.mailjet.client;
 
 import com.mailjet.client.easy.MJEasyClient;
 import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class MJEasyClientTest {
     }
 
     @Test
-    public void testEmailSend() throws MailjetException, MailjetSocketTimeoutException {
+    public void testEmailSend() throws MailjetException {
 
         List<Person> recipients = new ArrayList<Person>() {
             {
@@ -60,7 +59,7 @@ public class MJEasyClientTest {
     }
     
     @Test
-    public void testSmsSend() throws MailjetException, MailjetSocketTimeoutException {
+    public void testSmsSend() throws MailjetException {
 
         // We create a client
         MJEasyClient client = new MJEasyClient("");
