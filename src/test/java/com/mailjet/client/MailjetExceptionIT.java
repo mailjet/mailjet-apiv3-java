@@ -14,7 +14,7 @@ public class MailjetExceptionIT {
     @Test
     public void shouldThrowExceptionInCaseOfBadRequest() {
         // arrange
-        MailjetClient mailjetClient = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+        MailjetClient mailjetClient = TestHelper.getClientV3();
         MailjetRequest request = new MailjetRequest(Contact.resource, "Non-existent-id")
                 .property(Contact.ISEXCLUDEDFROMCAMPAIGNS, "true")
                 .property(Contact.NAME, "New Contact");
@@ -33,7 +33,7 @@ public class MailjetExceptionIT {
     @Test(expected = MailjetUnauthorizedException.class)
     public void shouldThrowMailjetUnauthorizedExceptionInCaseOfUnauthorizedRequest() throws MailjetException {
         // arrange
-        MailjetClient mailjetClient = new MailjetClient("MJ_APIKEY_PUBLIC", "MJ_APIKEY_PRIVATE");
+        MailjetClient mailjetClient = new MailjetClient("Not-valid-key", "not-valid-private-key");
         MailjetRequest request = new MailjetRequest(Contact.resource, "Non-existent-id")
                 .property(Contact.ISEXCLUDEDFROMCAMPAIGNS, "true")
                 .property(Contact.NAME, "New Contact");
@@ -45,9 +45,9 @@ public class MailjetExceptionIT {
     @Test
     public void shouldThrowMailjetRequestExceptionForTheSendApiV3() throws MailjetException {
         // arrange
-        MailjetClient mailjetClient = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+        MailjetClient mailjetClient = TestHelper.getClientV3();
 
-        String senderEmail = getValidSenderEmail(mailjetClient);
+        String senderEmail = TestHelper.getValidSenderEmail(mailjetClient);
 
         MailjetRequest request = new MailjetRequest(Email.resource)
                 // no from email filled set
@@ -76,10 +76,10 @@ public class MailjetExceptionIT {
     @Test
     public void shouldNotThrowExceptionForTheSendApiV31() throws MailjetException {
         // arrange
-        MailjetClient mailjetClientV31 = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"), new ClientOptions(ApiVersion.V3_1));
-        MailjetClient mailjetClientV3 = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+        MailjetClient mailjetClientV31 = TestHelper.getClientV3_1();;
+        MailjetClient mailjetClientV3 = TestHelper.getClientV3();;
 
-        String senderEmail = getValidSenderEmail(mailjetClientV3);
+        String senderEmail = TestHelper.getValidSenderEmail(mailjetClientV3);
 
         MailjetRequest request = new MailjetRequest(Emailv31.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
@@ -111,26 +111,8 @@ public class MailjetExceptionIT {
 
         JSONArray errors = response.getData().getJSONObject(0).getJSONArray("Errors");
 
+        // and the single error is about invalid sender
         Assert.assertEquals(1, errors.length());
-
-        // the error is about invalid sender
         Assert.assertEquals("mj-0013", errors.getJSONObject(0).getString("ErrorCode"));
-    }
-
-
-    public String getValidSenderEmail(MailjetClient v3Client) throws MailjetException {
-        MailjetRequest request = new MailjetRequest(Sender.resource);
-        MailjetResponse response = v3Client.get(request);
-
-        Assert.assertEquals(200, response.getStatus());
-
-        for (int i = 0; i < response.getData().length(); i++) {
-            JSONObject emailObject = response.getData().getJSONObject(i);
-
-            if (emailObject.getString("Status").equals("Active"))
-                return emailObject.getString("Email");
-        }
-
-        throw new AssertionError("Cannot find Active sender address under given account");
     }
 }

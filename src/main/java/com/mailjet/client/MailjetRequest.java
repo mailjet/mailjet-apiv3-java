@@ -227,10 +227,9 @@ public class MailjetRequest {
     /**
      * Build the call URL with query string parameters
      * @return url
-     * @throws MalformedURLException
      * @throws UnsupportedEncodingException
      */
-    public String buildUrl() throws MalformedURLException, UnsupportedEncodingException {
+    public String buildUrl() throws UnsupportedEncodingException {
         String base = (_withoutNamespace ? "" : _path) + '/' + _resource;
         String id = null;
         String url = null;
