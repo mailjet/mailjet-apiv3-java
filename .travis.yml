@@ -1,5 +1,5 @@
 language: java
-script: mvn verify -Dgpg.skip
+script: mvn verify
 notifications:
   slack:
     secure: IMaSW3IgweT0HwDPo67iGwS/e7WD78y52Gz5m+VMbsiaryVRnetzttD+swerZ6DvvJe8vlpW+718a+/d9epG9oA63mbZ/kXPlAsPToqHN0/HH5QIlUfaupJeP4srXkqsnK+VnSw8cGxh9Ks5IE/cUvTLRGxKOP/qk7Gc3Sb55Kg=
