@@ -227,10 +227,9 @@ public class MailjetRequest {
     /**
      * Build the call URL with query string parameters
      * @return url
-     * @throws MalformedURLException
      * @throws UnsupportedEncodingException
      */
-    public String buildUrl() throws MalformedURLException, UnsupportedEncodingException {
+    public String buildUrl() throws UnsupportedEncodingException {
         String base = (_withoutNamespace ? "" : _path) + '/' + _resource;
         String id = null;
         String url = null;
@@ -293,7 +292,7 @@ public class MailjetRequest {
      * @return a query string
      * @throws UnsupportedEncodingException
      */
-    public String queryString () throws UnsupportedEncodingException {
+    public String queryString() throws UnsupportedEncodingException {
         StringBuilder sb = new StringBuilder();
 
         for (String key : _filters.keySet()) {
@@ -331,5 +330,18 @@ public class MailjetRequest {
                 .put("Filters", _filters.toString())
                 .put("Body", _body.toString())
                 .toString();
+    }
+
+    private String apiVersion;
+    protected String getApiVersion(){
+        return apiVersion;
+    }
+
+    protected void setApiVersion(String apiVersion) {
+        this.apiVersion = apiVersion;
+    }
+
+    protected String getResource() {
+        return _resource;
     }
 }

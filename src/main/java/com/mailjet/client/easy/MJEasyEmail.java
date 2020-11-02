@@ -3,7 +3,6 @@ package com.mailjet.client.easy;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.mailjet.client.resource.Contact;
 import com.mailjet.client.resource.Email;
 import org.json.JSONArray;
@@ -103,7 +102,7 @@ public class MJEasyEmail {
      * @return a MailjetResponse instance
      * @throws MailjetException
      */
-    public MailjetResponse send() throws MailjetException, MailjetSocketTimeoutException {
+    public MailjetResponse send() throws MailjetException {
         return client.getClient().post(request);
     }
 

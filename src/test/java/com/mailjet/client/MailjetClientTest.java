@@ -6,12 +6,10 @@
 package com.mailjet.client;
 
 import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.mailjet.client.resource.Contact;
 import com.mailjet.client.resource.ContactGetcontactslists;
 import com.mailjet.client.resource.Email;
 import com.mailjet.client.resource.Emailv31;
-import com.mailjet.client.resource.sms.SmsCount;
 import com.mailjet.client.resource.sms.SmsSend;
 import java.io.UnsupportedEncodingException;
 import java.net.MalformedURLException;
@@ -36,7 +34,7 @@ public class MailjetClientTest {
      * @throws com.mailjet.client.errors.MailjetException
      */
     @Test
-    public void testSimpleGet() throws MailjetException, MailjetSocketTimeoutException {
+    public void testSimpleGet() throws MailjetException {
         MailjetClient client;
 
         client = new MailjetClient("", "");
@@ -77,7 +75,7 @@ public class MailjetClientTest {
 //    }
 
     @Test
-    public void testFilteringGet() throws MailjetException, MailjetSocketTimeoutException {
+    public void testFilteringGet() throws MailjetException {
         MailjetClient client;
 
         client = new MailjetClient("", "");
@@ -103,7 +101,7 @@ public class MailjetClientTest {
     }
 
     @Test
-    public void testActionGet() throws MailjetException, MalformedURLException, UnsupportedEncodingException, MailjetSocketTimeoutException {
+    public void testActionGet() throws MailjetException {
         MailjetClient client;
 
         client = new MailjetClient("", "");
@@ -125,7 +123,7 @@ public class MailjetClientTest {
     }
 
     @Test
-    public void testSendv3() throws MailjetException, MalformedURLException, UnsupportedEncodingException, MailjetSocketTimeoutException {
+    public void testSendv3() throws MailjetException {
         MailjetClient client;
 
         client = new MailjetClient("", "");
@@ -158,7 +156,7 @@ public class MailjetClientTest {
     }
 
     @Test
-    public void testSendv31() throws MailjetException, MalformedURLException, UnsupportedEncodingException, MailjetSocketTimeoutException {
+    public void testSendv31() throws MailjetException  {
         MailjetClient client;
 
         client = new MailjetClient("", "", new ClientOptions("v3.1"));
@@ -188,7 +186,7 @@ public class MailjetClientTest {
     }
 
     @Test
-    public void testSendSMS() throws MailjetException, MalformedURLException, UnsupportedEncodingException, MailjetSocketTimeoutException {
+    public void testSendSMS() throws MailjetException {
         MailjetClient client;
 
         client = new MailjetClient("", new ClientOptions("v4"));

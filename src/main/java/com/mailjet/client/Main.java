@@ -24,7 +24,6 @@
 package com.mailjet.client;
 
 import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.errors.MailjetSocketTimeoutException;
 import com.mailjet.client.resource.Contact;
 
 /**
@@ -32,7 +31,7 @@ import com.mailjet.client.resource.Contact;
  * @author guillaume
  */
 public class Main {
-    public static void main (String[] args) throws MailjetException, MailjetSocketTimeoutException {
+    public static void main (String[] args) throws MailjetException {
         MailjetClient client;
         MailjetRequest request;
         MailjetResponse response;
