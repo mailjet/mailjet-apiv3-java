@@ -48,7 +48,7 @@ Check out all the resources and all the Java code examples in the [Offical Docum
 
 ## Compatibility
 
-This library requires library requires Java version 1.8 or higher.
+This library requires Java version 1.8 or higher.
 
 ## Installation (Maven)
 

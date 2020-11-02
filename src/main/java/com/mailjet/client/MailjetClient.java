@@ -19,7 +19,6 @@ package com.mailjet.client;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 
 import com.mailjet.client.errors.MailjetClientCommunicationException;
 import org.json.JSONObject;
@@ -48,7 +47,7 @@ public class MailjetClient {
     private String _apiKey;
     private String _apiSecret;
     private String _token;
-    private static final String userAgent = "mailjet-apiv3-java/v4.5.0";
+    private static final String userAgent = "mailjet-apiv3-java/v4.6.0";
     private int _debug = 0;
 
     /**
