@@ -136,7 +136,7 @@ public class MailjetClientExceptionTest {
         when(response.getBodyAsString()).thenReturn(UNAUTHORIZED_MESSAGE);
         // assert
         expectedEx.expect(MailjetUnauthorizedException.class);
-        expectedEx.expectMessage("Unauthorized. Please,verify your access key or token for the given account");
+        expectedEx.expectMessage("Unauthorized. Please,verify your access key and access secret key or token for the given account");
         // act
         client.post(request);
     }

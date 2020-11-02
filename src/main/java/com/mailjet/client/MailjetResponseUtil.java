@@ -19,7 +19,7 @@ public final class MailjetResponseUtil {
 	private static final int UNAUTHORIZED_STATUS = 401;
 
 	private static final String UNEXPECTED_RESPONSE_MESSAGE = "Unexpected response from the server";
-	private static final String UNAUTHORIZED_MESSAGE = "Unauthorized. Please,verify your access key or token for the given account";
+	private static final String UNAUTHORIZED_MESSAGE = "Unauthorized. Please,verify your access key and access secret key or token for the given account";
 	private static final String TOO_MANY_REQUESTS_EXCEPTION = "Too Many Requests";
 	private static final String INTERNAL_SERVER_ERROR_GENERAL_EXCEPTION = "Internal Server Error: ";
 
