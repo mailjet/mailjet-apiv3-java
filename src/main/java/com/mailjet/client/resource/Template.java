@@ -35,6 +35,8 @@ public class Template {
 	public static String LIMIT = "Limit";
 	public static String OFFSET = "Offset";
 	public static String COUNTONLY = "CountOnly";
+	public static String ISTEXTPARTGENERATIONENABLED = "IsTextPartGenerationEnabled";
+	public static String LOCALE = "Locale";
 
 }
 
