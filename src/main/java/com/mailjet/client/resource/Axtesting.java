@@ -6,6 +6,8 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.enums.ApiAuthenticationType;
+import com.mailjet.client.enums.ApiVersion;
 
 /**
  *
@@ -13,7 +15,7 @@ import com.mailjet.client.Resource;
  */
 public class Axtesting {
 
-    public static Resource resource = new Resource("axtesting", "");
+    public static Resource resource = new Resource("axtesting", "", ApiVersion.V3, ApiAuthenticationType.Basic);
 
 	public static String CONTACTLIST = "ContactList";
 	public static String CREATEDAT = "CreatedAt";

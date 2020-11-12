@@ -11,10 +11,6 @@ import com.mailjet.client.resource.sms.SmsSend;
  */
 public class MJEasyClient {
     private final MailjetClient client;
-    
-    public static final int NO_DEBUG = 0;
-    public static final int VERBOSE_DEBUG = 1;
-    public static final int NOCALL_DEBUG = 2;
 
     /**
      * Constructor with api keys
@@ -22,7 +18,13 @@ public class MJEasyClient {
      * @param apiKeyPrivate Private API Key
      */
     public MJEasyClient(String apiKeyPublic, String apiKeyPrivate) {
-        client = new MailjetClient(apiKeyPublic, apiKeyPrivate);
+        ClientOptions clientOptions = ClientOptions
+                .builder()
+                .apiKey(apiKeyPublic)
+                .apiSecretKey(apiKeyPrivate)
+                .build();
+
+        client = new MailjetClient(clientOptions);
     }
     
     /**
@@ -30,29 +32,35 @@ public class MJEasyClient {
      * @param token V4 api token
      */
     public MJEasyClient(String token) {
-        client = new MailjetClient(token, new ClientOptions("v4"));
+        ClientOptions clientOptions = ClientOptions
+                .builder()
+                .apiAccessToken(token)
+                .build();
+
+        client = new MailjetClient(clientOptions);
     }
 
     /**
      * Constructor using the MJ_APIKEY_PUBLIC and MJ_APIKEY_PRIVATE environment variables.
      */
     public MJEasyClient() {
-        client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+        ClientOptions clientOptions = ClientOptions
+                .builder()
+                .apiKey(System.getenv("MJ_APIKEY_PUBLIC"))
+                .apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE"))
+                .build();
+
+        client = new MailjetClient(clientOptions);
     }
 
     /**
-     * Get the interal Mailjet client
+     * Get the internal Mailjet client
      * @return MailjetClient instance
      */
     public MailjetClient getClient() {
         return client;
     }
 
-    public MJEasyClient setDebug(int debug) {
-        client.setDebug(debug);
-        return this;
-    }
-    
     /**
      * Create an MJEasyEmail instance to prepare an email to send.
      * @return MJEasyEMail instance

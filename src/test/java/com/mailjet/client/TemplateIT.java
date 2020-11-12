@@ -16,7 +16,7 @@ import java.util.UUID;
 public class TemplateIT {
 
     private static long templateId;
-    private static MailjetClient mailjetClient = TestHelper.getClientV3();
+    private static MailjetClient mailjetClient = TestHelper.getClient();
     private static String utf8String = "ID_AÇÃO©℗®™";
     private static String mjmlContent =
             "<mjml>" +

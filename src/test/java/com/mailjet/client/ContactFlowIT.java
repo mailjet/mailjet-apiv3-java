@@ -15,7 +15,7 @@ import java.util.UUID;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ContactFlowIT {
 
-    private static final MailjetClient mailjetClientV3 = TestHelper.getClientV3();
+    private static final MailjetClient mailjetClient = TestHelper.getClient();
     private static final String contactEmail = String.format("integrationtest%s@mailjet.com", UUID.randomUUID());
     private static final String contactName = "Integration test Contact";
     private static long createdContactId;
@@ -29,7 +29,7 @@ public class ContactFlowIT {
                 .property(Contact.EMAIL, contactEmail);
 
         // act
-        MailjetResponse mailjetResponse = mailjetClientV3.post(mailjetRequest);
+        MailjetResponse mailjetResponse = mailjetClient.post(mailjetRequest);
 
         // assert
         Assert.assertEquals(201, mailjetResponse.getStatus());
@@ -42,7 +42,7 @@ public class ContactFlowIT {
         MailjetRequest mailjetRequest = new MailjetRequest(Contact.resource, contactEmail);
 
         // act
-        MailjetResponse mailjetResponse = mailjetClientV3.get(mailjetRequest);
+        MailjetResponse mailjetResponse = mailjetClient.get(mailjetRequest);
 
         // assert
         Assert.assertEquals(200, mailjetResponse.getStatus());
@@ -62,7 +62,7 @@ public class ContactFlowIT {
         Assert.assertNotEquals(0, createdContactId);
         MailjetRequest mailjetRequest = new MailjetRequest(Contacts.resource, createdContactId);
 
-        MailjetClient mailjetClientV4 = TestHelper.getClientV4();
+        MailjetClient mailjetClientV4 = TestHelper.getClient();
 
         // act
         MailjetResponse mailjetResponse = mailjetClientV4.delete(mailjetRequest);

@@ -1,9 +1,11 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.enums.ApiAuthenticationType;
+import com.mailjet.client.enums.ApiVersion;
 
 public class Statcounters {
-	public static final Resource resource = new Resource("statcounters", "");
+	public static final Resource resource = new Resource("statcounters", "", ApiVersion.V3, ApiAuthenticationType.Basic);
 
 	public static final String APIKEYID = "APIKeyID";
 	public static final String EVENTCLICKEDCOUNT = "EventClickedCount";

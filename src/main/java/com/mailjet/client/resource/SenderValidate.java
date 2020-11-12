@@ -5,6 +5,8 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.enums.ApiAuthenticationType;
+import com.mailjet.client.enums.ApiVersion;
 
 /**
  *
@@ -12,5 +14,5 @@ import com.mailjet.client.Resource;
  */
 public class SenderValidate {
 
-  public static Resource resource = new Resource("sender", "validate");
+  public static Resource resource = new Resource("sender", "validate", ApiVersion.V3, ApiAuthenticationType.Basic);
 }

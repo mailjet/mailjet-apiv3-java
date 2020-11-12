@@ -12,7 +12,7 @@ public class SendIT {
     @Test
     public void sendEmailV3() throws MailjetException {
         // arrange
-        MailjetClient mailjetClient = TestHelper.getClientV3();
+        MailjetClient mailjetClient = TestHelper.getClient();
         String senderEmail = TestHelper.getValidSenderEmail(mailjetClient);
 
         MailjetRequest mailjetRequest = new MailjetRequest(Email.resource)

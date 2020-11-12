@@ -6,7 +6,7 @@ package com.mailjet.client.errors;
  * Please, visit API keys Management section to check your keys.
  */
 public class MailjetUnauthorizedException extends MailjetClientRequestException {
-    public MailjetUnauthorizedException(String message, int statusCode) {
-        super(message, statusCode);
+    public MailjetUnauthorizedException(String message) {
+        super(message, 401);
     }
 }

@@ -1,22 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mailjet.client;
 
 import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.resource.Contact;
-import com.mailjet.client.resource.ContactGetcontactslists;
-import com.mailjet.client.resource.Email;
-import com.mailjet.client.resource.Emailv31;
+import com.mailjet.client.resource.*;
 import com.mailjet.client.resource.sms.SmsSend;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import org.junit.Test;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
+import okhttp3.mockwebserver.RecordedRequest;
+import org.junit.*;
+
 import static org.junit.Assert.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 /**
  *
@@ -24,115 +20,150 @@ import org.json.JSONObject;
  */
 public class MailjetClientTest {
 
-    private final long existingContactID = 2;
+    private static MailjetClient client;
+    private static MockWebServer mockWebServer;
 
-    public MailjetClientTest() {
+    @BeforeClass
+    public static void initialize() throws IOException {
+        mockWebServer = new MockWebServer();
+        mockWebServer.start();
+
+        final ClientOptions clientOptions = ClientOptions
+                .builder()
+                .baseUrl(mockWebServer.url("/").toString())
+                .apiSecretKey("secret-key")
+                .apiKey("api-key")
+                .apiAccessToken("bearer-token")
+                .build();
+
+        client = new MailjetClient(clientOptions);
     }
 
-    /**
-     * Test of setDebug method, of class MailjetClient.
-     * @throws com.mailjet.client.errors.MailjetException
-     */
     @Test
-    public void testSimpleGet() throws MailjetException {
-        MailjetClient client;
+    public void testRequestHeadersV3() throws MailjetException, InterruptedException {
 
-        client = new MailjetClient("", "");
-        client.setDebug(MailjetClient.NOCALL_DEBUG);
+        // arrange
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
 
-        System.out.println("TESTING: Simple GET");
+        MailjetRequest contactsRequest = new MailjetRequest(Contact.resource);
 
+        // act
+        MailjetResponse response = client.get(contactsRequest);
 
-        // Simple contact GET request
-        MailjetRequest contacts;
-        MailjetResponse response;
+        // assert
+        RecordedRequest recordedRequest = mockWebServer.takeRequest();
 
-        contacts = new MailjetRequest(Contact.resource);
-        response = client.get(contacts);
-
-
-        assertEquals(response.getString("url"), "https://api.mailjet.com/v3/REST/contact");
-
+        // base64 api-key:secret-key
+        assertEquals("Basic YXBpLWtleTpzZWNyZXQta2V5", recordedRequest.getHeader("Authorization"));
+        assertEquals("application/json", recordedRequest.getHeader("Accept"));
+        assertTrue(recordedRequest.getHeader("User-Agent").startsWith("mailjet-apiv3-java/v"));
     }
 
-//    @Test
-//    public void testSimplePut() throws MailjetException {
-//        MailjetClient client;
-//
-//        client = new MailjetClient("", "");
-//        client.setDebug(MailjetClient.NOCALL_DEBUG);
-//
-//        System.out.println("TESTING: Simple Put");
-//
-//
-//        MailjetRequest request;
-//        MailjetResponse response;
-//
-//        request = new MailjetRequest(Sender.resource)
-//                      .property(Sender.NAME, "Guillaume");
-//
-//        response = client.put(request);
-//    }
+    @Test
+    public void testContactsGet() throws MailjetException, InterruptedException {
+
+        // arrange
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody("{\n" +
+                "\t\"Count\": 1,\n" +
+                "\t\"Data\": [\n" +
+                "\t\t{\n" +
+                "\t\t\t\"IsExcludedFromCampaigns\": true,\n" +
+                "\t\t\t\"Name\": \"New Contact\",\n" +
+                "\t\t\t\"CreatedAt\": \"2018-01-01T00:00:00\",\n" +
+                "\t\t\t\"DeliveredCount\": 10,\n" +
+                "\t\t\t\"Email\": \"passenger@mailjet.com\",\n" +
+                "\t\t\t\"ExclusionFromCampaignsUpdatedAt\": \"2018-01-01T00:00:00\",\n" +
+                "\t\t\t\"ID\": 123456789,\n" +
+                "\t\t\t\"IsOptInPending\": false,\n" +
+                "\t\t\t\"IsSpamComplaining\": false,\n" +
+                "\t\t\t\"LastActivityAt\": \"2018-01-01T00:00:00\",\n" +
+                "\t\t\t\"LastUpdateAt\": \"2018-01-01T00:00:00\",\n" +
+                "\t\t\t\"UnsubscribedAt\": \"2018-01-01T00:00:00\",\n" +
+                "\t\t\t\"UnsubscribedBy\": \"2018-01-01T00:00:00\"\n" +
+                "\t\t}\n" +
+                "\t],\n" +
+                "\t\"Total\": 1\n" +
+                "}"));
+
+        MailjetRequest contactsRequest = new MailjetRequest(Contact.resource);
+
+        // act
+        MailjetResponse response = client.get(contactsRequest);
+
+        // assert
+        RecordedRequest recordedRequest = mockWebServer.takeRequest();
+
+        assertEquals("/v3/REST/contact", recordedRequest.getPath());
+        assertEquals("GET", recordedRequest.getMethod());
+        assertEquals(200, response.getStatus());
+        assertEquals(1, response.getCount());
+        assertEquals(1, response.getTotal());
+        assertEquals(true, response.getData().getJSONObject(0).getBoolean("IsExcludedFromCampaigns"));
+        assertEquals("New Contact", response.getData().getJSONObject(0).getString("Name"));
+    }
 
     @Test
-    public void testFilteringGet() throws MailjetException {
-        MailjetClient client;
+    public void testSenderPut() throws MailjetException, InterruptedException {
 
-        client = new MailjetClient("", "");
-        client.setDebug(MailjetClient.NOCALL_DEBUG);
+        // arrange
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
 
-        System.out.println("TESTING: Simple Filtering with GET");
+        MailjetRequest request = new MailjetRequest(Sender.resource, 121)
+                      .property(Sender.NAME, "Guillaume");
 
+        // act
+        MailjetResponse response = client.put(request);
 
-        // Simple contact GET request
-        MailjetRequest contacts;
-        MailjetResponse response;
+        // assert
+        RecordedRequest recordedRequest = mockWebServer.takeRequest();
 
-        contacts = new MailjetRequest(Contact.resource)
+        assertEquals("/v3/REST/sender/121", recordedRequest.getPath());
+        assertEquals("PUT", recordedRequest.getMethod());
+        assertEquals("{\"Name\":\"Guillaume\"}", recordedRequest.getBody().readUtf8());
+    }
+
+    @Test
+    public void testFilteringGet() throws MailjetException, InterruptedException {
+
+        // arrange
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+
+        MailjetRequest contactsRequest = new MailjetRequest(Contact.resource)
                         .filter(Contact.LIMIT, 10)
                         .filter(Contact.OFFSET, 2);
 
-        response = client.get(contacts);
-        String url = response.getString("url");
-        Boolean test = url.equals("https://api.mailjet.com/v3/REST/contact?Offset=2&Limit=10") ||
-                url.equals("https://api.mailjet.com/v3/REST/contact?Limit=10&Offset=2");
+        // act
+        MailjetResponse response = client.get(contactsRequest);
 
-        assertTrue(test);
+        // assert
+        RecordedRequest recordedRequest = mockWebServer.takeRequest();
+
+        assertEquals("/v3/REST/contact?Limit=10&Offset=2", recordedRequest.getPath());
     }
 
     @Test
-    public void testActionGet() throws MailjetException {
-        MailjetClient client;
+    public void testGetСontactslists() throws MailjetException, InterruptedException {
 
-        client = new MailjetClient("", "");
-        client.setDebug(MailjetClient.NOCALL_DEBUG);
+        // arrange
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+        MailjetRequest request = new MailjetRequest(ContactGetcontactslists.resource, 2);
 
-        System.out.println("TESTING: Simple Action with GET");
+        // act
+        MailjetResponse response = client.get(request);
 
+        // assert
+        RecordedRequest recordedRequest = mockWebServer.takeRequest();
 
-        // Simple contact GET request
-        MailjetRequest contacts;
-        MailjetResponse response;
-
-        contacts = new MailjetRequest(ContactGetcontactslists.resource, existingContactID);
-
-        response = client.get(contacts);
-
-
-        assertEquals(response.getString("url"), "https://api.mailjet.com/v3/REST/contact/" + existingContactID + "/getcontactslists");
+        assertEquals("/v3/REST/contact/2/getcontactslists", recordedRequest.getPath());
+        assertEquals("GET", recordedRequest.getMethod());
+        assertEquals(200, response.getStatus());
     }
 
     @Test
-    public void testSendv3() throws MailjetException {
-        MailjetClient client;
+    public void testSendv3() throws MailjetException, InterruptedException {
 
-        client = new MailjetClient("", "");
-        client.setDebug(MailjetClient.NOCALL_DEBUG);
-
-        System.out.println("TESTING: Send email with Send API v3.0");
-
-        MailjetRequest request;
-        MailjetResponse response;
+        // arrange
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
 
         String fromEmail =  "pilot@mailjet.com",
                fromName = "Mailjet Pilot",
@@ -141,8 +172,7 @@ public class MailjetClientTest {
                htmlPart = "<h3>Dear passenger, welcome to Mailjet</h3><br/>May the delivery force be with you!",
                recipient = "passenger@mailjet.com";
 
-        // Simple contact GET request
-        request = new MailjetRequest(Email.resource)
+        MailjetRequest request = new MailjetRequest(Email.resource)
                         .property(Email.FROMEMAIL, fromEmail)
                         .property(Email.FROMNAME, fromName)
                         .property(Email.SUBJECT, subject)
@@ -151,59 +181,80 @@ public class MailjetClientTest {
                         .property(Email.RECIPIENTS, new JSONArray()
                         .put(new JSONObject()
                         .put(Email.EMAIL, recipient)));
-        response = client.post(request);
-        assertEquals(response.getString("url"), "https://api.mailjet.com/v3/send");
+
+        // act
+        MailjetResponse response = client.post(request);
+
+        // assert
+        RecordedRequest recordedRequest = mockWebServer.takeRequest();
+
+        assertEquals("/v3/send", recordedRequest.getPath());
+        assertEquals("POST", recordedRequest.getMethod());
+        assertEquals(200, response.getStatus());
+        assertEquals("{\"FromName\":\"Mailjet Pilot\",\"Recipients\":[{\"Email\":\"passenger@mailjet.com\"}],\"Text-Part\":\"Dear passenger, welcome to Mailjet! May the delivery force be with you!\",\"FromEmail\":\"pilot@mailjet.com\",\"Subject\":\"Your email flight plan!\",\"Html-Part\":\"<h3>Dear passenger, welcome to Mailjet<\\/h3><br/>May the delivery force be with you!\"}",
+                recordedRequest.getBody().readUtf8());
     }
 
     @Test
-    public void testSendv31() throws MailjetException  {
-        MailjetClient client;
+    public void testSendv31() throws MailjetException, InterruptedException {
 
-        client = new MailjetClient("", "", new ClientOptions("v3.1"));
-        client.setDebug(MailjetClient.NOCALL_DEBUG);
-
-        System.out.println("TESTING: Send email with Send API v3.1");
-
-        MailjetRequest request;
-        MailjetResponse response;
+        // arrange
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
 
         JSONObject message = new JSONObject();
         message.put(Emailv31.Message.FROM, new JSONObject()
-        .put(Emailv31.Message.EMAIL, "pilot@mailjet.com")
-        .put(Emailv31.Message.NAME, "Mailjet Pilot"))
-        .put(Emailv31.Message.SUBJECT, "Your email flight plan!")
-        .put(Emailv31.Message.TEXTPART, "Dear passenger, welcome to Mailjet! May the delivery force be with you!")
-        .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger, welcome to Mailjet</h3><br/>May the delivery force be with you!")
-        .put(Emailv31.Message.TO, new JSONArray()
-        .put(new JSONObject()
-        .put(Emailv31.Message.EMAIL, "passenger@mailjet.com")));
+            .put(Emailv31.Message.EMAIL, "pilot@mailjet.com")
+            .put(Emailv31.Message.NAME, "Mailjet Pilot"))
+            .put(Emailv31.Message.SUBJECT, "Your email flight plan!")
+            .put(Emailv31.Message.TEXTPART, "Dear passenger, welcome to Mailjet! May the delivery force be with you!")
+            .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger, welcome to Mailjet</h3><br/>May the delivery force be with you!")
+            .put(Emailv31.Message.TO, new JSONArray()
+            .put(new JSONObject()
+            .put(Emailv31.Message.EMAIL, "passenger@mailjet.com")));
 
-        // Simple contact GET request
-        request = new MailjetRequest(Emailv31.resource).property(Emailv31.MESSAGES, (new JSONArray()).put(message));
-        response = client.post(request);
+        MailjetRequest request = new MailjetRequest(Emailv31.resource).property(Emailv31.MESSAGES, (new JSONArray()).put(message));
 
-        assertEquals(response.getString("url"), "https://api.mailjet.com/v3.1/send");
+        // act
+        MailjetResponse response = client.post(request);
+
+        // assert
+        RecordedRequest recordedRequest = mockWebServer.takeRequest();
+
+        assertEquals("/v3.1/send", recordedRequest.getPath());
+        assertEquals("POST", recordedRequest.getMethod());
+        assertEquals(200, response.getStatus());
+        assertEquals("{\"Messages\":[{\"HTMLPart\":\"<h3>Dear passenger, welcome to Mailjet<\\/h3><br/>May the delivery force be with you!\",\"TextPart\":\"Dear passenger, welcome to Mailjet! May the delivery force be with you!\",\"From\":{\"Email\":\"pilot@mailjet.com\",\"Name\":\"Mailjet Pilot\"},\"To\":[{\"Email\":\"passenger@mailjet.com\"}],\"Subject\":\"Your email flight plan!\"}]}",
+                recordedRequest.getBody().readUtf8());
     }
 
     @Test
-    public void testSendSMS() throws MailjetException {
-        MailjetClient client;
+    public void testSendSMS() throws MailjetException, InterruptedException {
 
-        client = new MailjetClient("", new ClientOptions("v4"));
-        client.setDebug(MailjetClient.NOCALL_DEBUG);
+        // arrange
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
 
-        System.out.println("TESTING: Send SMS with Send SMS API v4.");
-
-        MailjetRequest request;
-        MailjetResponse response;
-
-        // Simple post request
-        request = new MailjetRequest(SmsSend.resource)
+        MailjetRequest request = new MailjetRequest(SmsSend.resource)
 			.property(SmsSend.FROM, "MJPilot")
         	.property(SmsSend.TO, "+336000000")
 			.property(SmsSend.TEXT, "Have a nice SMS flight with Mailjet!");
-		response = client.post(request);
 
-        assertEquals(response.getString("url"), "https://api.mailjet.com/v4/sms-send");
+        // act
+        MailjetResponse response = client.post(request);
+
+        // assert
+        RecordedRequest recordedRequest = mockWebServer.takeRequest();
+
+        assertEquals("Bearer bearer-token", recordedRequest.getHeader("Authorization"));
+        assertEquals("/v4/sms-send", recordedRequest.getPath());
+        assertEquals("POST", recordedRequest.getMethod());
+        assertEquals("{\"Text\":\"Have a nice SMS flight with Mailjet!\",\"From\":\"MJPilot\",\"To\":\"+336000000\"}",
+                recordedRequest.getBody().readUtf8());
+
+        assertEquals(200, response.getStatus());
+    }
+
+    @AfterClass
+    public static void tearDown() throws IOException {
+        mockWebServer.shutdown();
     }
 }
