@@ -1,9 +1,11 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.enums.ApiAuthenticationType;
+import com.mailjet.client.enums.ApiVersion;
 
 public class StatisticsRecepientesp {
-	public static final Resource resource = new Resource("statistics/recipient-esp", "");
+	public static final Resource resource = new Resource("statistics/recipient-esp", "", ApiVersion.V3, ApiAuthenticationType.Basic);
 
 	public static final String ATTEMPTEDMESSAGESCOUNT = "AttemptedMessagesCount";
 	public static final String CLICKEDMESSAGESCOUNT = "ClickedMessagesCount";

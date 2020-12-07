@@ -1,6 +1,8 @@
 package com.mailjet.client.resource.sms;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.enums.ApiAuthenticationType;
+import com.mailjet.client.enums.ApiVersion;
 
 /**
  *
@@ -8,7 +10,7 @@ import com.mailjet.client.Resource;
  */
 public class SmsSend {
 
-    public static final Resource resource = new Resource("sms-send", "", true);
+    public static final Resource resource = new Resource("sms-send", "", ApiVersion.V4, ApiAuthenticationType.Bearer, true);
 
 	public static final String FROM = "From";
     public static final String TO = "To";

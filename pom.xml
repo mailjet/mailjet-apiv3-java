@@ -6,7 +6,7 @@
     <!--General configuration -->
     <groupId>com.mailjet</groupId>
     <artifactId>mailjet-client</artifactId>
-    <version>4.6.0</version>
+    <version>5.0.0</version>
     <packaging>jar</packaging>
     <name>Mailjet Client</name>
     <description>A Mailjet API Client</description>
@@ -27,7 +27,7 @@
         <connection>scm:git:https://github.com/mailjet/mailjet-apiv3-java.git</connection>
         <developerConnection>scm:git:https://github.com/mailjet/mailjet-apiv3-java.git</developerConnection>
         <url>git@github.com:mailjet/mailjet-apiv3-java.git</url>
-        <tag>mailjet-client-4.6.0</tag>
+        <tag>mailjet-client-5.0.0</tag>
     </scm>
     <!--License-->
     <licenses>
@@ -53,15 +53,22 @@
     </properties>
     <!--Dependencies-->
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
         <dependency>
-            <groupId>com.turbomanage.basic-http-client</groupId>
-            <artifactId>http-client-java</artifactId>
-            <version>0.89</version>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>okhttp</artifactId>
+            <version>4.9.0</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>20190722</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.16</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
@@ -75,6 +82,14 @@
             <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/mockwebserver -->
+        <dependency>
+            <groupId>com.squareup.okhttp3</groupId>
+            <artifactId>mockwebserver</artifactId>
+            <version>4.9.0</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
     <!--Build Steps-->
     <build>

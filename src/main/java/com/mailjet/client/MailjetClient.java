@@ -18,18 +18,13 @@ package com.mailjet.client;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 
 import com.mailjet.client.errors.MailjetClientCommunicationException;
+import com.mailjet.client.errors.MailjetUnauthorizedException;
+import okhttp3.*;
 import org.json.JSONObject;
 
 import com.mailjet.client.errors.MailjetException;
-import com.turbomanage.httpclient.BasicHttpClient;
-import com.turbomanage.httpclient.ConsoleRequestLogger;
-import com.turbomanage.httpclient.HttpResponse;
-import com.turbomanage.httpclient.ParameterMap;
-import com.turbomanage.httpclient.RequestHandler;
-import com.turbomanage.httpclient.RequestLogger;
 
 /**
  *
@@ -37,326 +32,189 @@ import com.turbomanage.httpclient.RequestLogger;
  */
 public class MailjetClient {
 
-    public static final int NO_DEBUG = 0;
-    public static final int VERBOSE_DEBUG = 1;
-    public static final int NOCALL_DEBUG = 2;
-    
     private ClientOptions _options;
-    private BasicHttpClient _client;
+    private OkHttpClient _client;
 
-    private String _apiKey;
-    private String _apiSecret;
-    private String _token;
-    private static final String userAgent = "mailjet-apiv3-java/v4.6.0";
-    private int _debug = 0;
+    private static final String userAgent = "mailjet-apiv3-java/v5.0.0";
 
     /**
-     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET
-     * @param apiKey
-     * @param apiSecret
+     * Deprecated - please, use MailjetClient(ClientOptions clientOptions) ctor instead
+     * Create a new Instance of the MailjetClient class with given APIKEY/APISECRET
+     * @param apiKey api key
+     * @param apiSecret api secret key
      */
+    @Deprecated()
     public MailjetClient(String apiKey, String apiSecret) {
-		initLogger(null);
-        initBasicAuth(apiKey, apiSecret);
-		initOptions(null);
+        this(ClientOptions
+                .builder()
+                .apiKey(apiKey)
+                .apiSecretKey(apiSecret)
+                .build());
     }
 
     /**
-     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET. Use custom request handler.
-     * @param apiKey
-     * @param apiSecret
-     * @param handler
+     * Deprecated - please, use MailjetClient(ClientOptions clientOptions) ctor instead
+     * Create a new Instance of the MailjetClient class with given bearer token
+     * @param token bearer token to authenticate SMS API calls
      */
-    public MailjetClient(String apiKey, String apiSecret, RequestHandler handler) {
-		initLogger(handler);
-        initBasicAuth(apiKey, apiSecret);
-		initOptions(null);
-    }
-
-    /**
-     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET. Use client options.
-     * @param apiKey
-     * @param apiSecret
-     * @param options
-     */
-    public MailjetClient(String apiKey, String apiSecret, ClientOptions options) {
-		initLogger(null);
-        initBasicAuth(apiKey, apiSecret);
-		initOptions(options);
-    }
-
-    /**
-     * Create a new Instance of the MailjetClient class and register the APIKEY/APISECRET. Use custom request handler. Use client options.
-     * @param apiKey
-     * @param apiSecret
-     * @param handler
-     * @param options
-     */
-    public MailjetClient(String apiKey, String apiSecret, RequestHandler handler, ClientOptions options) {
-		initLogger(handler);
-        initBasicAuth(apiKey, apiSecret);
-		initOptions(options);
-    }
-
-    /**
-     * Create a new Instance of the MailjetClient class and register the Token
-     * @param token
-     */
+    @Deprecated()
     public MailjetClient(String token) {
-		initLogger(null);
-        initTokenAuth(token);
-		initOptions(null);
+        this(ClientOptions
+                .builder()
+                .bearerAccessToken(token)
+                .build());
     }
 
     /**
-     * Create a new Instance of the MailjetClient class and register the Token. Use custom request handler.
-     * @param token
-     * @param handler
+     * Create a new Instance of the MailjetClient class with given options
      */
-    public MailjetClient(String token, RequestHandler handler) {
-		initLogger(handler);
-        initTokenAuth(token);
-		initOptions(null);
+    public MailjetClient(ClientOptions clientOptions) {
+        _options = clientOptions;
+        _client = clientOptions.getOkHttpClient() == null ?
+                MailjetClient.createDefaultOkHttpClient() :
+                clientOptions.getOkHttpClient();
     }
 
     /**
-     * Create a new Instance of the MailjetClient class and register the Token. Use client options.
-     * @param token
-     * @param options
-     */
-    public MailjetClient(String token, ClientOptions options) {
-		initLogger(null);
-        initTokenAuth(token);
-		initOptions(options);
-    }
-
-    /**
-     * Create a new Instance of the MailjetClient class and register the Token. Use custom request handler. Use client options.
-     * @param token
-     * @param handler
-     * @param options
-     */
-    public MailjetClient(String token, RequestHandler handler, ClientOptions options) {
-		initLogger(handler);
-        initTokenAuth(token);
-		initOptions(options);
-    }
-
-    private void initBasicAuth(String apiKey, String apiSecret) {
-        _apiKey = apiKey;
-        _apiSecret = apiSecret;
-
-        String authEncBytes = Base64.encode((_apiKey + ":" + _apiSecret).getBytes());
-
-        _client
-              .addHeader("Accept", "application/json")
-              .addHeader("user-agent", this.userAgent)
-              .addHeader("Authorization", "Basic " + authEncBytes);
-        
-    }
-
-    private void initTokenAuth(String token) {
-        _token = token;
-
-        _client
-              .addHeader("Accept", "application/json")
-              .addHeader("user-agent", this.userAgent)
-              .addHeader("Authorization", "Bearer " + token);
-        
-    }
-
-	private void initLogger(RequestHandler handler) {
-		if (handler == null) {
-            /**
-            * Provide an Empty logger to the client.
-            * The user can enable it with .setDebug()
-            */
-            RequestLogger logger = new RequestLogger() {
-
-                @Override
-                public boolean isLoggingEnabled() {
-                    return false;
-                }
-
-                @Override
-                public void log(String string) {}
-
-                @Override
-                public void logRequest(HttpURLConnection hurlc, Object o) throws IOException {}
-
-                @Override
-                public void logResponse(HttpResponse hr) {}
-            };
-            _client = new BasicHttpClient();
-            _client.setRequestLogger(logger);
-        } else {
-            _client = new BasicHttpClient("", handler);
-        }
-	}
-
-	private void initOptions(ClientOptions options) {
-		if (options != null) {
-          setOptions(options);
-        }
-        else {
-          setOptions(new ClientOptions());
-        }
-	}
-
-    /**
-     * Set the request logger
-     * @param logger
-     */
-	public void setRequestLogger(RequestLogger logger) {
-	    _client.setRequestLogger(logger);
-    }
-
-    /**
-     * Set the debug level
-     * @param debug:
-     *  VERBOSE_DEBUG: prints every URL/payload.
-     *  NOCALL_DEBUG: returns the URL + payload in a JSONObject.
-     *  NO_DEBUG: usual call.
-     */
-    public void setDebug(int debug) {
-        _debug = debug;
-
-        if (_debug == VERBOSE_DEBUG) {
-            _client.setRequestLogger(new ConsoleRequestLogger());
-        }
-    }
-
-    /**
-     * Perform a get Request on a Mailjet endpoint
-     * @param request
-     * @return MailjetResponse
-     * @throws MailjetException
+     * performs GET request.
+     * @param request request to be sent to Mailjet server
+     * @return MailjetResponse with parameters of the response
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccess response status code
      */
      public MailjetResponse get(MailjetRequest request) throws MailjetException {
         try {
-            String url = createUrl() + request.buildUrl();
-            // TODO move API version from the client to the request itself to be able configuring it dynamically
-            request.setApiVersion(this._options.getVersion());
 
-            if (this._debug == NOCALL_DEBUG) {
-                return new MailjetResponse(new JSONObject().put("url", url + request.queryString()));
+            final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
+                    .get()
+                    .build();
+
+            try (final Response okHttpResponse = _client.newCall(okHttpRequest).execute()) {
+                return parseResponse(request, okHttpResponse);
             }
 
-            ParameterMap p = new ParameterMap();
-            p.putAll(request._filters);
-            HttpResponse response = _client.get(url, p);
+        } catch (IOException ex) {
+            throw new MailjetClientCommunicationException("Connection Exception", ex);
+        }
+    }
 
-            MailjetResponseUtil.validateMailjetResponse(request, response);
 
-            String json = MailjetResponseUtil.isValidJSON(response.getBodyAsString()) ?
-                    response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString();
+    /**
+     * performs POST request.
+     * @param request request to be sent to Mailjet server
+     * @return MailjetResponse with parameters of the response
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccess response status code
+     */
+    public MailjetResponse post(MailjetRequest request) throws MailjetException {
 
-            return new MailjetResponse(response.getStatus(), new JSONObject(json));
+        try {
+            final RequestBody requestBody = RequestBody.create(
+                    request.getBody().getBytes("UTF8"), MediaType.parse(request.getContentType()));
 
-        } catch (UnsupportedEncodingException ex) {
-            throw new MailjetClientCommunicationException("Internal Exception: Unsupported Encoding", ex);
-        } catch (IOException | NullPointerException ex) {
+            final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
+                    .post(requestBody)
+                    .build();
+
+            try (final Response okHttpResponse = _client.newCall(okHttpRequest).execute()) {
+                return parseResponse(request, okHttpResponse);
+            }
+
+        } catch (IOException ex) {
             throw new MailjetClientCommunicationException("Connection Exception", ex);
         }
     }
 
     /**
-     * perform a Mailjet POST request.
-     * @param request
-     * @return
-     * @throws com.mailjet.client.errors.MailjetException
+     * performs PUT request.
+     * @param request request to be sent to Mailjet server
+     * @return MailjetResponse with parameters of the response
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccess response status code
      */
-    public MailjetResponse post(MailjetRequest request) throws MailjetException {
-        try {
-            String url = createUrl() + request.buildUrl();
-            // TODO move API version from the client to the request itself to be able configuring it dynamically
-            request.setApiVersion(this._options.getVersion());
-
-            if (_debug == NOCALL_DEBUG) {
-                return new MailjetResponse(new JSONObject()
-                        .put("url", url)
-                        .put("payload", request.getBody()));
-            }
-
-            HttpResponse response = _client.post(url, request.getContentType(), request.getBody().getBytes("UTF8"));
-
-            MailjetResponseUtil.validateMailjetResponse(request, response);
-
-            String json = MailjetResponseUtil.isValidJSON(response.getBodyAsString()) ?
-                    response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString();
-
-            return new MailjetResponse(response.getStatus(), new JSONObject(json));
-
-        } catch (UnsupportedEncodingException ex) {
-            throw new MailjetClientCommunicationException("Internal Exception: Unsupported Encoding", ex);
-        } catch (IOException | NullPointerException ex) {
-            throw new MailjetClientCommunicationException("Connection Exception", ex);
-        }
-    }
-
     public MailjetResponse put(MailjetRequest request) throws MailjetException {
         try {
-            String url = createUrl() + request.buildUrl();
-            // TODO move API version from the client to the request itself to be able configuring it dynamically
-            request.setApiVersion(this._options.getVersion());
+            final RequestBody requestBody = RequestBody.create(
+                    request.getBody().getBytes("UTF8"), MediaType.parse(request.getContentType()));
 
-            if (_debug == NOCALL_DEBUG) {
-                return new MailjetResponse(new JSONObject()
-                        .put("url", url)
-                        .put("payload", request.getBody()));
+            final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
+                    .put(requestBody)
+                    .build();
+
+            try (final Response okHttpResponse = _client.newCall(okHttpRequest).execute()) {
+                return parseResponse(request, okHttpResponse);
             }
 
-            HttpResponse response = _client.put(url, request.getContentType(), request.getBody().getBytes("UTF8"));
-
-            MailjetResponseUtil.validateMailjetResponse(request, response);
-
-            String json = MailjetResponseUtil.isValidJSON(response.getBodyAsString()) ?
-                    response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString();
-
-            return new MailjetResponse(response.getStatus(), new JSONObject(json));
-
-        } catch (UnsupportedEncodingException ex) {
-            throw new MailjetClientCommunicationException("Internal Exception: Unsupported Encoding", ex);
-        } catch (IOException | NullPointerException ex) {
+        } catch (IOException ex) {
             throw new MailjetClientCommunicationException("Connection Exception", ex);
         }
     }
 
+    /**
+     * performs DELETE request.
+     * @param request request to be sent to Mailjet server
+     * @return MailjetResponse with parameters of the response
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccess response status code
+     */
     public MailjetResponse delete(MailjetRequest request) throws MailjetException {
         try {
-            String url = createUrl() + request.buildUrl();
-            // TODO move API version from the client to the request itself to be able configuring it dynamically
-            request.setApiVersion(this._options.getVersion());
 
-            if (_debug == NOCALL_DEBUG) {
-               return new MailjetResponse(new JSONObject()
-                       .put("url", url));
+            final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
+                    .delete()
+                    .build();
+
+            try (final Response okHttpResponse = _client.newCall(okHttpRequest).execute()) {
+                return parseResponse(request, okHttpResponse);
             }
 
-            ParameterMap p = new ParameterMap();
-            p.putAll(request._filters);
-            HttpResponse response = _client.delete(url, p);
-
-            MailjetResponseUtil.validateMailjetResponse(request, response);
-            
-            String json = MailjetResponseUtil.isValidJSON(response.getBodyAsString()) ?
-                    response.getBodyAsString() : new JSONObject().put("status", response.getStatus()).toString();
-            
-            return new MailjetResponse(response.getStatus(), new JSONObject(json));
-
-        } catch (UnsupportedEncodingException ex) {
-            throw new MailjetClientCommunicationException("Internal Exception: Unsupported Encoding", ex);
-        } catch (IOException | NullPointerException ex) {
+        } catch (IOException ex) {
             throw new MailjetClientCommunicationException("Connection Exception", ex);
         }
     }
 
-    private void setOptions(ClientOptions options) {
-        this._options = options;
-        this._client.setReadTimeout(options.getTimeout());
+    private MailjetResponse parseResponse(MailjetRequest request, Response okHttpResponse) throws IOException, MailjetException {
+
+        final int responseStatusCode = okHttpResponse.code();
+        final String responseBody = okHttpResponse.body().string();
+
+        MailjetResponseUtil.validateMailjetResponse(request, responseStatusCode, responseBody);
+
+        final String json = MailjetResponseUtil.isValidJSON(responseBody) ?
+                responseBody : new JSONObject().put("status", responseStatusCode).toString();
+
+        return new MailjetResponse(responseStatusCode, new JSONObject(json));
     }
 
-    private String createUrl() {
-        return this._options.getBaseUrl() + '/' + _options.getVersion();
+    private static OkHttpClient createDefaultOkHttpClient(){
+        return new OkHttpClient
+                .Builder()
+                .build();
+    }
+
+    private Request.Builder getPreconfiguredRequestBuilder(MailjetRequest request) throws MailjetUnauthorizedException, UnsupportedEncodingException {
+
+        final String url = request.buildUrl(this._options.getBaseUrl());
+
+        final Request.Builder builder = new Request
+                .Builder()
+                .addHeader("Accept", "application/json")
+                .addHeader("User-Agent", this.userAgent)
+                .url(url);
+
+        switch (request.getAuthenticationType()){
+            case Basic:
+                if (_options.getApiKey() == null || _options.getApiSecretKey() == null)
+                    throw new MailjetUnauthorizedException("To do a request to MailJet api, api key and api secret should be set");
+
+                final String authEncBytes = Base64.encode((_options.getApiKey() + ":" + _options.getApiSecretKey()).getBytes());
+                builder.addHeader("Authorization", "Basic " + authEncBytes);
+                break;
+
+            case Bearer:
+                if (_options.getBearerAccessToken() == null)
+                    throw new MailjetUnauthorizedException("To do a request to MailJet api, api access token should be set");
+
+                builder.addHeader("Authorization", "Bearer " + _options.getBearerAccessToken());
+                break;
+        }
+
+        return builder;
     }
  }

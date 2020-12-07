@@ -32,15 +32,18 @@ import com.mailjet.client.resource.Contact;
  */
 public class Main {
     public static void main (String[] args) throws MailjetException {
-        MailjetClient client;
-        MailjetRequest request;
-        MailjetResponse response;
-        
-        client = new MailjetClient("", "");
-        request = new MailjetRequest(Contact.resource)
+
+        final ClientOptions clientOptions = ClientOptions
+                .builder()
+                .apiKey(System.getenv("MJ_APIKEY_PUBLIC"))
+                .apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE"))
+                .build();
+
+        final MailjetClient client = new MailjetClient(clientOptions);
+        final MailjetRequest request = new MailjetRequest(Contact.resource)
                         .filter(Contact.LIMIT, 10);
         
-        response = client.get(request);
+        final MailjetResponse response = client.get(request);
         System.out.println(response.getStatus());
     }
 }

@@ -20,13 +20,16 @@ import static com.mailjet.client.MailjetRequestUtil.decodeDecimals;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
-import java.util.List;
+
+import com.mailjet.client.enums.ApiAuthenticationType;
+import com.mailjet.client.enums.ApiVersion;
+import lombok.Getter;
+import okhttp3.HttpUrl;
 import org.json.JSONObject;
 
 /**
@@ -44,7 +47,8 @@ public class MailjetRequest {
     /**
      * Mailjet resource string
      */
-    private String _resource;
+    @Getter
+    private String resource;
 
     /**
      * Mailjet resource action, if any
@@ -66,6 +70,12 @@ public class MailjetRequest {
     private long _actionId;
 
     private String _data;
+
+    @Getter
+    private final ApiVersion apiVersion;
+
+    @Getter
+    private final ApiAuthenticationType authenticationType;
 
     /**
      * Filters HashMap.
@@ -94,13 +104,15 @@ public class MailjetRequest {
     public MailjetRequest(Resource res) {
         this._path = "/REST";
         _configuration = 1;
-        _resource = res.getResource();
+        resource = res.getResource();
         _action = res.getAction();
 		_withoutNamespace = res.getWithoutNamespace();
+		apiVersion = res.getApiVersion();
+		authenticationType = res.getAuthenticationType();
 
         _id = null;
 
-        if (_resource.equals("send")) {
+        if (resource.equals("send")) {
             _path = "";
         }
     }
@@ -112,10 +124,12 @@ public class MailjetRequest {
      */
     public MailjetRequest(Resource res, long id) {
         this._path = "/REST";
-        _resource = res.getResource();
+        resource = res.getResource();
         _action = res.getAction();
 		_withoutNamespace = res.getWithoutNamespace();
         _id = id;
+        apiVersion = res.getApiVersion();
+        authenticationType = res.getAuthenticationType();
 
         if (_action.equals("")) {
             _configuration = 2;
@@ -131,10 +145,12 @@ public class MailjetRequest {
      */
     public MailjetRequest(Resource res, String id) {
         this._path = "/REST";
-        _resource = res.getResource();
+        resource = res.getResource();
         _action = res.getAction();
 		_withoutNamespace = res.getWithoutNamespace();
         _alt = id;
+        apiVersion = res.getApiVersion();
+        authenticationType = res.getAuthenticationType();
 
         if (_action.equals("")) {
             _configuration = 2;
@@ -151,9 +167,12 @@ public class MailjetRequest {
      */
     public MailjetRequest(Resource res, long id, long actionid) {
         this._path = "/REST";
-        _resource = res.getResource();
+        resource = res.getResource();
         _action = res.getAction();
 		_withoutNamespace = res.getWithoutNamespace();
+        apiVersion = res.getApiVersion();
+        authenticationType = res.getAuthenticationType();
+
         _id = id;
         _actionId = actionid;
         _configuration = 4;
@@ -229,8 +248,10 @@ public class MailjetRequest {
      * @return url
      * @throws UnsupportedEncodingException
      */
-    public String buildUrl() throws UnsupportedEncodingException {
-        String base = (_withoutNamespace ? "" : _path) + '/' + _resource;
+    public String buildUrl(String baseApiUrl) throws UnsupportedEncodingException {
+
+        baseApiUrl = baseApiUrl.endsWith("/") ? baseApiUrl : baseApiUrl + '/';
+        String base = baseApiUrl + apiVersion.getUrlSegment() + (_withoutNamespace ? "" : _path) + '/' + resource;
         String id = null;
         String url = null;
 
@@ -251,7 +272,14 @@ public class MailjetRequest {
         else if (_configuration == 4)
             url = base + '/' + id + '/' + _action + '/' + _actionId;
 
-        return url;
+        // add query params to the request url
+        final HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
+        for (final String key : _filters.keySet()) {
+            final String value = _filters.get(key);
+            urlBuilder.addQueryParameter(key, value);
+        }
+
+        return urlBuilder.build().toString();
     }
 
     /**
@@ -323,25 +351,12 @@ public class MailjetRequest {
     @Override
     public String toString() {
         return new JSONObject()
-                .put("Resource", _resource)
+                .put("Resource", resource)
                 .put("ID", _id)
                 .put("Action", _action)
                 .put("Action ID", _actionId)
                 .put("Filters", _filters.toString())
                 .put("Body", _body.toString())
                 .toString();
-    }
-
-    private String apiVersion;
-    protected String getApiVersion(){
-        return apiVersion;
-    }
-
-    protected void setApiVersion(String apiVersion) {
-        this.apiVersion = apiVersion;
-    }
-
-    protected String getResource() {
-        return _resource;
     }
 }

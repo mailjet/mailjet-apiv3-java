@@ -1,77 +1,44 @@
-
-/*
- * This is a generated class.
- */
-
 package com.mailjet.client;
 
-import com.mailjet.client.resource.ApiVersion;
+import lombok.Builder;
+import lombok.Data;
+import okhttp3.OkHttpClient;
 
 /**
+ * Class used to configure MailJet client
  *
- * @author Guillaume Badi
  */
+@Builder
+@Data
 public class ClientOptions {
 
-  private static String defaultBaseURL = "https://api.mailjet.com";
-  private static String defaultVersion = ApiVersion.V3;
-  private static Integer defaultTimeout = 8000;
+  private static final String defaultBaseURL = "https://api.mailjet.com";
 
-  private String baseUrl;
-  private String version;
-  private Integer timeout;
+  /**
+   * base Url for all API calls
+   */
+  @Builder.Default
+  private String baseUrl = defaultBaseURL;
 
-  public ClientOptions() {
-    this.baseUrl = ClientOptions.defaultBaseURL;
-    this.version = ClientOptions.defaultVersion;
-    this.timeout = ClientOptions.defaultTimeout;
-  }
+  /**
+   * Bearer token used for SMS Api calls
+   */
+  private String bearerAccessToken;
 
-  public ClientOptions(String version, String baseUrl, Integer timeout) {
-    this.baseUrl = baseUrl;
-    this.version = version;
-    this.timeout = timeout;
-  }
+  /**
+   * API key to authenticate Email Api calls
+   */
+  private String apiKey;
 
-  public ClientOptions(Integer timeout) {
-    this.baseUrl = ClientOptions.defaultBaseURL;
-    this.version = ClientOptions.defaultVersion;
-    this.timeout = timeout;
-  }
+  /**
+   * API secret key to authenticate Email Api calls
+   */
+  private String apiSecretKey;
 
-  public ClientOptions(String version, String baseUrl) {
-    this.baseUrl = baseUrl;
-    this.version = version;
-    this.timeout = ClientOptions.defaultTimeout;
-  }
-
-  public ClientOptions(String version) {
-    this.baseUrl = ClientOptions.defaultBaseURL;
-    this.version = version;
-    this.timeout = ClientOptions.defaultTimeout;
-  }
-
-  public void setBaseUrl(String baseUrl) {
-    this.baseUrl = baseUrl;
-  }
-
-  public String getBaseUrl() {
-    return this.baseUrl;
-  }
-
-  public void setVersion(String version) {
-    this.version = version;
-  }
-
-  public String getVersion() {
-    return this.version;
-  }
-
-  public void setTimeout(Integer timeout) {
-    this.timeout = timeout;
-  }
-
-  public Integer getTimeout() {
-    return this.timeout;
-  }
+  /**
+   * If set to the customly created OkHttp client, mailJet client will use provided client
+   * Instead of creating the new one internally
+   * use this to add custom calls interceptors/logging/etc
+   */
+  private OkHttpClient okHttpClient;
 }

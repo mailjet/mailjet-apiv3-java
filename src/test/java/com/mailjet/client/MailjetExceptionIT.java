@@ -14,7 +14,7 @@ public class MailjetExceptionIT {
     @Test
     public void shouldThrowExceptionInCaseOfBadRequest() {
         // arrange
-        MailjetClient mailjetClient = TestHelper.getClientV3();
+        MailjetClient mailjetClient = TestHelper.getClient();
         MailjetRequest request = new MailjetRequest(Contact.resource, "Non-existent-id")
                 .property(Contact.ISEXCLUDEDFROMCAMPAIGNS, "true")
                 .property(Contact.NAME, "New Contact");
@@ -45,7 +45,7 @@ public class MailjetExceptionIT {
     @Test
     public void shouldThrowMailjetRequestExceptionForTheSendApiV3() throws MailjetException {
         // arrange
-        MailjetClient mailjetClient = TestHelper.getClientV3();
+        MailjetClient mailjetClient = TestHelper.getClient();
 
         String senderEmail = TestHelper.getValidSenderEmail(mailjetClient);
 
@@ -76,10 +76,9 @@ public class MailjetExceptionIT {
     @Test
     public void shouldNotThrowExceptionForTheSendApiV31() throws MailjetException {
         // arrange
-        MailjetClient mailjetClientV31 = TestHelper.getClientV3_1();;
-        MailjetClient mailjetClientV3 = TestHelper.getClientV3();;
+        MailjetClient mailjetClient = TestHelper.getClient();
 
-        String senderEmail = TestHelper.getValidSenderEmail(mailjetClientV3);
+        String senderEmail = TestHelper.getValidSenderEmail(mailjetClient);
 
         MailjetRequest request = new MailjetRequest(Emailv31.resource)
                 .property(Emailv31.MESSAGES, new JSONArray()
@@ -101,7 +100,7 @@ public class MailjetExceptionIT {
                                 .put(Emailv31.Message.HTMLPART, "<h3>Dear passenger 1, welcome to <a href=\"https://www.mailjet.com/\">Mailjet</a>!</h3><br />May the delivery force be with you!")));
 
         // act
-        MailjetResponse response = mailjetClientV31.post(request);
+        MailjetResponse response = mailjetClient.post(request);
 
         // assert
         Assert.assertEquals(400, response.getStatus());

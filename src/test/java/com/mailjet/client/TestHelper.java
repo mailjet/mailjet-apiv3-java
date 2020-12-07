@@ -1,32 +1,20 @@
 package com.mailjet.client;
 
 import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.resource.ApiVersion;
 import com.mailjet.client.resource.Sender;
 import org.json.JSONObject;
 import org.junit.Assert;
 
 public class TestHelper {
-    public static MailjetClient getClientV3() {
-        MailjetClient mailjetClient = new MailjetClient(
-                System.getenv("MJ_APIKEY_PUBLIC"),
-                System.getenv("MJ_APIKEY_PRIVATE"));
-        return mailjetClient;
-    }
+    public static MailjetClient getClient() {
+        final ClientOptions clientOptions = ClientOptions
+                .builder()
+                .apiKey(System.getenv("MJ_APIKEY_PUBLIC"))
+                .apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE"))
+                .build();
 
-    public static MailjetClient getClientV4() {
-        MailjetClient mailjetClient = new MailjetClient(
-                System.getenv("MJ_APIKEY_PUBLIC"),
-                System.getenv("MJ_APIKEY_PRIVATE"),
-                new ClientOptions(ApiVersion.V4));
-        return mailjetClient;
-    }
+        final MailjetClient mailjetClient = new MailjetClient(clientOptions);
 
-    public static MailjetClient getClientV3_1() {
-        MailjetClient mailjetClient = new MailjetClient(
-                System.getenv("MJ_APIKEY_PUBLIC"),
-                System.getenv("MJ_APIKEY_PRIVATE"),
-                new ClientOptions(ApiVersion.V3_1));
         return mailjetClient;
     }
 

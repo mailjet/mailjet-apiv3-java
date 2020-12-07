@@ -6,6 +6,8 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.enums.ApiAuthenticationType;
+import com.mailjet.client.enums.ApiVersion;
 
 /**
  *
@@ -13,7 +15,7 @@ import com.mailjet.client.Resource;
  */
 public class Dns {
 
-    public static Resource resource = new Resource("dns", "");
+    public static Resource resource = new Resource("dns", "", ApiVersion.V3, ApiAuthenticationType.Basic);
 
 	public static String DKIMRECORDNAME = "DKIMRecordName";
 	public static String DKIMRECORDVALUE = "DKIMRecordValue";

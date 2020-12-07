@@ -6,6 +6,8 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.enums.ApiAuthenticationType;
+import com.mailjet.client.enums.ApiVersion;
 
 /**
  *
@@ -13,7 +15,7 @@ import com.mailjet.client.Resource;
  */
 public class Messagestate {
 
-    public static Resource resource = new Resource("messagestate", "");
+    public static Resource resource = new Resource("messagestate", "", ApiVersion.V3, ApiAuthenticationType.Basic);
 
 	public static String ID = "ID";
 	public static String RELATEDTO = "RelatedTo";

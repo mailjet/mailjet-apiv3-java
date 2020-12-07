@@ -2,6 +2,7 @@ package com.mailjet.client;
 
 import com.mailjet.client.easy.MJEasyClient;
 import com.mailjet.client.errors.MailjetException;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class MJEasyClientTest {
         }
     }
 
-    @Test
+    @Test @Ignore
     public void testEmailSend() throws MailjetException {
 
         List<Person> recipients = new ArrayList<Person>() {
@@ -32,8 +33,6 @@ public class MJEasyClientTest {
 
         // We create a client
         MJEasyClient client = new MJEasyClient();
-        client.setDebug(MJEasyClient.NOCALL_DEBUG);
-
 
         for (Person r : recipients) {
             // Create an email
@@ -58,12 +57,11 @@ public class MJEasyClientTest {
         // Response: {"Status":200,"Sent":[{"Email":"florent@mailjet.com","MessageID":18014415886982635}]}
     }
     
-    @Test
+    @Test @Ignore
     public void testSmsSend() throws MailjetException {
 
         // We create a client
         MJEasyClient client = new MJEasyClient("");
-        client.setDebug(MJEasyClient.NOCALL_DEBUG);
 
         client.sms()
                 .from("MJPilot")

@@ -6,6 +6,8 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.enums.ApiAuthenticationType;
+import com.mailjet.client.enums.ApiVersion;
 
 /**
  *
@@ -13,7 +15,7 @@ import com.mailjet.client.Resource;
  */
 public class Metasender {
 
-    public static Resource resource = new Resource("metasender", "");
+    public static Resource resource = new Resource("metasender", "", ApiVersion.V3, ApiAuthenticationType.Basic);
 
 	public static String CREATEDAT = "CreatedAt";
 	public static String DESCRIPTION = "Description";

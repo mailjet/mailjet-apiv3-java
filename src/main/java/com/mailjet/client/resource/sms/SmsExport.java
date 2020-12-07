@@ -1,6 +1,8 @@
 package com.mailjet.client.resource.sms;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.enums.ApiAuthenticationType;
+import com.mailjet.client.enums.ApiVersion;
 
 /**
  *
@@ -8,7 +10,7 @@ import com.mailjet.client.Resource;
  */
 public class SmsExport {
 
-    public static final Resource resource = new Resource("sms/export", "", true);
+    public static final Resource resource = new Resource("sms/export", "", ApiVersion.V4, ApiAuthenticationType.Bearer, true);
 
 	public static final String FROMTS = "FromTS";
     public static final String TOTS = "ToTS";

@@ -6,6 +6,8 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.enums.ApiAuthenticationType;
+import com.mailjet.client.enums.ApiVersion;
 
 /**
  *
@@ -13,7 +15,7 @@ import com.mailjet.client.Resource;
  */
 public class Csvimport {
 
-    public static Resource resource = new Resource("csvimport", "");
+    public static Resource resource = new Resource("csvimport", "", ApiVersion.V3, ApiAuthenticationType.Basic);
 
 	public static String ALIVEAT = "AliveAt";
 	public static String CONTACTSLIST = "ContactsList";

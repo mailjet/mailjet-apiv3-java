@@ -20,6 +20,7 @@ Check out all the resources and all the Java code examples in the [Offical Docum
 
 ## Table of contents
 
+- [Release notes](#release-notes)
 - [Compatibility](#compatibility)
 - [Installation (Maven)](#installation-maven)
 - [Authentication](#authentication)
@@ -46,6 +47,12 @@ Check out all the resources and all the Java code examples in the [Offical Docum
 - [Contribute](#contribute)
 
 
+## Release notes
+v5.0.0
+- migrated to more reliable OkHttpClient
+- removed ApiVersion from the MailjetClient configuration: Now the client will determine the needed API version from the resource itself.
+- added ClientOptions builder to make configuration more explicit. If you have troubles with migration, please, check [tests](src/test/java/com/mailjet/client/SendIT.java) for more examples. 
+
 ## Compatibility
 
 This library requires Java version 1.8 or higher.
@@ -59,7 +66,7 @@ Add the following in your `pom.xml`
         <dependency>
             <groupId>com.mailjet</groupId>
             <artifactId>mailjet-client</artifactId>
-            <version>4.5.0</version>
+            <version>5.0.0</version>
         </dependency>
     </dependencies>
 ```
@@ -78,7 +85,14 @@ export MJ_APIKEY_PRIVATE='your API secret'
 Initialize your [Mailjet][mailjet] Client:
 
 ```java
-MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+
+        ClientOptions options = ClientOptions.builder()
+                .apiKey(System.getenv("MJ_APIKEY_PUBLIC"))
+                .apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE"))
+                .build();
+
+        MailjetClient client = new MailjetClient(options);
+
 ```
 
 ## Make your first call
@@ -93,7 +107,6 @@ import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.ClientOptions;
-import com.mailjet.client.resource.ApiVersion;
 import com.mailjet.client.resource.Emailv31;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -102,10 +115,16 @@ public class MyClass {
      * Run:
      */
     public static void main(String[] args) throws MailjetException {
-      MailjetClient client;
       MailjetRequest request;
       MailjetResponse response;
-      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"), new ClientOptions(ApiVersion.V3));
+
+      ClientOptions options = ClientOptions.builder()
+            .apiKey(System.getenv("MJ_APIKEY_PUBLIC"))
+            .apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE"))
+            .build();
+      
+      MailjetClient client = new MailjetClient(options);
+
       request = new MailjetRequest(Emailv31.resource)
             .property(Emailv31.MESSAGES, new JSONArray()
                 .put(new JSONObject()
@@ -131,14 +150,39 @@ public class MyClass {
 To instantiate the library you can use the following constructor:  
 
 ```java
-MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"), new ClientOptions(ApiVersion.V3, "https://api.us.mailjet.com"));
+        ClientOptions options = ClientOptions.builder()
+                .apiKey(System.getenv("MJ_APIKEY_PUBLIC"))
+                .apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE"))
+                .build();
+
+        MailjetClient client = new MailjetClient(options);
 ```
 
- - `$MJ_APIKEY_PUBLIC` : public Mailjet API key
- - `$MJ_APIKEY_PRIVATE` : private Mailjet API key
- - `ClientOptions` : associative array describing the connection options (see Options bellow for full list)
-
 ### Options
+
+#### Set connection timeouts and log requests 
+
+You can pass a custom configured HttpClient to the Mailjet client to get request logs or custom timeouts:
+
+```java
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(Level.BASIC);
+    	OkHttpClient customHttpClient = new OkHttpClient.Builder()
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .addInterceptor(logging)
+                .build();
+
+        ClientOptions options = ClientOptions.builder()
+                .apiKey(System.getenv("MJ_APIKEY_PUBLIC"))
+                .apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE"))
+                .okHttpClient(customHttpClient)
+                .build();
+
+```
+
+for more configuration options, please, refer to the [OkHttpClient documentation](https://square.github.io/okhttp/)
 
 #### API Versioning
 
@@ -148,13 +192,8 @@ The Mailjet API is spread among three distinct versions:
 - `v3.1` - Email Send API v3.1, which is the latest version of our Send API
 - `v4` - SMS API
 
-Since most Email API endpoints are located under `v3`, it is set as the default one and does not need to be specified when making your request. For the others you need to specify the version using `ClientOptions`. For example, if using Send API `v3.1`:
+You can skip version specification during the request, as MailJet client will determine the needed API version by himself.
 
-``` java
-
-MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"), new ClientOptions(ApiVersion.V3_1));
-
-```
 
 For additional information refer to our [API Reference](https://dev.preprod.mailjet.com/reference/overview/versioning/).
 
@@ -163,7 +202,13 @@ For additional information refer to our [API Reference](https://dev.preprod.mail
 The default base domain name for the Mailjet API is api.mailjet.com. You can modify this base URL by adding a different URL in `ClientOptions`:
 
 ```java
-MailjetClient client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"), new ClientOptions(ApiVersion.V3, "https://api.us.mailjet.com"));
+        ClientOptions options = ClientOptions.builder()
+                .baseUrl("https://api.us.mailjet.com")
+                .apiKey(System.getenv("MJ_APIKEY_PUBLIC"))
+                .apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE"))
+                .build();
+
+        MailjetClient client = new MailjetClient(options);
 ```
 
 If your account has been moved to Mailjet's **US architecture**, the URL you need to add is `https://api.us.mailjet.com`.
@@ -218,7 +263,7 @@ public class MyClass {
       MailjetClient client;
       MailjetRequest request;
       MailjetResponse response;
-      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      client = new MailjetClient(ClientOptions.builder().apiKey(System.getenv("MJ_APIKEY_PUBLIC")).apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE")).build());
       request = new MailjetRequest(Contact.resource)
             .property(Contact.EMAIL, "Mister@mailjet.com");
       response = client.post(request);
@@ -251,7 +296,7 @@ public class MyClass {
       MailjetClient client;
       MailjetRequest request;
       MailjetResponse response;
-      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      client = new MailjetClient(ClientOptions.builder().apiKey(System.getenv("MJ_APIKEY_PUBLIC")).apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE")).build());
       request = new MailjetRequest(ContactManagecontactslists.resource, ID)
             .property(ContactManagecontactslists.CONTACTSLISTS, new JSONArray()
                 .put(new JSONObject()
@@ -292,7 +337,8 @@ public class MyClass {
       MailjetClient client;
       MailjetRequest request;
       MailjetResponse response;
-      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      client = new MailjetClient(ClientOptions.builder().apiKey(System.getenv("MJ_APIKEY_PUBLIC")).apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE")).build());
+
       request = new MailjetRequest(Contact.resource);
       response = client.get(request);
       System.out.println(response.getStatus());
@@ -324,7 +370,8 @@ public class MyClass {
       MailjetClient client;
       MailjetRequest request;
       MailjetResponse response;
-      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      client = new MailjetClient(ClientOptions.builder().apiKey(System.getenv("MJ_APIKEY_PUBLIC")).apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE")).build());
+
       request = new MailjetRequest(Contact.resource)
             .filter(Contact.ISEXCLUDEDFROMCAMPAIGNS, "false");
       response = client.get(request);
@@ -358,7 +405,8 @@ public class MyClass {
       MailjetClient client;
       MailjetRequest request;
       MailjetResponse response;
-      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      client = new MailjetClient(ClientOptions.builder().apiKey(System.getenv("MJ_APIKEY_PUBLIC")).apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE")).build());
+
       request = new MailjetRequest(Contact.resource, ID);
       response = client.get(request);
       System.out.println(response.getStatus());
@@ -392,7 +440,8 @@ public class MyClass {
       MailjetClient client;
       MailjetRequest request;
       MailjetResponse response;
-      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      client = new MailjetClient(ClientOptions.builder().apiKey(System.getenv("MJ_APIKEY_PUBLIC")).apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE")).build());
+
       request = new MailjetRequest(Contactdata.resource, ID)
             .property(Contactdata.DATA, new JSONArray()
                 .put(new JSONObject()
@@ -432,7 +481,8 @@ public class MyClass {
       MailjetClient client;
       MailjetRequest request;
       MailjetResponse response;
-      client = new MailjetClient(System.getenv("MJ_APIKEY_PUBLIC"), System.getenv("MJ_APIKEY_PRIVATE"));
+      client = new MailjetClient(ClientOptions.builder().apiKey(System.getenv("MJ_APIKEY_PUBLIC")).apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE")).build());
+
       request = new MailjetRequest(Template.resource, ID);
       response = client.delete(request);
       System.out.println(response.getStatus());
@@ -445,15 +495,11 @@ public class MyClass {
 
 ### Token Authentication
 
-Authentication for the SMS API endpoints is done using a bearer token. The bearer token is generated in the [SMS section](https://app.mailjet.com/sms) of your Mailjet account.
-
-```java
-MailjetClient client = new MailjetClient(System.getenv("MJ_TOKEN"), new ClientOptions(ApiVersion.V4));
-```
+Authentication for the SMS API endpoints is done using a bearer token. The bearer token generated in the [SMS section](https://app.mailjet.com/sms) of your Mailjet account.
 
 ### Example request
 
-Here's an example SMS API request:
+An example SMS API request:
 
 ``` java
 
@@ -461,47 +507,27 @@ MailjetClient client;
 MailjetRequest request;
 MailjetResponse response;
 
-// Note how we set the version to v4 using ClientOptions and use an already generated token
-MailjetClient client = new MailjetClient(System.getenv("MJ_TOKEN"), new ClientOptions(ApiVersion.V4));
+MailjetClient mailjetClient = new MailjetClient(ClientOptions
+                .builder()
+                .bearerAccessToken(System.getenv("MJ_APITOKEN"))
+                .build());
 
-request = new MailjetRequest(Send.resource)
-			.property(Send.From, "MJPilot")
-        	.property(Send.To, "+33600000000")
-			.property(Send.Text, "Have a nice SMS flight with Mailjet!");
+String germanyPhoneNumber = "+4915207831169";
 
-response = client.post(request);
+MailjetRequest mailjetRequest = new MailjetRequest(SmsSend.resource)
+                .property(SmsSend.FROM, "MJPilot")
+                .property(SmsSend.TO, germanyPhoneNumber)
+                .property(SmsSend.TEXT, "Have a nice SMS flight with Mailjet!");
 
-package com.my.project;
-import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.errors.MailjetSocketTimeoutException;
-import com.mailjet.client.MailjetClient;
-import com.mailjet.client.MailjetRequest;
-import com.mailjet.client.MailjetResponse;
-import com.mailjet.client.ClientOptions;
-import com.mailjet.client.resource.sms.SmsSend;
-import org.json.JSONArray;
-import org.json.JSONObject;
-public class MyClass {
-    /**
-     * Run:
-     */
-    public static void main(String[] args) throws MailjetException {
-      MailjetClient client;
-      MailjetRequest request;
-      MailjetResponse response;
-      client = new MailjetClient(System.getenv("MJ_TOKEN"), new ClientOptions(ApiVersion.V4));
-      request = new MailjetRequest(SmsSend.resource)
-		.property(SmsSend.FROM, "MJPilot")
-        	.property(SmsSend.TO, "+33600000000")
-		.property(SmsSend.TEXT, "Have a nice SMS flight with Mailjet!")
-      response = client.post(request);
-      System.out.println(response.getStatus());
-      System.out.println(response.getData());
-    }
-}
+// send the request
+MailjetResponse response = mailjetClient.post(mailjetRequest);
 
+// assert response
+Assert.assertEquals(200, response.getStatus());
+Assert.assertEquals("Message is being sent", response.getData().getJSONObject(0).getJSONObject("Status").getString("Description"));
 
 ```
+Also, you can check [integration tests](src/test/java/com/mailjet/client/SendSmsIT.java) how to work with Mailjet client. 
 
 ## Contribute
 

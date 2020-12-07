@@ -1,48 +1,40 @@
 package com.mailjet.client;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+import com.mailjet.client.enums.ApiAuthenticationType;
+import com.mailjet.client.enums.ApiVersion;
+import lombok.Getter;
 
 /**
  *
  * @author guillaume
  */
 public class Resource {
-    
-    private String _resource;
-    private String _action;
-	private Boolean _withoutNamespace;
 
-	public Resource(String resource, String action, Boolean withoutNamespace) {
-        _resource = resource;
-        _action = action;
-		_withoutNamespace = withoutNamespace;
+    @Getter
+    private final String resource;
+
+    @Getter
+    private final String action;
+
+    @Getter
+	private final Boolean withoutNamespace;
+
+    @Getter
+	private final ApiVersion apiVersion;
+
+    @Getter
+    private final ApiAuthenticationType authenticationType;
+
+	public Resource(String resource, String action, ApiVersion apiVersion, ApiAuthenticationType authenticationType, Boolean withoutNamespace) {
+        this.resource = resource;
+        this.action = action;
+        this.withoutNamespace = withoutNamespace;
+        this.apiVersion = apiVersion;
+        this.authenticationType = authenticationType;
 	}
     
-    public Resource(String resource, String action) {
-        _resource = resource;
-        _action = action;
-		_withoutNamespace = false;
-    }
-    
-    public Resource(String resource) {
-        _resource = resource;
-        _action = "";
-		_withoutNamespace = false;
-    }
-    
-    public String getResource() {
-        return _resource;
-    }
-    
-    public String getAction() {
-        return _action;
-    }
+    public Resource(String resource, String action, ApiVersion apiVersion, ApiAuthenticationType authenticationType) {
 
-	public Boolean getWithoutNamespace() {
-		return _withoutNamespace;
-	}
+	    this(resource, action, apiVersion, authenticationType, false);
+    }
 }
