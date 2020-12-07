@@ -20,6 +20,7 @@ Check out all the resources and all the Java code examples in the [Offical Docum
 
 ## Table of contents
 
+- [Release notes](#release-notes)
 - [Compatibility](#compatibility)
 - [Installation (Maven)](#installation-maven)
 - [Authentication](#authentication)
@@ -45,6 +46,12 @@ Check out all the resources and all the Java code examples in the [Offical Docum
   - [Example Request](#example-request)
 - [Contribute](#contribute)
 
+
+## Release notes
+v5.0.0
+- migrated to more reliable OkHttpClient
+- removed ApiVersion from the MailjetClient configuration: Now the client will determine the needed API version from the resource itself.
+- added ClientOptions builder to make configuration more explicit. If you have troubles with migration, please, check [tests](src/test/java/com/mailjet/client/SendIT.java) for more examples. 
 
 ## Compatibility
 
@@ -155,7 +162,7 @@ To instantiate the library you can use the following constructor:
 
 #### Set connection timeouts and log requests 
 
-You can pass customly configured HttpClient to the Mailjet client to get request logs or custom timeouts:
+You can pass a custom configured HttpClient to the Mailjet client to get request logs or custom timeouts:
 
 ```java
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
@@ -490,13 +497,9 @@ public class MyClass {
 
 Authentication for the SMS API endpoints is done using a bearer token. The bearer token generated in the [SMS section](https://app.mailjet.com/sms) of your Mailjet account.
 
-```java
-client = new MailjetClient(ClientOptions.builder().apiAccessToken(System.getenv("MJ_TOKEN")).build());
-```
-
 ### Example request
 
-Here's an example SMS API request:
+An example SMS API request:
 
 ``` java
 
@@ -504,46 +507,27 @@ MailjetClient client;
 MailjetRequest request;
 MailjetResponse response;
 
-// Note how we use an already generated token
-MailjetClient client = new MailjetClient(ClientOptions.builder().apiAccessToken(System.getenv("MJ_TOKEN")).build());
-request = new MailjetRequest(Send.resource)
-			.property(Send.From, "MJPilot")
-        	.property(Send.To, "+33600000000")
-			.property(Send.Text, "Have a nice SMS flight with Mailjet!");
+MailjetClient mailjetClient = new MailjetClient(ClientOptions
+                .builder()
+                .bearerAccessToken(System.getenv("MJ_APITOKEN"))
+                .build());
 
-response = client.post(request);
+String germanyPhoneNumber = "+4915207831169";
 
-package com.my.project;
-import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.errors.MailjetSocketTimeoutException;
-import com.mailjet.client.MailjetClient;
-import com.mailjet.client.MailjetRequest;
-import com.mailjet.client.MailjetResponse;
-import com.mailjet.client.ClientOptions;
-import com.mailjet.client.resource.sms.SmsSend;
-import org.json.JSONArray;
-import org.json.JSONObject;
-public class MyClass {
-    /**
-     * Run:
-     */
-    public static void main(String[] args) throws MailjetException {
-      MailjetClient client;
-      MailjetRequest request;
-      MailjetResponse response;
-      client = new MailjetClient(ClientOptions.builder().apiAccessToken(System.getenv("MJ_TOKEN")).build());
-      request = new MailjetRequest(SmsSend.resource)
-		.property(SmsSend.FROM, "MJPilot")
-        	.property(SmsSend.TO, "+33600000000")
-		.property(SmsSend.TEXT, "Have a nice SMS flight with Mailjet!")
-      response = client.post(request);
-      System.out.println(response.getStatus());
-      System.out.println(response.getData());
-    }
-}
+MailjetRequest mailjetRequest = new MailjetRequest(SmsSend.resource)
+                .property(SmsSend.FROM, "MJPilot")
+                .property(SmsSend.TO, germanyPhoneNumber)
+                .property(SmsSend.TEXT, "Have a nice SMS flight with Mailjet!");
 
+// send the request
+MailjetResponse response = mailjetClient.post(mailjetRequest);
+
+// assert response
+Assert.assertEquals(200, response.getStatus());
+Assert.assertEquals("Message is being sent", response.getData().getJSONObject(0).getJSONObject("Status").getString("Description"));
 
 ```
+Also, you can check [integration tests](src/test/java/com/mailjet/client/SendSmsIT.java) how to work with Mailjet client. 
 
 ## Contribute
 
