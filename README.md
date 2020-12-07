@@ -66,7 +66,7 @@ Add the following in your `pom.xml`
         <dependency>
             <groupId>com.mailjet</groupId>
             <artifactId>mailjet-client</artifactId>
-            <version>4.6.0</version>
+            <version>5.0.0</version>
         </dependency>
     </dependencies>
 ```
