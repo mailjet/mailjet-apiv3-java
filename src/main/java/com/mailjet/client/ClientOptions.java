@@ -23,7 +23,7 @@ public class ClientOptions {
   /**
    * Bearer token used for SMS Api calls
    */
-  private String apiAccessToken;
+  private String bearerAccessToken;
 
   /**
    * API key to authenticate Email Api calls

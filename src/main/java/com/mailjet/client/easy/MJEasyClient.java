@@ -34,7 +34,7 @@ public class MJEasyClient {
     public MJEasyClient(String token) {
         ClientOptions clientOptions = ClientOptions
                 .builder()
-                .apiAccessToken(token)
+                .bearerAccessToken(token)
                 .build();
 
         client = new MailjetClient(clientOptions);

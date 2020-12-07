@@ -61,7 +61,7 @@ public class MailjetClient {
     public MailjetClient(String token) {
         this(ClientOptions
                 .builder()
-                .apiAccessToken(token)
+                .bearerAccessToken(token)
                 .build());
     }
 
@@ -76,10 +76,10 @@ public class MailjetClient {
     }
 
     /**
-     * Performs a get request to the Mailjet endpoint
-     * @param request formed request to the MailJet API
-     * @return MailjetResponse
-     * @throws MailjetException exception is thrown in case of unsuccessful HTTP call execution
+     * performs GET request.
+     * @param request request to be sent to Mailjet server
+     * @return MailjetResponse with parameters of the response
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccess response status code
      */
      public MailjetResponse get(MailjetRequest request) throws MailjetException {
         try {
@@ -98,12 +98,11 @@ public class MailjetClient {
     }
 
 
-
     /**
-     * perform a Mailjet POST request.
-     * @param request
-     * @return
-     * @throws com.mailjet.client.errors.MailjetException
+     * performs POST request.
+     * @param request request to be sent to Mailjet server
+     * @return MailjetResponse with parameters of the response
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccess response status code
      */
     public MailjetResponse post(MailjetRequest request) throws MailjetException {
 
@@ -124,6 +123,12 @@ public class MailjetClient {
         }
     }
 
+    /**
+     * performs PUT request.
+     * @param request request to be sent to Mailjet server
+     * @return MailjetResponse with parameters of the response
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccess response status code
+     */
     public MailjetResponse put(MailjetRequest request) throws MailjetException {
         try {
             final RequestBody requestBody = RequestBody.create(
@@ -142,6 +147,12 @@ public class MailjetClient {
         }
     }
 
+    /**
+     * performs DELETE request.
+     * @param request request to be sent to Mailjet server
+     * @return MailjetResponse with parameters of the response
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccess response status code
+     */
     public MailjetResponse delete(MailjetRequest request) throws MailjetException {
         try {
 
@@ -197,10 +208,10 @@ public class MailjetClient {
                 break;
 
             case Bearer:
-                if (_options.getApiAccessToken() == null)
+                if (_options.getBearerAccessToken() == null)
                     throw new MailjetUnauthorizedException("To do a request to MailJet api, api access token should be set");
 
-                builder.addHeader("Authorization", "Bearer " + _options.getApiAccessToken());
+                builder.addHeader("Authorization", "Bearer " + _options.getBearerAccessToken());
                 break;
         }
 

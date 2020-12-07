@@ -14,7 +14,7 @@ public class SendSmsIT {
         // arrange
         MailjetClient mailjetClient = new MailjetClient(ClientOptions
                 .builder()
-                .apiAccessToken(System.getenv("MJ_APITOKEN"))
+                .bearerAccessToken(System.getenv("MJ_APITOKEN"))
                 .build());
 
         String ukrainePhoneNumber = "+380507363100";
@@ -38,7 +38,7 @@ public class SendSmsIT {
         // arrange
         MailjetClient mailjetClient = new MailjetClient(ClientOptions
                 .builder()
-                .apiAccessToken(System.getenv("MJ_APITOKEN"))
+                .bearerAccessToken(System.getenv("MJ_APITOKEN"))
                 .build());
 
         // to verify other countries, free services like https://receive-smss.com/ can be used

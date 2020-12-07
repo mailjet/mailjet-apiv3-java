@@ -33,7 +33,7 @@ public class MailjetClientTest {
                 .baseUrl(mockWebServer.url("/").toString())
                 .apiSecretKey("secret-key")
                 .apiKey("api-key")
-                .apiAccessToken("bearer-token")
+                .bearerAccessToken("bearer-token")
                 .build();
 
         client = new MailjetClient(clientOptions);
