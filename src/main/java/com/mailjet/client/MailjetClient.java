@@ -198,7 +198,7 @@ public class MailjetClient {
 
             case Bearer:
                 if (_options.getApiAccessToken() == null)
-                    throw new MailjetUnauthorizedException("To do a request to MailJet api, api key and api secret should be set");
+                    throw new MailjetUnauthorizedException("To do a request to MailJet api, api access token should be set");
 
                 builder.addHeader("Authorization", "Bearer " + _options.getApiAccessToken());
                 break;
