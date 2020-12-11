@@ -48,6 +48,10 @@ Check out all the resources and all the Java code examples in the [Offical Docum
 
 
 ## Release notes
+v5.1.0
+- downgraded OkHttpClient to v3.12 to be compatible with the current version in Spring Boot
+- adds [transactional email builder](src/test/java/com/mailjet/client/TransactionalEmailIT.java) to make possible sending messages easier 
+
 v5.0.0
 - migrated to more reliable OkHttpClient
 - removed ApiVersion from the MailjetClient configuration: Now the client will determine the needed API version from the resource itself.
@@ -66,7 +70,7 @@ Add the following in your `pom.xml`
         <dependency>
             <groupId>com.mailjet</groupId>
             <artifactId>mailjet-client</artifactId>
-            <version>5.0.0</version>
+            <version>5.1.0</version>
         </dependency>
     </dependencies>
 ```
@@ -80,7 +84,7 @@ export MJ_APIKEY_PUBLIC='your API key'
 export MJ_APIKEY_PRIVATE='your API secret'
 ```
 
-> Note: For the SMS API the authorization is based on a Bearer token. See information about it in the [SMS API](#sms-api) section of the readme.
+> Note: The SMS API authorization is based on a Bearer token. See information about it in the [SMS API](#sms-api) section of the readme.
 
 Initialize your [Mailjet][mailjet] Client:
 
@@ -97,7 +101,31 @@ Initialize your [Mailjet][mailjet] Client:
 
 ## Make your first call
 
-Here's an example on how to send an email:
+Here's an example on how to send a transactional email:
+```java
+        TransactionalEmail message1 = TransactionalEmail
+                .builder()
+                .to(new SendContact(senderEmail, "stanislav"))
+                .from(new SendContact(senderEmail, "Mailjet integration test"))
+                .htmlPart("<h1>This is the HTML content of the mail</h1>")
+                .subject("This is the subject")
+                .trackOpens(TrackOpens.ENABLED)
+                .attachment(Attachment.fromFile(attachmentPath))
+                .header("test-header-key", "test-value")
+                .customID("custom-id-value")
+                .build();
+
+        SendEmailsRequest request = SendEmailsRequest
+                .builder()
+                .message(message1) // you can add up to 50 messages per request
+                .build();
+
+        // act
+        SendEmailsResponse response = request.send(client);
+
+```
+
+Or using an old JSONObject syntax:
 
 ```java
 package com.my.project;
