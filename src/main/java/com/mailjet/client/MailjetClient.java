@@ -67,6 +67,7 @@ public class MailjetClient {
 
     /**
      * Create a new Instance of the MailjetClient class with given options
+     * @param clientOptions object that contains options for the given client instance
      */
     public MailjetClient(ClientOptions clientOptions) {
         _options = clientOptions;

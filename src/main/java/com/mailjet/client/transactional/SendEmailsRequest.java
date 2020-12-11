@@ -36,11 +36,11 @@ public class SendEmailsRequest {
 
     /**
      * Represents a method to send multiple transactional emails
+     * Note: Mailjet send API v3.1 will be used
+     * Note: Max 50 emails per batch allowed
      * @param mailjetClient the Mailjet client that will be used to send messages
      * @return A response with sent messages information, or error information
      * @throws MailjetException in case of communication error
-     * @apiNote Mailjet send API v3.1 will be used
-     * @apiNote Max 50 emails per batch
      */
     public SendEmailsResponse sendWith(MailjetClient mailjetClient) throws MailjetException {
         Gson gson = new GsonBuilder()
