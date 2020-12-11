@@ -108,7 +108,7 @@ public class MailjetClient {
 
         try {
             final RequestBody requestBody = RequestBody.create(
-                    request.getBody().getBytes("UTF8"), MediaType.parse(request.getContentType()));
+                    MediaType.parse(request.getContentType()), request.getBody().getBytes("UTF8"));
 
             final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
                     .post(requestBody)
@@ -132,7 +132,7 @@ public class MailjetClient {
     public MailjetResponse put(MailjetRequest request) throws MailjetException {
         try {
             final RequestBody requestBody = RequestBody.create(
-                    request.getBody().getBytes("UTF8"), MediaType.parse(request.getContentType()));
+                     MediaType.parse(request.getContentType()), request.getBody().getBytes("UTF8"));
 
             final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
                     .put(requestBody)
