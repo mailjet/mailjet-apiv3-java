@@ -179,7 +179,7 @@ public class MailjetClient {
         final String json = MailjetResponseUtil.isValidJSON(responseBody) ?
                 responseBody : new JSONObject().put("status", responseStatusCode).toString();
 
-        return new MailjetResponse(responseStatusCode, new JSONObject(json));
+        return new MailjetResponse(responseStatusCode, json);
     }
 
     private static OkHttpClient createDefaultOkHttpClient(){

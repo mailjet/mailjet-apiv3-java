@@ -19,6 +19,7 @@ public class Emailv31 {
 
     public static String MESSAGES = "Messages";
     public static String SANDBOX_MODE = "SandboxMode";
+    public static String ADVANCE_ERROR_HANDLING = "AdvanceErrorHandling";
 
     public static class Message {
       public static String EMAIL = "Email";
