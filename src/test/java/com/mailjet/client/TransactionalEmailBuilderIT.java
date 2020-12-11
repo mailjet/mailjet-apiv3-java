@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.nio.file.Paths;
 
 
-public class TransactionalEmailIT {
+public class TransactionalEmailBuilderIT {
     private MailjetClient client;
     private String attachmentPath;
     private String senderEmail;
@@ -49,7 +49,7 @@ public class TransactionalEmailIT {
                 .build();
 
         // act
-        SendEmailsResponse response = request.send(client);
+        SendEmailsResponse response = request.sendWith(client);
 
         // assert
         Assert.assertEquals(1, response.getMessages().length);
@@ -77,7 +77,7 @@ public class TransactionalEmailIT {
                 .build();
 
         // act
-        SendEmailsResponse response = request.send(client);
+        SendEmailsResponse response = request.sendWith(client);
 
         // assert
         Assert.assertEquals(1, response.getMessages().length);

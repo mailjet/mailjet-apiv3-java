@@ -42,7 +42,7 @@ public class SendEmailsRequest {
      * @apiNote Mailjet send API v3.1 will be used
      * @apiNote Max 50 emails per batch
      */
-    public SendEmailsResponse send(MailjetClient mailjetClient) throws MailjetException {
+    public SendEmailsResponse sendWith(MailjetClient mailjetClient) throws MailjetException {
         Gson gson = new GsonBuilder()
                 .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
                 .create();

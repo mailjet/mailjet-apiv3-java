@@ -50,7 +50,7 @@ Check out all the resources and all the Java code examples in the [Offical Docum
 ## Release notes
 v5.1.0
 - downgraded OkHttpClient to v3.12 to be compatible with the current version in Spring Boot
-- adds [transactional email builder](src/test/java/com/mailjet/client/TransactionalEmailIT.java) to make possible sending messages easier 
+- adds [transactional email builder](src/test/java/com/mailjet/client/TransactionalEmailBuilderIT.java) to make possible sending messages easier 
 
 v5.0.0
 - migrated to more reliable OkHttpClient
@@ -121,7 +121,7 @@ Here's an example on how to send a transactional email:
                 .build();
 
         // act
-        SendEmailsResponse response = request.send(client);
+        SendEmailsResponse response = request.sendWith(client);
 
 ```
 
