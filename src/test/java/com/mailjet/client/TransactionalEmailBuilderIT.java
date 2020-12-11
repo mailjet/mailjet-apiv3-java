@@ -3,7 +3,9 @@ package com.mailjet.client;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.transactional.*;
 import com.mailjet.client.transactional.response.MessageResult;
+import com.mailjet.client.transactional.response.SendEmailError;
 import com.mailjet.client.transactional.response.SendEmailsResponse;
+import com.mailjet.client.transactional.response.SentMessageStatus;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -56,7 +58,7 @@ public class TransactionalEmailBuilderIT {
 
         MessageResult messageResult = response.getMessages()[0];
 
-        Assert.assertEquals("success", messageResult.getStatus());
+        Assert.assertEquals(SentMessageStatus.SUCCESS, messageResult.getStatus());
         Assert.assertEquals("custom-id-value", messageResult.getCustomID());
     }
 
@@ -84,10 +86,12 @@ public class TransactionalEmailBuilderIT {
 
         MessageResult messageResult = response.getMessages()[0];
 
-        Assert.assertEquals("error", messageResult.getStatus());
-        Assert.assertEquals("mj-0013", messageResult.getErrors()[0].getErrorCode());
-        Assert.assertEquals(400, messageResult.getErrors()[0].getStatusCode());
-        Assert.assertEquals("\"invalid-email\" is an invalid email address.", messageResult.getErrors()[0].getErrorMessage());
-        Assert.assertEquals("To[0].Email", messageResult.getErrors()[0].getErrorRelatedTo()[0]);
+        Assert.assertEquals(SentMessageStatus.ERROR, messageResult.getStatus());
+        SendEmailError error = messageResult.getErrors()[0];
+
+        Assert.assertEquals("mj-0013", error.getErrorCode());
+        Assert.assertEquals(400, error.getStatusCode());
+        Assert.assertEquals("\"invalid-email\" is an invalid email address.", error.getErrorMessage());
+        Assert.assertEquals("To[0].Email", error.getErrorRelatedTo()[0]);
     }
 }

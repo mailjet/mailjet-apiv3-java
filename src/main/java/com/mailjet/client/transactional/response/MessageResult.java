@@ -9,16 +9,14 @@ public class MessageResult {
 
     /**
      * Indicates the sending status of the message.
-     * Possible values:
-     * success
-     * error
      */
-    private String status;
+    private SentMessageStatus status;
 
     /**
      * List containing information about any errors with the processing of this message.
-     * Will be displayed only if processing errors occur.
+     * Will be filled in only if processing errors occur.
      * Each error will generate a separate error object with the below properties.
+     * null if the message sent successfully
      */
     private SendEmailError[] errors;
 

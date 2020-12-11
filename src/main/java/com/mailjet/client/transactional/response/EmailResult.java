@@ -16,6 +16,7 @@ public class EmailResult {
 
     /**
      * Unique numeric ID of this message.
+     * With this ID, you can get the message information through /messages/ API endpoint
      */
     private long messageID;
 
