@@ -16,6 +16,7 @@ public final class MailjetResponseUtil {
 	private static final int INTERNAL_SERVER_ERROR_STATUS = 500;
 	private static final int BAD_REQUEST_ERROR_STATUS = 400;
 	private static final int UNAUTHORIZED_STATUS = 401;
+	public static final int CREATED_STATUS = 201;
 
 	private static final String UNAUTHORIZED_MESSAGE = "Unauthorized. Please,verify your access key and access secret key or token for the given account";
 	private static final String TOO_MANY_REQUESTS_EXCEPTION = "Too Many Requests";
@@ -42,7 +43,7 @@ public final class MailjetResponseUtil {
 		return json != null && json.trim().startsWith("{") && json.trim().endsWith("}");
 	}
 
-	/*
+	/**
 	* Specific API methods support partial success
 	* like, if we send multiple emails in bulk
 	* and the one is failed and other one sent successfully

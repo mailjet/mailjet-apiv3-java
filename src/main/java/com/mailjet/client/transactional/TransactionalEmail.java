@@ -1,6 +1,8 @@
 package com.mailjet.client.transactional;
 
+import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
+import com.mailjet.client.helpers.StringMapSerializer;
 import lombok.Builder;
 import lombok.Singular;
 
@@ -177,16 +179,20 @@ public class TransactionalEmail {
 
     /**
      * Additional email headers.
+     * If the passed value type is not String, it will be serialized as a String with JSON representation of the passed object
      */
     @Singular
-    private Map<String, String> headers;
+    @JsonAdapter(StringMapSerializer.class)
+    private Map<String, Object> headers;
 
     /**
      * Adds variable used to modify the content of your email.
      * Specified as {var_name}:{var_value} pairs.
+     * If the passed value type is not String, it will be serialized as a String with JSON representation of the passed object
      * Enter the information in the template text / HTML part by using the [[var:{var_name}]] format.
      * Equivalent of using X-MJ-Vars header through SMTP.
      */
     @Singular
-    private Map<String, String> variables;
+    @JsonAdapter(StringMapSerializer.class)
+    private Map<String, Object> variables;
 }

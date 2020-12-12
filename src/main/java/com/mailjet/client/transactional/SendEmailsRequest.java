@@ -1,11 +1,11 @@
 package com.mailjet.client.transactional;
 
-import com.google.gson.FieldNamingPolicy;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.google.gson.*;
 import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
+import com.mailjet.client.MailjetResponseUtil;
+import com.mailjet.client.errors.MailjetClientRequestException;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.resource.Emailv31;
 import com.mailjet.client.transactional.response.SendEmailsResponse;
@@ -17,6 +17,10 @@ import java.util.List;
 
 @Builder
 public class SendEmailsRequest {
+
+    private final static Gson gson = new GsonBuilder()
+            .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+            .create();
 
     /**
      * Adds message to sent to the request
@@ -40,12 +44,12 @@ public class SendEmailsRequest {
      * Note: Max 50 emails per batch allowed
      * @param mailjetClient the Mailjet client that will be used to send messages
      * @return A response with sent messages information, or error information
-     * @throws MailjetException in case of communication error
+     * @throws MailjetException in case of communication error in HTTP stack,
+     * like, TLS connection couldn't be established to the Mailjet server
+     * Or the Server returned 5xx error,
+     * Or the Server returned the generic error response
      */
     public SendEmailsResponse sendWith(MailjetClient mailjetClient) throws MailjetException {
-        Gson gson = new GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
-                .create();
 
         MailjetRequest request = new MailjetRequest(Emailv31.resource);
         request.setBody(gson.toJson(this));
@@ -55,6 +59,11 @@ public class SendEmailsRequest {
         String responseContent = response.getRawResponseContent();
 
         SendEmailsResponse typedResponse = gson.fromJson(responseContent, SendEmailsResponse.class);
+
+        // in some cases, Mailjet server returns generic error w/o parsing the real passed messages
+        if (typedResponse.getMessages() == null && response.getStatus() != MailjetResponseUtil.CREATED_STATUS){
+            throw new MailjetClientRequestException(responseContent, response.getStatus());
+        }
 
         return typedResponse;
     }
