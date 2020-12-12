@@ -15,38 +15,42 @@ import org.json.JSONObject;
  */
 public class MailjetResponse {
     
-    private JSONObject _rawResponse;
-    private int _status;
+    private final JSONObject responseObject;
+    private final String rawResponse;
+    private final int status;
 
-    public MailjetResponse(int status, JSONObject obj) {
-        _rawResponse = obj;
-        _status = status;
+    public MailjetResponse(int status, String rawResponse) {
+        responseObject = new JSONObject(rawResponse);
+        this.rawResponse = rawResponse;
+        this.status = status;
     }
-
-    public MailjetResponse(JSONObject object) {
-        _rawResponse = object;
-        _status = 0;
-    }
-    
+    /**
+     * @return HTTP status code returned by Mailjet server
+     */
     public int getStatus() {
-        return _status;
+        return status;
     }
-    
+
+    /**
+     * @return Raw response string sent by Mailjet server
+     */
+    public String getRawResponseContent() { return rawResponse; }
+
     public JSONArray getData() {
-        if (_rawResponse.has("Data")) {
-            return _rawResponse.getJSONArray("Data");
-        } else if (_rawResponse.has("Sent")) {
-            return _rawResponse.getJSONArray("Sent");
-        } else if (_rawResponse.has("Messages")) {
-            return _rawResponse.getJSONArray("Messages");
+        if (responseObject.has("Data")) {
+            return responseObject.getJSONArray("Data");
+        } else if (responseObject.has("Sent")) {
+            return responseObject.getJSONArray("Sent");
+        } else if (responseObject.has("Messages")) {
+            return responseObject.getJSONArray("Messages");
         } else {
-            return (new JSONArray()).put(_rawResponse);
+            return (new JSONArray()).put(responseObject);
         }
     }
     
     public int getTotal() {
-        if (_rawResponse.has("Total")) {
-            return _rawResponse.getInt("Total");
+        if (responseObject.has("Total")) {
+            return responseObject.getInt("Total");
         } else {
             return 0;
         }
@@ -54,7 +58,7 @@ public class MailjetResponse {
     
     public String getString(String key) throws MailjetException {
         try {
-            return _rawResponse.getString(key);
+            return responseObject.getString(key);
         } catch (NullPointerException e) {
            throw new MailjetException("No entry found for key: " + key);
         }
@@ -62,7 +66,7 @@ public class MailjetResponse {
     
     public int getInt(String key) throws MailjetException {
         try {
-            return _rawResponse.getInt(key);
+            return responseObject.getInt(key);
         } catch (NullPointerException e) {
             throw new MailjetException("No entry found for key: " + key);
         }
@@ -70,15 +74,15 @@ public class MailjetResponse {
     
     public JSONArray getJSONArray(String key) throws MailjetException {
         try {
-            return _rawResponse.getJSONArray(key);
+            return responseObject.getJSONArray(key);
         } catch (NullPointerException e) { 
             throw new MailjetException("No entry found for key: " + key);
         }
     }
     
     public int getCount() {
-        if (_rawResponse.has("Count")) {
-            return _rawResponse.getInt("Count");
+        if (responseObject.has("Count")) {
+            return responseObject.getInt("Count");
         } else {
             return 0;
         }

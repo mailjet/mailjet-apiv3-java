@@ -339,8 +339,8 @@ public class MailjetRequest {
 
     /**
      * Add a property to the body JSONObject
-     * @param key
-     * @param value
+     * @param key property name
+     * @param value property value
      * @return the request itself
      */
     public MailjetRequest property(String key, Object value) {

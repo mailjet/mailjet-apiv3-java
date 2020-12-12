@@ -35,7 +35,7 @@ public class MailjetClient {
     private ClientOptions _options;
     private OkHttpClient _client;
 
-    private static final String userAgent = "mailjet-apiv3-java/v5.0.0";
+    private static final String userAgent = "mailjet-apiv3-java/v5.1.0";
 
     /**
      * Deprecated - please, use MailjetClient(ClientOptions clientOptions) ctor instead
@@ -67,6 +67,7 @@ public class MailjetClient {
 
     /**
      * Create a new Instance of the MailjetClient class with given options
+     * @param clientOptions object that contains options for the given client instance
      */
     public MailjetClient(ClientOptions clientOptions) {
         _options = clientOptions;
@@ -179,7 +180,7 @@ public class MailjetClient {
         final String json = MailjetResponseUtil.isValidJSON(responseBody) ?
                 responseBody : new JSONObject().put("status", responseStatusCode).toString();
 
-        return new MailjetResponse(responseStatusCode, new JSONObject(json));
+        return new MailjetResponse(responseStatusCode, json);
     }
 
     private static OkHttpClient createDefaultOkHttpClient(){
