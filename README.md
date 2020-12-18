@@ -16,7 +16,7 @@
 
 This repo features the official Java wrapper for the Mailjet API.
 
-Check out all the resources and all the Java code examples in the [Offical Documentation][doc].
+Check out all the resources and all the Java code examples in the [Official Documentation][doc].
 
 ## Table of contents
 
@@ -48,6 +48,9 @@ Check out all the resources and all the Java code examples in the [Offical Docum
 
 
 ## Release notes
+v5.1.1
+- fixes adding additional quotes during serialization of string variables adn headers in TransactionalEmailBuilder
+
 v5.1.0
 - downgraded OkHttpClient to v3.12 to be compatible with the current version in Spring Boot
 - adds [transactional email builder](src/test/java/com/mailjet/client/TransactionalEmailBuilderIT.java) to make possible sending messages easier 
@@ -70,7 +73,7 @@ Add the following in your `pom.xml`
         <dependency>
             <groupId>com.mailjet</groupId>
             <artifactId>mailjet-client</artifactId>
-            <version>5.1.0</version>
+            <version>5.1.1</version>
         </dependency>
     </dependencies>
 ```
