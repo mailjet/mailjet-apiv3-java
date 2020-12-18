@@ -46,14 +46,14 @@ public class TransactionalEmailBuilderTest {
     public void transactionalEmail_WithVariables_ShouldCorrectlyPassVariables() throws MailjetException, InterruptedException {
 
         // arrange
-        String expectedBody = "{\"Messages\":[{\"Cc\":[],\"TrackClicks\":\"enabled\",\"Bcc\":[],\"Priority\":3,\"Headers\":{},\"From\":{\"Email\":\"xxxxxxxx@xxxxxxx.com\",\"Name\":\"xxxxxxxx xxxxxxxxxx\"},\"Attachments\":[],\"TemplateLanguage\":true,\"TrackOpens\":\"enabled\",\"Variables\":{\"E_DATE\":\"a string text\",\"E_YEAR\":\"another text\",\"E_MAIL_ID\":\"a last text example\"},\"CustomID\":\"8c0725fa-403c-496e-ac7e-xxxxxxxxx\",\"InlinedAttachments\":[],\"To\":[{\"Email\":\"xxxxxxxx@xxxxxxx.com\",\"Name\":\"xxxxxxxx xxxxxxxxxx\"}],\"TemplateID\":1234567}]}";
+        String expectedBody = "{\"Messages\":[{\"Cc\":[],\"TrackClicks\":\"enabled\",\"Bcc\":[],\"Priority\":3,\"Headers\":{},\"From\":{\"Email\":\"xxxxxxxx@xxxxxxx.com\",\"Name\":\"xxxxxxxx xxxxxxxxxx\"},\"Attachments\":[],\"TemplateLanguage\":true,\"TrackOpens\":\"enabled\",\"Variables\":{\"E_DATE\":\"a string text\",\"E_ARRAY\":[\"val1\",\"val2\"],\"E_MAIL_ID\":123},\"CustomID\":\"8c0725fa-403c-496e-ac7e-xxxxxxxxx\",\"InlinedAttachments\":[],\"To\":[{\"Email\":\"xxxxxxxx@xxxxxxx.com\",\"Name\":\"xxxxxxxx xxxxxxxxxx\"}],\"TemplateID\":1234567}]}";
 
         mockWebServer.enqueue(new MockResponse().setResponseCode(201).setBody("{}"));
 
-        Map<String, String> variables = new HashMap<>();
+        Map<String, Object> variables = new HashMap<>();
         variables.put("E_DATE", "a string text");
-        variables.put("E_YEAR", "another text");
-        variables.put("E_MAIL_ID", "a last text example");
+        variables.put("E_ARRAY", new String[]{"val1", "val2"});
+        variables.put("E_MAIL_ID", 123);
 
         TransactionalEmail message = TransactionalEmail
                 .builder()

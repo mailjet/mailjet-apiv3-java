@@ -45,6 +45,8 @@ public class TransactionalEmailBuilderIT {
                 .attachment(Attachment.fromFile(attachmentPath))
                 .header("test-header-key", "test-value")
                 .variable("test-vars-array", new String[] {"a", "b", "c"})
+                .variable("test-vars-string", "abc")
+                .variable("test-vars-primitive", 123)
                 .customID("custom-id-value")
                 .build();
 
