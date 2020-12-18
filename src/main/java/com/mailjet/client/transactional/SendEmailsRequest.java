@@ -33,10 +33,14 @@ public class SendEmailsRequest {
      * If set to true, messages will be send to the Mailjet API for verification
      * But the actual emails will not be send
      */
-    private boolean sandboxMode;
+    private Boolean sandboxMode;
 
-    @Default
-    public boolean AdvanceErrorHandling = true;
+    /**
+     * When true, enables additional error checks relating to the Send API v3.1 payload.
+     * Keep in mind that For a list of all error checks enabled by this, please see the Send API errors section in the Email API Guides.
+     * https://dev.mailjet.com/email/guides/send-api-v31/#send-api-errors
+     */
+    private Boolean advanceErrorHandling;
 
     /**
      * Represents a method to send multiple transactional emails
