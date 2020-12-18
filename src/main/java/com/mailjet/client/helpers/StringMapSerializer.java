@@ -15,13 +15,13 @@ import java.util.Map;
 public class StringMapSerializer implements JsonSerializer<Map> {
     @Override
     public JsonElement serialize(Map map, Type type, JsonSerializationContext jsonSerializationContext) {
-        Map<String, String> stringMap = new HashMap<>(map.size());
+        Map<String, JsonElement> stringMap = new HashMap<>(map.size());
 
         for (Object entry: map.entrySet()) {
             Map.Entry<String, Object> objectEntry = (Map.Entry<String, Object>) entry;
 
             String key = objectEntry.getKey();
-            String value = jsonSerializationContext.serialize(objectEntry.getValue()).toString();
+            JsonElement value = jsonSerializationContext.serialize(objectEntry.getValue());
 
             stringMap.put(key, value);
         }
