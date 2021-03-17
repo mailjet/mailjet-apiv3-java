@@ -378,10 +378,12 @@ public class MyClass {
 }
 ```
 
-#### Use filtering
+#### Use filtering and sorting
 
-You can add filter for your API call on the `MailjetRequest` by using the `filter` method. 
-Example: `.filter(Contact.ISEXCLUDEDFROMCAMPAIGNS, "false");`
+You can add filter to your API call on the `MailjetRequest` by using the `filter` method.
+Sorting is also possible, with specification the field name and order (ASC or DESC) separated by space.
+Note: Both the Sort query parameter, and the option to select a descending order are not available for every property.
+Example:
 
 ```java
 package com.my.project;
@@ -404,7 +406,8 @@ public class MyClass {
       client = new MailjetClient(ClientOptions.builder().apiKey(System.getenv("MJ_APIKEY_PUBLIC")).apiSecretKey(System.getenv("MJ_APIKEY_PRIVATE")).build());
 
       request = new MailjetRequest(Contact.resource)
-            .filter(Contact.ISEXCLUDEDFROMCAMPAIGNS, "false");
+            .filter(Contact.ISEXCLUDEDFROMCAMPAIGNS, "false")
+            .filter("Sort", "CreatedAt DESC");
       response = client.get(request);
       System.out.println(response.getStatus());
       System.out.println(response.getData());
