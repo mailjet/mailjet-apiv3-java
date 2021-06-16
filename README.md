@@ -91,6 +91,8 @@ export MJ_APIKEY_PRIVATE='your API secret'
 
 Initialize your [Mailjet][mailjet] Client:
 
+_Hint: register MailjetClient as a **Singleton** and reuse it during sending emails to reduce resource consumption_
+
 ```java
 
         ClientOptions options = ClientOptions.builder()
