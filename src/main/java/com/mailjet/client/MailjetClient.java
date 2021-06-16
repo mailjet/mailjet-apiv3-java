@@ -18,6 +18,7 @@ package com.mailjet.client;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.concurrent.CompletableFuture;
 
 import com.mailjet.client.errors.MailjetClientCommunicationException;
 import com.mailjet.client.errors.MailjetUnauthorizedException;
@@ -80,48 +81,86 @@ public class MailjetClient {
      * performs GET request.
      * @param request request to be sent to Mailjet server
      * @return MailjetResponse with parameters of the response
-     * @throws com.mailjet.client.errors.MailjetException in case of unsuccess response status code
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccessfull response status code
      */
      public MailjetResponse get(MailjetRequest request) throws MailjetException {
-        try {
 
-            final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
-                    .get()
-                    .build();
-
-            try (final Response okHttpResponse = _client.newCall(okHttpRequest).execute()) {
-                return parseResponse(request, okHttpResponse);
-            }
-
+         try (final Response okHttpResponse = getGetCall(request).execute()) {
+             return parseResponse(request, okHttpResponse);
         } catch (IOException ex) {
             throw new MailjetClientCommunicationException("Connection Exception", ex);
         }
     }
 
+    /**
+     * async version of {@link #get(MailjetRequest)} method
+     * performs GET request.
+     * @param request request to be sent to Mailjet server
+     * @return CompletableFuture with MailjetResponse response, or exception thrown during the call/response parsing
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccessfull call
+     */
+    public CompletableFuture<MailjetResponse> getAsync(MailjetRequest request) throws MailjetException {
+        final CompletableFuture<MailjetResponse> resultFuture = new CompletableFuture<>();
+
+        getGetCall(request).enqueue(getAsyncCallback(request, resultFuture));
+
+        return resultFuture;
+    }
+
+    private Call getGetCall(MailjetRequest request) throws MailjetException {
+        final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
+                .get()
+                .build();
+
+        return _client.newCall(okHttpRequest);
+    }
 
     /**
      * performs POST request.
      * @param request request to be sent to Mailjet server
      * @return MailjetResponse with parameters of the response
-     * @throws com.mailjet.client.errors.MailjetException in case of unsuccess response status code
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccessfull response status code
      */
     public MailjetResponse post(MailjetRequest request) throws MailjetException {
 
-        try {
-            final RequestBody requestBody = RequestBody.create(
-                    MediaType.parse(request.getContentType()), request.getBody().getBytes("UTF8"));
-
-            final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
-                    .post(requestBody)
-                    .build();
-
-            try (final Response okHttpResponse = _client.newCall(okHttpRequest).execute()) {
-                return parseResponse(request, okHttpResponse);
-            }
-
+        try (final Response okHttpResponse = getPostCall(request).execute()) {
+            return parseResponse(request, okHttpResponse);
         } catch (IOException ex) {
             throw new MailjetClientCommunicationException("Connection Exception", ex);
         }
+    }
+
+    /**
+     * async version of {@link #post(MailjetRequest)} method
+     * performs POST request.
+     * @param request request to be sent to Mailjet server
+     * @return CompletableFuture with MailjetResponse response, or exception thrown during the call/response parsing
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccessfull call
+     */
+    public CompletableFuture<MailjetResponse> postAsync(MailjetRequest request) throws MailjetException {
+        final CompletableFuture<MailjetResponse> resultFuture = new CompletableFuture<>();
+
+        getPostCall(request).enqueue(getAsyncCallback(request, resultFuture));
+
+        return resultFuture;
+    }
+
+    private Call getPostCall(MailjetRequest request) throws MailjetException {
+        final byte[] bodyContent;
+        try {
+            bodyContent = request.getBody().getBytes("UTF8");
+        } catch (UnsupportedEncodingException e) {
+            throw new MailjetClientCommunicationException("Connection Exception", e);
+        }
+
+        final RequestBody requestBody = RequestBody.create(
+                MediaType.parse(request.getContentType()), bodyContent);
+
+        final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
+                .post(requestBody)
+                .build();
+
+        return _client.newCall(okHttpRequest);
     }
 
     /**
@@ -131,21 +170,45 @@ public class MailjetClient {
      * @throws com.mailjet.client.errors.MailjetException in case of unsuccess response status code
      */
     public MailjetResponse put(MailjetRequest request) throws MailjetException {
-        try {
-            final RequestBody requestBody = RequestBody.create(
-                     MediaType.parse(request.getContentType()), request.getBody().getBytes("UTF8"));
 
-            final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
-                    .put(requestBody)
-                    .build();
-
-            try (final Response okHttpResponse = _client.newCall(okHttpRequest).execute()) {
-                return parseResponse(request, okHttpResponse);
-            }
-
+        try (final Response okHttpResponse = getPutCall(request).execute()) {
+            return parseResponse(request, okHttpResponse);
         } catch (IOException ex) {
             throw new MailjetClientCommunicationException("Connection Exception", ex);
         }
+    }
+
+    /**
+     * async version of {@link #put(MailjetRequest)} method
+     * performs PUT request.
+     * @param request request to be sent to Mailjet server
+     * @return CompletableFuture with MailjetResponse response, or exception thrown during the call/response parsing
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccessfull call
+     */
+    public CompletableFuture<MailjetResponse> putAsync(MailjetRequest request) throws MailjetException {
+        final CompletableFuture<MailjetResponse> resultFuture = new CompletableFuture<>();
+
+        getPutCall(request).enqueue(getAsyncCallback(request, resultFuture));
+
+        return resultFuture;
+    }
+
+    private Call getPutCall(MailjetRequest request) throws MailjetException {
+        final byte[] bodyContent;
+        try {
+            bodyContent = request.getBody().getBytes("UTF8");
+        } catch (UnsupportedEncodingException e) {
+            throw new MailjetClientCommunicationException("Connection Exception", e);
+        }
+
+        final RequestBody requestBody = RequestBody.create(
+                MediaType.parse(request.getContentType()), bodyContent);
+
+        final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
+                .put(requestBody)
+                .build();
+
+        return _client.newCall(okHttpRequest);
     }
 
     /**
@@ -155,19 +218,54 @@ public class MailjetClient {
      * @throws com.mailjet.client.errors.MailjetException in case of unsuccess response status code
      */
     public MailjetResponse delete(MailjetRequest request) throws MailjetException {
-        try {
 
-            final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
-                    .delete()
-                    .build();
-
-            try (final Response okHttpResponse = _client.newCall(okHttpRequest).execute()) {
-                return parseResponse(request, okHttpResponse);
-            }
-
+        try (final Response okHttpResponse = getDeleteCall(request).execute()) {
+            return parseResponse(request, okHttpResponse);
         } catch (IOException ex) {
             throw new MailjetClientCommunicationException("Connection Exception", ex);
         }
+    }
+
+    /**
+     * async version of {@link #delete(MailjetRequest)} method
+     * performs DELETE request.
+     * @param request request to be sent to Mailjet server
+     * @return CompletableFuture with MailjetResponse with response
+     * @throws com.mailjet.client.errors.MailjetException in case of unsuccessfull call
+     */
+    public CompletableFuture<MailjetResponse> deleteAsync(MailjetRequest request) throws MailjetException {
+
+        final CompletableFuture<MailjetResponse> resultFuture = new CompletableFuture<>();
+
+        getDeleteCall(request).enqueue(getAsyncCallback(request, resultFuture));
+
+        return resultFuture;
+    }
+
+    private Call getDeleteCall(MailjetRequest request) throws MailjetException {
+        final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
+                .delete()
+                .build();
+
+        return _client.newCall(okHttpRequest);
+    }
+
+    private Callback getAsyncCallback(MailjetRequest request, CompletableFuture<MailjetResponse> completableFuture){
+        return new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                completableFuture.completeExceptionally(new MailjetClientCommunicationException("Connection Exception", e));
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                try {
+                    completableFuture.complete(parseResponse(request, response));
+                } catch (MailjetException e) {
+                    completableFuture.completeExceptionally(e);
+                }
+            }
+        };
     }
 
     private MailjetResponse parseResponse(MailjetRequest request, Response okHttpResponse) throws IOException, MailjetException {
@@ -189,9 +287,14 @@ public class MailjetClient {
                 .build();
     }
 
-    private Request.Builder getPreconfiguredRequestBuilder(MailjetRequest request) throws MailjetUnauthorizedException, UnsupportedEncodingException {
+    private Request.Builder getPreconfiguredRequestBuilder(MailjetRequest request) throws MailjetException {
 
-        final String url = request.buildUrl(this._options.getBaseUrl());
+        final String url;
+        try {
+            url = request.buildUrl(this._options.getBaseUrl());
+        } catch (UnsupportedEncodingException e) {
+            throw new MailjetClientCommunicationException("Connection Exception", e);
+        }
 
         final Request.Builder builder = new Request
                 .Builder()
