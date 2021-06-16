@@ -11,7 +11,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.LinkedList;
 
@@ -68,7 +70,45 @@ public class TransactionalEmailBuilderIT {
     }
 
     @Test
-    public void SendEmailsRequest_InvalidToField_ReturnsAnError() throws MailjetException, IOException {
+    public void SendEmailsRequest_SendsMessage_WithStreamAttachment() throws MailjetException, IOException {
+        // arrange
+        InputStream fileStream = new FileInputStream(attachmentPath);
+        Attachment textAttachment = Attachment.fromInputStream(fileStream, "utf8.txt", "text/plain");
+
+        TransactionalEmail message1 = TransactionalEmail
+                .builder()
+                .to(new SendContact(senderEmail, "stanislav"))
+                .from(new SendContact(senderEmail, "Mailjet integration test"))
+                .htmlPart("<h1>This is the HTML content of the mail</h1>")
+                .subject("This is the subject")
+                .trackOpens(TrackOpens.ENABLED)
+                .attachment(textAttachment)
+                .header("test-header-key", "test-value")
+                .variable("test-vars-array", new String[] {"a", "b", "c"})
+                .variable("test-vars-string", "abc")
+                .variable("test-vars-primitive", 123)
+                .customID("custom-id-value")
+                .build();
+
+        SendEmailsRequest request = SendEmailsRequest
+                .builder()
+                .message(message1) // you can add up to 50 messages per request
+                .build();
+
+        // act
+        SendEmailsResponse response = request.sendWith(client);
+
+        // assert
+        Assert.assertEquals(1, response.getMessages().length);
+
+        MessageResult messageResult = response.getMessages()[0];
+
+        Assert.assertEquals(SentMessageStatus.SUCCESS, messageResult.getStatus());
+        Assert.assertEquals("custom-id-value", messageResult.getCustomID());
+    }
+
+    @Test
+    public void SendEmailsRequest_InvalidToField_ReturnsAnError() throws MailjetException {
         // arrange
         TransactionalEmail message1 = TransactionalEmail
                 .builder()
@@ -101,7 +141,7 @@ public class TransactionalEmailBuilderIT {
     }
 
     @Test
-    public void SendEmailsRequest_MoreThan50MessagesPassed_ReturnsAnError() throws MailjetException, IOException {
+    public void SendEmailsRequest_MoreThan50MessagesPassed_ReturnsAnError() {
         // arrange
         LinkedList<TransactionalEmail> messages = new LinkedList<>();
 
