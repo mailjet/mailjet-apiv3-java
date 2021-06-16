@@ -18,6 +18,7 @@ package com.mailjet.client;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 
 import com.mailjet.client.errors.MailjetClientCommunicationException;
@@ -146,12 +147,8 @@ public class MailjetClient {
     }
 
     private Call getPostCall(MailjetRequest request) throws MailjetException {
-        final byte[] bodyContent;
-        try {
-            bodyContent = request.getBody().getBytes("UTF8");
-        } catch (UnsupportedEncodingException e) {
-            throw new MailjetClientCommunicationException("Connection Exception", e);
-        }
+
+        final byte[] bodyContent = request.getBody().getBytes(StandardCharsets.UTF_8);
 
         final RequestBody requestBody = RequestBody.create(
                 MediaType.parse(request.getContentType()), bodyContent);
@@ -194,12 +191,8 @@ public class MailjetClient {
     }
 
     private Call getPutCall(MailjetRequest request) throws MailjetException {
-        final byte[] bodyContent;
-        try {
-            bodyContent = request.getBody().getBytes("UTF8");
-        } catch (UnsupportedEncodingException e) {
-            throw new MailjetClientCommunicationException("Connection Exception", e);
-        }
+
+        final byte[] bodyContent = request.getBody().getBytes(StandardCharsets.UTF_8);
 
         final RequestBody requestBody = RequestBody.create(
                 MediaType.parse(request.getContentType()), bodyContent);
@@ -271,7 +264,7 @@ public class MailjetClient {
     private MailjetResponse parseResponse(MailjetRequest request, Response okHttpResponse) throws IOException, MailjetException {
 
         final int responseStatusCode = okHttpResponse.code();
-        final String responseBody = okHttpResponse.body().string();
+        final String responseBody = okHttpResponse.body() != null ? okHttpResponse.body().string() : null;
 
         MailjetResponseUtil.validateMailjetResponse(request, responseStatusCode, responseBody);
 
@@ -299,7 +292,7 @@ public class MailjetClient {
         final Request.Builder builder = new Request
                 .Builder()
                 .addHeader("Accept", "application/json")
-                .addHeader("User-Agent", this.userAgent)
+                .addHeader("User-Agent", userAgent)
                 .url(url);
 
         switch (request.getAuthenticationType()){
