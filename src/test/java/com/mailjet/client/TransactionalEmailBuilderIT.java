@@ -16,6 +16,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Paths;
 import java.util.LinkedList;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 
 public class TransactionalEmailBuilderIT {
@@ -70,7 +72,7 @@ public class TransactionalEmailBuilderIT {
     }
 
     @Test
-    public void SendEmailsRequest_SendsMessage_WithStreamAttachment() throws MailjetException, IOException {
+    public void SendEmailsRequest_SendsMessageAsync_WithStreamAttachment() throws IOException, ExecutionException, InterruptedException {
         // arrange
         InputStream fileStream = new FileInputStream(attachmentPath);
         Attachment textAttachment = Attachment.fromInputStream(fileStream, "utf8.txt", "text/plain");
@@ -96,7 +98,8 @@ public class TransactionalEmailBuilderIT {
                 .build();
 
         // act
-        SendEmailsResponse response = request.sendWith(client);
+        CompletableFuture<SendEmailsResponse> responseFuture = request.sendAsyncWith(client);
+        SendEmailsResponse response = responseFuture.get();
 
         // assert
         Assert.assertEquals(1, response.getMessages().length);

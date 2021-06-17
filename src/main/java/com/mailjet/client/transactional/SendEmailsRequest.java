@@ -10,10 +10,10 @@ import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.resource.Emailv31;
 import com.mailjet.client.transactional.response.SendEmailsResponse;
 import lombok.Builder;
-import lombok.Builder.Default;
 import lombok.Singular;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Builder
 public class SendEmailsRequest {
@@ -55,14 +55,40 @@ public class SendEmailsRequest {
      */
     public SendEmailsResponse sendWith(MailjetClient mailjetClient) throws MailjetException {
 
-        MailjetRequest request = new MailjetRequest(Emailv31.resource);
-        request.setBody(gson.toJson(this));
+        final MailjetResponse response = mailjetClient.post(getMailjetRequest());
 
-        MailjetResponse response = mailjetClient.post(request);
+        return convertResponse(response);
+    }
 
-        String responseContent = response.getRawResponseContent();
+    /**
+     * Represents a method to send multiple transactional emails asynchronously
+     * Note: Mailjet send API v3.1 will be used
+     * Note: Max 50 emails per batch allowed
+     * @param mailjetClient the Mailjet client that will be used to send messages
+     * @return A response future with sent messages information, or error information
+     * The returned future will contain MailjetException in case of communication error in HTTP stack,
+     * like, TLS connection couldn't be established to the Mailjet server
+     * Or the Server returned 5xx error,
+     * Or the Server returned the generic error response
+     */
+    public CompletableFuture<SendEmailsResponse> sendAsyncWith(MailjetClient mailjetClient)  {
 
-        SendEmailsResponse typedResponse = gson.fromJson(responseContent, SendEmailsResponse.class);
+        final CompletableFuture<SendEmailsResponse> responseCompletableFuture = new CompletableFuture<>();
+
+        try {
+            CompletableFuture<MailjetResponse> future = mailjetClient.postAsync(getMailjetRequest());
+            responseCompletableFuture.complete(convertResponse(future.get()));
+        } catch (Exception e) {
+            responseCompletableFuture.completeExceptionally(e);
+        }
+
+        return responseCompletableFuture;
+    }
+
+    private SendEmailsResponse convertResponse(MailjetResponse response) throws MailjetClientRequestException {
+        final String responseContent = response.getRawResponseContent();
+
+        final SendEmailsResponse typedResponse = gson.fromJson(responseContent, SendEmailsResponse.class);
 
         // in some cases, Mailjet server returns generic error w/o parsing the real passed messages
         if (typedResponse.getMessages() == null && response.getStatus() != MailjetResponseUtil.CREATED_STATUS){
@@ -70,5 +96,11 @@ public class SendEmailsRequest {
         }
 
         return typedResponse;
+    }
+
+    private MailjetRequest getMailjetRequest() {
+        final MailjetRequest request = new MailjetRequest(Emailv31.resource);
+        request.setBody(gson.toJson(this));
+        return request;
     }
 }
