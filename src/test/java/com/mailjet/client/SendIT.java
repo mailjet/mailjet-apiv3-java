@@ -7,6 +7,10 @@ import org.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
+
 public class SendIT {
 
     @Test
@@ -30,6 +34,34 @@ public class SendIT {
 
         // act
         MailjetResponse mailjetResponse = mailjetClient.post(mailjetRequest);
+
+        // assert
+        Assert.assertEquals(200, mailjetResponse.getStatus());
+        Assert.assertEquals(senderEmail, mailjetResponse.getData().getJSONObject(0).getString("Email"));
+    }
+
+    @Test
+    public void sendEmailV3Async() throws MailjetException, ExecutionException, InterruptedException {
+        // arrange
+        MailjetClient mailjetClient = TestHelper.getClient();
+        String senderEmail = TestHelper.getValidSenderEmail(mailjetClient);
+
+        MailjetRequest mailjetRequest = new MailjetRequest(Email.resource)
+                .property(Email.FROMEMAIL, senderEmail)
+                .property(Email.FROMNAME, "Your Mailjet Pilot")
+                .property(Email.RECIPIENTS, new JSONArray()
+                        .put(new JSONObject()
+                                .put("Email", senderEmail)
+                                .put("Name", "Passenger 1")
+                        )
+                )
+                .property(Email.SUBJECT, "Your email flight plan!")
+                .property(Email.TEXTPART, "Dear passenger, welcome to Mailjet! May the delivery force be with you!")
+                .property(Email.HTMLPART, "<h3>Dear passenger, welcome to Mailjet!</h3><br />May the delivery force be with you!");
+
+        // act
+        CompletableFuture<MailjetResponse> responseFuture = mailjetClient.postAsync(mailjetRequest);
+        MailjetResponse mailjetResponse = responseFuture.get();
 
         // assert
         Assert.assertEquals(200, mailjetResponse.getStatus());
