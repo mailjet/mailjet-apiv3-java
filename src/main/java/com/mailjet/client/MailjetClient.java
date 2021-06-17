@@ -98,12 +98,16 @@ public class MailjetClient {
      * performs GET request.
      * @param request request to be sent to Mailjet server
      * @return CompletableFuture with MailjetResponse response, or exception thrown during the call/response parsing
-     * @throws com.mailjet.client.errors.MailjetException in case of unsuccessfull call
+     * CompletableFuture contains com.mailjet.client.errors.MailjetException in case of unsuccessfull call
      */
-    public CompletableFuture<MailjetResponse> getAsync(MailjetRequest request) throws MailjetException {
+    public CompletableFuture<MailjetResponse> getAsync(MailjetRequest request) {
         final CompletableFuture<MailjetResponse> resultFuture = new CompletableFuture<>();
 
-        getGetCall(request).enqueue(getAsyncCallback(request, resultFuture));
+        try {
+            getGetCall(request).enqueue(getAsyncCallback(request, resultFuture));
+        } catch (MailjetException e) {
+            resultFuture.completeExceptionally(e);
+        }
 
         return resultFuture;
     }
@@ -136,12 +140,16 @@ public class MailjetClient {
      * performs POST request.
      * @param request request to be sent to Mailjet server
      * @return CompletableFuture with MailjetResponse response, or exception thrown during the call/response parsing
-     * @throws com.mailjet.client.errors.MailjetException in case of unsuccessfull call
+     * CompletableFuture contains com.mailjet.client.errors.MailjetException in case of unsuccessfull call
      */
-    public CompletableFuture<MailjetResponse> postAsync(MailjetRequest request) throws MailjetException {
+    public CompletableFuture<MailjetResponse> postAsync(MailjetRequest request) {
         final CompletableFuture<MailjetResponse> resultFuture = new CompletableFuture<>();
 
-        getPostCall(request).enqueue(getAsyncCallback(request, resultFuture));
+        try {
+            getPostCall(request).enqueue(getAsyncCallback(request, resultFuture));
+        } catch (MailjetException e) {
+            resultFuture.completeExceptionally(e);
+        }
 
         return resultFuture;
     }
@@ -178,14 +186,18 @@ public class MailjetClient {
     /**
      * async version of {@link #put(MailjetRequest)} method
      * performs PUT request.
+     * CompletableFuture contains com.mailjet.client.errors.MailjetException in case of unsuccessfull call
      * @param request request to be sent to Mailjet server
      * @return CompletableFuture with MailjetResponse response, or exception thrown during the call/response parsing
-     * @throws com.mailjet.client.errors.MailjetException in case of unsuccessfull call
      */
-    public CompletableFuture<MailjetResponse> putAsync(MailjetRequest request) throws MailjetException {
+    public CompletableFuture<MailjetResponse> putAsync(MailjetRequest request) {
         final CompletableFuture<MailjetResponse> resultFuture = new CompletableFuture<>();
 
-        getPutCall(request).enqueue(getAsyncCallback(request, resultFuture));
+        try {
+            getPutCall(request).enqueue(getAsyncCallback(request, resultFuture));
+        } catch (MailjetException e) {
+            resultFuture.completeExceptionally(e);
+        }
 
         return resultFuture;
     }
@@ -222,15 +234,19 @@ public class MailjetClient {
     /**
      * async version of {@link #delete(MailjetRequest)} method
      * performs DELETE request.
+     * CompletableFuture contains com.mailjet.client.errors.MailjetException in case of unsuccessfull call
      * @param request request to be sent to Mailjet server
      * @return CompletableFuture with MailjetResponse with response
-     * @throws com.mailjet.client.errors.MailjetException in case of unsuccessfull call
      */
-    public CompletableFuture<MailjetResponse> deleteAsync(MailjetRequest request) throws MailjetException {
+    public CompletableFuture<MailjetResponse> deleteAsync(MailjetRequest request) {
 
         final CompletableFuture<MailjetResponse> resultFuture = new CompletableFuture<>();
 
-        getDeleteCall(request).enqueue(getAsyncCallback(request, resultFuture));
+        try {
+            getDeleteCall(request).enqueue(getAsyncCallback(request, resultFuture));
+        } catch (MailjetException e) {
+            resultFuture.completeExceptionally(e);
+        }
 
         return resultFuture;
     }
