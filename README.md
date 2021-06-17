@@ -48,6 +48,11 @@ Check out all the resources and all the Java code examples in the [Official Docu
 
 
 ## Release notes
+v5.2.0
+- added async methods
+- added automatic module nam
+- added possibility to create attachments form the InputStream
+
 v5.1.1
 - fixes adding additional quotes during serialization of string variables adn headers in TransactionalEmailBuilder
 
@@ -73,7 +78,7 @@ Add the following in your `pom.xml`
         <dependency>
             <groupId>com.mailjet</groupId>
             <artifactId>mailjet-client</artifactId>
-            <version>5.1.1</version>
+            <version>5.2.0</version>
         </dependency>
     </dependencies>
 ```
