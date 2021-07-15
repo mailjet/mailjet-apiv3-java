@@ -22,6 +22,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.CompletableFuture;
 
 import com.mailjet.client.errors.MailjetClientCommunicationException;
+import com.mailjet.client.errors.MailjetClientRequestException;
 import com.mailjet.client.errors.MailjetUnauthorizedException;
 import okhttp3.*;
 import org.json.JSONObject;
@@ -113,6 +114,10 @@ public class MailjetClient {
     }
 
     private Call getGetCall(MailjetRequest request) throws MailjetException {
+
+        if (request._body.length() > 0)
+            throw new MailjetClientRequestException("Seems like you are using .parameters() on the MailjetRequest object for the GET call. This parameters will not be used. Please, use .filter() instead", 400);
+
         final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
                 .get()
                 .build();
