@@ -43,6 +43,23 @@ public class MailjetExceptionIT {
     }
 
     @Test
+    public void shouldThrowExceptionInCaseOfGetWithBody() {
+        // arrange
+        MailjetClient mailjetClient = TestHelper.getClient();
+        MailjetRequest request = new MailjetRequest(Contact.resource, "Non-existent-id")
+                .property(Contact.NAME, "New Contact");
+
+        // act
+        MailjetClientRequestException exception = Assert.assertThrows(MailjetClientRequestException.class, () -> {
+            MailjetResponse response = mailjetClient.get(request);
+        });
+
+        // assert
+        Assert.assertEquals(400, exception.getStatusCode());
+        Assert.assertEquals("Seems like you are using .parameters() on the MailjetRequest object for the GET call. This parameters will not be used. Please, use .filter() instead", exception.getMessage());
+    }
+
+    @Test
     public void shouldThrowMailjetRequestExceptionForTheSendApiV3() throws MailjetException {
         // arrange
         MailjetClient mailjetClient = TestHelper.getClient();
