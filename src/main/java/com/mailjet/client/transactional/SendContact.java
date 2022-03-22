@@ -1,5 +1,8 @@
 package com.mailjet.client.transactional;
 
+import lombok.EqualsAndHashCode;
+
+@EqualsAndHashCode
 public class SendContact {
     /**
      * Represents an object with email and name (optional) that can be used as To, Cc, Bcc, From etc
@@ -20,5 +23,5 @@ public class SendContact {
     }
 
     private String Name;
-    private String Email;
+    private final String Email;
 }
