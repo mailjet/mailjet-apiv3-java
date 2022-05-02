@@ -62,7 +62,7 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20190722</version>
+            <version>20220320</version>
         </dependency>
         <dependency>
             <groupId>com.google.code.gson</groupId>
