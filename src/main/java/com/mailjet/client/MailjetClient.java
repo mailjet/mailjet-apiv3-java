@@ -38,7 +38,7 @@ public class MailjetClient {
     private ClientOptions _options;
     private OkHttpClient _client;
 
-    private static final String userAgent = "mailjet-apiv3-java/v5.2.0";
+    private static final String userAgent = "mailjet-apiv3-java/v5.2.1";
 
     /**
      * Deprecated - please, use MailjetClient(ClientOptions clientOptions) ctor instead
