@@ -48,6 +48,9 @@ Check out all the resources and all the Java code examples in the [Official Docu
 
 
 ## Release notes
+v5.2.1
+- update dependency versions
+
 v5.2.0
 - added async methods
 - added automatic module nam
@@ -78,7 +81,7 @@ Add the following in your `pom.xml`
         <dependency>
             <groupId>com.mailjet</groupId>
             <artifactId>mailjet-client</artifactId>
-            <version>5.2.0</version>
+            <version>5.2.1</version>
         </dependency>
     </dependencies>
 ```
