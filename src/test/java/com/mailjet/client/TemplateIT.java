@@ -39,7 +39,7 @@ public class TemplateIT {
         // arrange
         MailjetRequest mailjetRequest = new MailjetRequest(Template.resource)
                 .property(Template.AUTHOR, "John Doe")
-                .property(Template.CATEGORIES, new JSONArray("[\"demo-category\"]"))
+                .property(Template.CATEGORIES, new JSONArray("[\"welcome\"]"))
                 .property(Template.COPYRIGHT, "Mailjet")
                 .property(Template.DESCRIPTION, "Used to send out promo codes.")
                 .property(Template.EDITMODE, 1)
