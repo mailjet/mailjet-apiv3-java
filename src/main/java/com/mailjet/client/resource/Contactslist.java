@@ -16,6 +16,7 @@ import com.mailjet.client.enums.ApiVersion;
 public class Contactslist {
 
     public static Resource resource = new Resource("contactslist", "", ApiVersion.V3, ApiAuthenticationType.Basic);
+    public static Resource csvDataResource = new Resource("contactslist", "csvdata", ApiVersion.V3, ApiAuthenticationType.Basic);
 
 	public static String ADDRESS = "Address";
 	public static String CREATEDAT = "CreatedAt";

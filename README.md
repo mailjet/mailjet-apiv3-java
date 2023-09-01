@@ -49,6 +49,10 @@ Check out all the resources and all the Java code examples in the [Official Docu
 
 ## Release notes
 
+v5.2.4
+- add ability to attach the file into request
+- fix for uploading CSV file through the DATA API
+
 v5.2.3
 - update dependency versions
 
@@ -88,7 +92,7 @@ Add the following in your `pom.xml`
         <dependency>
             <groupId>com.mailjet</groupId>
             <artifactId>mailjet-client</artifactId>
-            <version>5.2.3</version>
+            <version>5.2.4</version>
         </dependency>
     </dependencies>
 ```

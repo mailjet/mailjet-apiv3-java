@@ -18,6 +18,7 @@ package com.mailjet.client;
 
 import static com.mailjet.client.MailjetRequestUtil.decodeDecimals;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -71,6 +72,9 @@ public class MailjetRequest {
 
     private String _data;
 
+	@Getter
+	private File attachment;
+
     @Getter
     private final ApiVersion apiVersion;
 
@@ -102,7 +106,7 @@ public class MailjetRequest {
      * @param res
      */
     public MailjetRequest(Resource res) {
-        this._path = "/REST";
+        this._path = definePath(res);
         _configuration = 1;
         resource = res.getResource();
         _action = res.getAction();
@@ -123,7 +127,7 @@ public class MailjetRequest {
      * @param id
      */
     public MailjetRequest(Resource res, long id) {
-        this._path = "/REST";
+        this._path = definePath(res);
         resource = res.getResource();
         _action = res.getAction();
 		_withoutNamespace = res.getWithoutNamespace();
@@ -144,7 +148,7 @@ public class MailjetRequest {
      * @param id
      */
     public MailjetRequest(Resource res, String id) {
-        this._path = "/REST";
+        this._path = definePath(res);
         resource = res.getResource();
         _action = res.getAction();
 		_withoutNamespace = res.getWithoutNamespace();
@@ -166,7 +170,7 @@ public class MailjetRequest {
      * @param actionid the resource action ID
      */
     public MailjetRequest(Resource res, long id, long actionid) {
-        this._path = "/REST";
+        this._path = definePath(res);
         resource = res.getResource();
         _action = res.getAction();
 		_withoutNamespace = res.getWithoutNamespace();
@@ -183,6 +187,11 @@ public class MailjetRequest {
         System.out.println(_data);
         return this;
     }
+
+	public MailjetRequest attachFile(File file) {
+		this.attachment = file;
+		return this;
+	}
 
     /**
      * Pass a String formatted json as the request body
@@ -236,7 +245,7 @@ public class MailjetRequest {
      */
     public String getContentType() {
         if ("csvdata".equals(_action))
-            return "text:csv";
+            return "text/plain";
         if ("csverror".equals(_action))
             return "text/plain";
         else
@@ -263,6 +272,8 @@ public class MailjetRequest {
             url = base + '/' + _action;
         else if (_action.equals("managemanycontacts") && id != null)
             url = base + '/' + _action + '/' + id;
+		else if (_action.equals("csvdata"))
+			url = base + '/' + id + '/' + _action + '/' + "text:plain";
         else if (_configuration == 1)
             url = base;
         else if (_configuration == 2)
@@ -359,4 +370,11 @@ public class MailjetRequest {
                 .put("Body", _body.toString())
                 .toString();
     }
+
+	private String definePath(Resource res) {
+		if (res.getAction().equals("csvdata")) {
+			return "/DATA";
+		}
+		return "/REST";
+	}
 }

@@ -19,6 +19,7 @@ public class Csvimport {
 
 	public static String ALIVEAT = "AliveAt";
 	public static String CONTACTSLIST = "ContactsList";
+	public static String CONTACTSLISTID = "ContactsListID";
 	public static String COUNT = "Count";
 	public static String CURRENT = "Current";
 	public static String DATAID = "DataID";

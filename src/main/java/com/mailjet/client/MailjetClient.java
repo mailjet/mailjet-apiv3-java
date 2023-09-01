@@ -16,9 +16,11 @@
 
 package com.mailjet.client;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 
 import com.mailjet.client.errors.MailjetClientCommunicationException;
@@ -38,7 +40,7 @@ public class MailjetClient {
     private ClientOptions _options;
     private OkHttpClient _client;
 
-    private static final String userAgent = "mailjet-apiv3-java/v5.2.3";
+    private static final String userAgent = "mailjet-apiv3-java/v5.2.4";
 
     /**
      * Deprecated - please, use MailjetClient(ClientOptions clientOptions) ctor instead
@@ -160,11 +162,16 @@ public class MailjetClient {
     }
 
     private Call getPostCall(MailjetRequest request) throws MailjetException {
+		final File attachment = request.getAttachment();
+		final RequestBody requestBody;
+		final MediaType mediaType = MediaType.parse(request.getContentType());
+		final byte[] bodyContent = request.getBody().getBytes(StandardCharsets.UTF_8);
 
-        final byte[] bodyContent = request.getBody().getBytes(StandardCharsets.UTF_8);
-
-        final RequestBody requestBody = RequestBody.create(
-                MediaType.parse(request.getContentType()), bodyContent);
+		if (Objects.nonNull(attachment)) {
+			requestBody = RequestBody.create(mediaType, attachment);
+		} else {
+			requestBody = RequestBody.create(mediaType, bodyContent);
+		}
 
         final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
                 .post(requestBody)
