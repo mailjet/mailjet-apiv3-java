@@ -70,8 +70,8 @@ public class MJEasyClient {
     }
     
     /**
-     * Create an {@link MJEasySms} instance to prepare an email to send.
-     * @return {@link MJEasyClient} instance
+     * Create an {@link MJEasySms} instance to prepare an SMS to send.
+     * @return {@link MJEasySms} instance
      */
     public MJEasySms sms() {
         return new MJEasySms(this, new MailjetRequest(SmsSend.resource));
