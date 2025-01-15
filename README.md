@@ -44,6 +44,7 @@ Check out all the resources and all the Java code examples in the [Official Docu
 - [SMS API](#sms-api)
   - [Token authentication](#token-authentication)
   - [Example Request](#example-request)
+- [Other Examples](#other-examples)
 - [Contribute](#contribute)
 
 
@@ -586,6 +587,10 @@ Assert.assertEquals("Message is being sent", response.getData().getJSONObject(0)
 
 ```
 Also, you can check [integration tests](src/test/java/com/mailjet/client/SendSmsIT.java) how to work with Mailjet client. 
+
+## Other examples
+
+- [AWS Lambda](https://github.com/fouad-j/aws-lambda-java-jetmail)
 
 ## Contribute
 
