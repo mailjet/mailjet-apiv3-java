@@ -48,6 +48,9 @@ Check out all the resources and all the Java code examples in the [Official Docu
 
 
 ## Release notes
+v5.2.6
+- fixed vulnerabilities
+- moved to Java 11
 
 v5.2.5
 - update dependency versions
@@ -95,7 +98,7 @@ Add the following in your `pom.xml`
         <dependency>
             <groupId>com.mailjet</groupId>
             <artifactId>mailjet-client</artifactId>
-            <version>5.2.5</version>
+            <version>5.2.6</version>
         </dependency>
     </dependencies>
 ```
