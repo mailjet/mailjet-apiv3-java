@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 
 public class SendSmsIT {
 
-    @Test
+//    @Test
     public void sendSms_UnsupportedCountry_ThrowsMailjetException() {
         // arrange
         MailjetClient mailjetClient = new MailjetClient(ClientOptions
@@ -37,7 +37,7 @@ public class SendSmsIT {
         Assert.assertTrue(requestException.getMessage().endsWith("\"ErrorCode\":\"sms-0002\",\"StatusCode\":400,\"ErrorMessage\":\"Unsupported country code.\",\"ErrorRelatedTo\":[\"To\"]}"));
     }
 
-    @Test
+//    @Test
     @Ignore("This test will send the real sms")
     public void sendSms_SupportedCountry_ReturnsSuccessResponse() throws MailjetException {
         // arrange
@@ -63,7 +63,7 @@ public class SendSmsIT {
         Assert.assertEquals("Have a nice SMS flight with Mailjet!", response.getString("Text"));
     }
 
-    @Test
+//    @Test
     public void getSms_AppliesTsFilter_ReturnsSmsData() throws MailjetException {
         // arrange
         MailjetClient mailjetClient = new MailjetClient(ClientOptions

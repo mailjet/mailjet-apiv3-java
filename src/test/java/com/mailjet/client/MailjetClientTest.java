@@ -1,18 +1,35 @@
 package com.mailjet.client;
 
+import com.mailjet.client.errors.MailjetClientRequestException;
 import com.mailjet.client.errors.MailjetException;
-import com.mailjet.client.resource.*;
+import com.mailjet.client.errors.MailjetUnauthorizedException;
+import com.mailjet.client.resource.Contact;
+import com.mailjet.client.resource.ContactGetcontactslists;
+import com.mailjet.client.resource.Email;
+import com.mailjet.client.resource.Emailv31;
+import com.mailjet.client.resource.Sender;
 import com.mailjet.client.resource.sms.SmsSend;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;
-import org.junit.*;
 
-import static org.junit.Assert.*;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 /**
  *
@@ -251,6 +268,124 @@ public class MailjetClientTest {
                 recordedRequest.getBody().readUtf8());
 
         assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    public void testPutAsync() throws Exception {
+        // arrange
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+
+        MailjetRequest request = new MailjetRequest(Sender.resource, 121)
+                .property(Sender.NAME, "Guillaume");
+
+        // act
+        CompletableFuture<MailjetResponse> futureResponse = client.putAsync(request);
+        MailjetResponse response = futureResponse.get();
+
+        // assert
+        RecordedRequest recordedRequest = mockWebServer.takeRequest();
+
+        assertEquals("/v3/REST/sender/121", recordedRequest.getPath());
+        assertEquals("PUT", recordedRequest.getMethod());
+        assertEquals("{\"Name\":\"Guillaume\"}", recordedRequest.getBody().readUtf8());
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    public void testDelete() throws Exception {
+        // arrange
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+
+        MailjetRequest request = new MailjetRequest(Contact.resource, 123);
+
+        // act
+        MailjetResponse response = client.delete(request);
+
+        // assert
+        RecordedRequest recordedRequest = mockWebServer.takeRequest();
+
+        assertEquals("/v3/REST/contact/123", recordedRequest.getPath());
+        assertEquals("DELETE", recordedRequest.getMethod());
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test
+    public void testDeleteAsync() throws Exception {
+        // arrange
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+
+        MailjetRequest request = new MailjetRequest(Contact.resource, 123);
+
+        // act
+        CompletableFuture<MailjetResponse> futureResponse = client.deleteAsync(request);
+        MailjetResponse response = futureResponse.get();
+
+        // assert
+        RecordedRequest recordedRequest = mockWebServer.takeRequest();
+
+        assertEquals("/v3/REST/contact/123", recordedRequest.getPath());
+        assertEquals("DELETE", recordedRequest.getMethod());
+        assertEquals(200, response.getStatus());
+    }
+
+    @Test(expected = MailjetClientRequestException.class)
+    public void testGet_withBodyThrowsRequestException() throws Exception {
+        MailjetRequest bad = new MailjetRequest(Contact.resource)
+                .property("foo","bar");
+        client.get(bad);
+    }
+
+    /**
+     * The async GET should immediately complete exceptionally in the same case.
+     */
+    @Test
+    public void testGetAsync_withBodyCompletesExceptionally() throws Exception {
+        MailjetRequest bad = new MailjetRequest(Contact.resource)
+                .property("foo","bar");
+        CompletableFuture<MailjetResponse> f = client.getAsync(bad);
+        assertTrue(f.isCompletedExceptionally());
+        try {
+            f.get();
+            fail("Expected MailjetClientRequestException");
+        } catch (ExecutionException e) {
+            assertTrue(e.getCause() instanceof MailjetClientRequestException);
+        }
+    }
+
+    /**
+     * POST with an attachment should use the File‐branch in getPostCall and stream the file contents.
+     */
+    @Test
+    public void testPost_withAttachmentStreamsFile() throws Exception {
+        // 1) create a temp file with known bytes
+        Path tmp = Files.createTempFile("mj-", ".txt");
+        Files.write(tmp, "xyz123".getBytes(StandardCharsets.UTF_8));
+
+        // 2) enqueue a dummy response so client.post(...) returns without error
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody("{}"));
+
+        // 3) build request with attachFile(...)
+        MailjetRequest r = new MailjetRequest(Email.resource)
+                .attachFile(tmp.toFile());
+        client.post(r);
+
+        // 4) verify that the server saw exactly the file’s bytes
+        RecordedRequest rec = mockWebServer.takeRequest();
+        assertEquals("xyz123", rec.getBody().readUtf8());
+
+        Files.delete(tmp);
+    }
+
+    @Test(expected = MailjetUnauthorizedException.class)
+    public void testMissingBasicCredentials_throwsUnauthorized() throws Exception {
+        // build a client with no apiKey/apiSecret
+        ClientOptions opts = ClientOptions.builder()
+                .baseUrl(mockWebServer.url("/").toString())
+                .build();
+        MailjetClient naked = new MailjetClient(opts);
+
+        // even a plain GET will now throw
+        naked.get(new MailjetRequest(Contact.resource));
     }
 
     @AfterClass
