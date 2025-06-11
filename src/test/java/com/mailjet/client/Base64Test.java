@@ -3,6 +3,8 @@ package com.mailjet.client;
 import junit.framework.TestCase;
 import org.junit.Assert;
 
+import java.nio.charset.StandardCharsets;
+
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class Base64Test extends TestCase {
@@ -14,7 +16,7 @@ public class Base64Test extends TestCase {
         byte[] result = Base64.decode(mock);
 
         // THEN
-        Assert.assertEquals("test:testéa$$à)=/*", new String(result));
+        Assert.assertEquals("test:testéa$$à)=/*", new String(result, StandardCharsets.UTF_8));
     }
 
     public void test_should_base64_encode_provided_bytes_array() {

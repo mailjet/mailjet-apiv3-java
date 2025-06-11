@@ -6,10 +6,19 @@ import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.resource.Email;
 import com.mailjet.client.resource.sms.SmsSend;
 
+import lombok.Getter;
+
 /**
  * Mailjet easy client
  */
+@Getter
 public class MJEasyClient {
+    /**
+     * -- GETTER --
+     *  Get the internal Mailjet client
+     *
+     * @return MailjetClient instance
+     */
     private final MailjetClient client;
 
     /**
@@ -54,11 +63,11 @@ public class MJEasyClient {
     }
 
     /**
-     * Get the internal Mailjet client
-     * @return MailjetClient instance
+     * Constructor using a pre-configured MailjetClient instance.
+     * @param client Pre-configured MailjetClient instance
      */
-    public MailjetClient getClient() {
-        return client;
+    protected MJEasyClient(MailjetClient client) {
+        this.client = client;
     }
 
     /**

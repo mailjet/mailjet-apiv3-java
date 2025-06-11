@@ -9,6 +9,8 @@ import com.mailjet.client.errors.MailjetException;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import lombok.Getter;
+
 /**
  *
  * @author Guillaume Badi
@@ -17,18 +19,18 @@ public class MailjetResponse {
     
     private final JSONObject responseObject;
     private final String rawResponse;
+    /**
+     * -- GETTER --
+     *
+     * @return HTTP status code returned by Mailjet server
+     */
+    @Getter
     private final int status;
 
     public MailjetResponse(int status, String rawResponse) {
         responseObject = new JSONObject(rawResponse);
         this.rawResponse = rawResponse;
         this.status = status;
-    }
-    /**
-     * @return HTTP status code returned by Mailjet server
-     */
-    public int getStatus() {
-        return status;
     }
 
     /**

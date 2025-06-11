@@ -16,7 +16,10 @@
 
 package com.mailjet.client;
 
-import static com.mailjet.client.MailjetRequestUtil.decodeDecimals;
+import com.mailjet.client.enums.ApiAuthenticationType;
+import com.mailjet.client.enums.ApiVersion;
+
+import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,11 +30,10 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
 
-import com.mailjet.client.enums.ApiAuthenticationType;
-import com.mailjet.client.enums.ApiVersion;
 import lombok.Getter;
 import okhttp3.HttpUrl;
-import org.json.JSONObject;
+
+import static com.mailjet.client.MailjetRequestUtil.decodeDecimals;
 
 /**
  *

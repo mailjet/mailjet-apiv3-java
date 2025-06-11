@@ -47,6 +47,10 @@ Check out all the resources and all the Java code examples in the [Official Docu
 - [Other Examples](#other-examples)
 - [Contribute](#contribute)
 
+## Release notes
+v6.0.0
+- Added unit tests and updated existing
+- Moved to the new version 6.x.x as JDK was moved to Java 11
 
 ## Release notes
 v5.2.6
@@ -99,7 +103,7 @@ Add the following in your `pom.xml`
         <dependency>
             <groupId>com.mailjet</groupId>
             <artifactId>mailjet-client</artifactId>
-            <version>5.2.6</version>
+            <version>6.0.0</version>
         </dependency>
     </dependencies>
 ```
