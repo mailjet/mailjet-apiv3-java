@@ -12,7 +12,9 @@ import com.mailjet.client.enums.ApiVersion;
 /**
  *
  * @author Guillaume Badi
+ * @deprecated Use {@link CampaigndraftStatus} to retrieve campaign draft status.
  */
+@Deprecated
 public class NewsletterStatus {
 
     public static Resource resource = new Resource("newsletter", "status", ApiVersion.V3, ApiAuthenticationType.Basic);
@@ -20,4 +22,3 @@ public class NewsletterStatus {
 
 
 }
-

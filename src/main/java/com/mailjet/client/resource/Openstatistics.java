@@ -12,7 +12,9 @@ import com.mailjet.client.enums.ApiVersion;
 /**
  *
  * @author Guillaume Badi
+ * @deprecated Use {@link Statcounters} for open counters.
  */
+@Deprecated
 public class Openstatistics {
 
     public static Resource resource = new Resource("openstatistics", "", ApiVersion.V3, ApiAuthenticationType.Basic);
@@ -40,4 +42,3 @@ public class Openstatistics {
 	public static String COUNTONLY = "CountOnly";
 
 }
-

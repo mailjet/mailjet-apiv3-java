@@ -18,11 +18,11 @@ public class Base64 {
     /**
      * Translates the specified Base64 string into a byte array.
      *
-     * @param s the Base64 string (not null)
+     * @param value the Base64 string (not null)
      * @return the byte array (not null)
      */
-    public static byte[] decode(String s){
-        return java.util.Base64.getDecoder().decode(s);
+    public static byte[] decode(String value){
+        return java.util.Base64.getDecoder().decode(value);
     }
 
 }

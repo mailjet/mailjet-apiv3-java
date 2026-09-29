@@ -12,7 +12,9 @@ import com.mailjet.client.enums.ApiVersion;
 /**
  *
  * @author Guillaume Badi
+ * @deprecated Use {@link CampaigndraftTest} to send campaign draft tests.
  */
+@Deprecated
 public class NewsletterTest {
 
     public static Resource resource = new Resource("newsletter", "test", ApiVersion.V3, ApiAuthenticationType.Basic);
@@ -20,4 +22,3 @@ public class NewsletterTest {
 	public static String RECIPIENTS = "Recipients";
 
 }
-

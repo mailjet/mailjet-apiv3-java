@@ -12,7 +12,9 @@ import com.mailjet.client.enums.ApiVersion;
 /**
  *
  * @author Guillaume Badi
+ * @deprecated Use {@link CampaigndraftSend} to send campaign drafts.
  */
+@Deprecated
 public class NewsletterSend {
 
     public static Resource resource = new Resource("newsletter", "send", ApiVersion.V3, ApiAuthenticationType.Basic);
@@ -20,4 +22,3 @@ public class NewsletterSend {
 
 
 }
-

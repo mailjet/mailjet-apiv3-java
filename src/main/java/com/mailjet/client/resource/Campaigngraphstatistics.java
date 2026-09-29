@@ -12,7 +12,9 @@ import com.mailjet.client.enums.ApiVersion;
 /**
  *
  * @author Guillaume Badi
+ * @deprecated Use {@link Statcounters} for campaign statistics over time.
  */
+@Deprecated
 public class Campaigngraphstatistics {
 
     public static Resource resource = new Resource("campaigngraphstatistics", "", ApiVersion.V3, ApiAuthenticationType.Basic);
@@ -34,4 +36,3 @@ public class Campaigngraphstatistics {
 	public static String COUNTONLY = "CountOnly";
 
 }
-

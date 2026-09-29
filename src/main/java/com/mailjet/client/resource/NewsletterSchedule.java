@@ -12,7 +12,9 @@ import com.mailjet.client.enums.ApiVersion;
 /**
  *
  * @author Guillaume Badi
+ * @deprecated Use {@link CampaigndraftSchedule} to manage campaign draft schedules.
  */
+@Deprecated
 public class NewsletterSchedule {
 
     public static Resource resource = new Resource("newsletter", "schedule", ApiVersion.V3, ApiAuthenticationType.Basic);
@@ -20,4 +22,3 @@ public class NewsletterSchedule {
 	public static String DATE = "Date";
 
 }
-

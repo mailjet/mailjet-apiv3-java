@@ -12,7 +12,9 @@ import com.mailjet.client.enums.ApiVersion;
 /**
  *
  * @author Guillaume Badi
+ * @deprecated Use {@link Statcounters} with a sender counter source.
  */
+@Deprecated
 public class Senderstatistics {
 
     public static Resource resource = new Resource("senderstatistics", "", ApiVersion.V3, ApiAuthenticationType.Basic);
@@ -39,4 +41,3 @@ public class Senderstatistics {
 	public static final String WORKFLOWEXITEDCOUNT = "WorkflowExitedCount";
 
 }
-

@@ -12,7 +12,9 @@ import com.mailjet.client.enums.ApiVersion;
 /**
  *
  * @author Guillaume Badi
+ * @deprecated Use {@link StatisticsRecepientesp} for statistics grouped by recipient provider.
  */
+@Deprecated
 public class Domainstatistics {
 
     public static Resource resource = new Resource("domainstatistics", "", ApiVersion.V3, ApiAuthenticationType.Basic);
@@ -49,4 +51,3 @@ public class Domainstatistics {
 	public static String COUNTONLY = "CountOnly";
 
 }
-

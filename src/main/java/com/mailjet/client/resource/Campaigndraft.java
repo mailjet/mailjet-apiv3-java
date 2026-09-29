@@ -17,10 +17,13 @@ public class Campaigndraft {
 
     public static Resource resource = new Resource("campaigndraft", "", ApiVersion.V3, ApiAuthenticationType.Basic);
 
+	public static String AXFRACTION = "AXFraction";
 	public static String AXFRACTIONNAME = "AXFractionName";
 	public static String AXTESTING = "AXTesting";
 	public static String CAMPAIGN = "Campaign";
 	public static String CONTACTSLIST = "ContactsList";
+	public static String CONTACTSLISTALT = "ContactsListAlt";
+	public static String CONTACTSLISTID = "ContactsListID";
 	public static String CREATEDAT = "CreatedAt";
 	public static String CURRENT = "Current";
 	public static String DELIVEREDAT = "DeliveredAt";
@@ -33,12 +36,15 @@ public class Campaigndraft {
 	public static String PRESET = "Preset";
 	public static String REPLYEMAIL = "ReplyEmail";
 	public static String SEGMENTATION = "Segmentation";
+	public static String SEGMENTATIONALT = "SegmentationAlt";
+	public static String SEGMENTATIONID = "SegmentationID";
 	public static String SENDER = "Sender";
 	public static String SENDEREMAIL = "SenderEmail";
 	public static String SENDERNAME = "SenderName";
 	public static String STATUS = "Status";
 	public static String SUBJECT = "Subject";
 	public static String TEMPLATE = "Template";
+	public static String TEMPLATEID = "TemplateID";
 	public static String TITLE = "Title";
 	public static String URL = "Url";
 	public static String USED = "Used";
@@ -53,4 +59,3 @@ public class Campaigndraft {
 	public static String COUNTONLY = "CountOnly";
 
 }
-

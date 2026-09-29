@@ -12,7 +12,9 @@ import com.mailjet.client.enums.ApiVersion;
 /**
  *
  * @author Guillaume Badi
+ * @deprecated Use {@link Campaigndraft} for campaign creation and management.
  */
+@Deprecated
 public class Newsletter {
 
     public static Resource resource = new Resource("newsletter", "", ApiVersion.V3, ApiAuthenticationType.Basic);
@@ -67,4 +69,3 @@ public class Newsletter {
 	public static String COUNTONLY = "CountOnly";
 
 }
-

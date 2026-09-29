@@ -12,7 +12,9 @@ import com.mailjet.client.enums.ApiVersion;
 /**
  *
  * @author Guillaume Badi
+ * @deprecated Use {@link Statcounters} for message-based aggregate statistics.
  */
+@Deprecated
 public class Messagestatistics {
 
     public static Resource resource = new Resource("messagestatistics", "", ApiVersion.V3, ApiAuthenticationType.Basic);
@@ -58,4 +60,3 @@ public class Messagestatistics {
 	public static final String DEFERREDCOUNT = "DeferredCount";
 
 }
-

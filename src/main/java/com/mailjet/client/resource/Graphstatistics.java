@@ -12,7 +12,9 @@ import com.mailjet.client.enums.ApiVersion;
 /**
  *
  * @author Guillaume Badi
+ * @deprecated Use {@link Statcounters} for statistics grouped by time interval.
  */
+@Deprecated
 public class Graphstatistics {
 
     public static Resource resource = new Resource("graphstatistics", "", ApiVersion.V3, ApiAuthenticationType.Basic);
@@ -54,4 +56,3 @@ public class Graphstatistics {
 	public static final String DEFERREDCOUNT = "DeferredCount";
 
 }
-

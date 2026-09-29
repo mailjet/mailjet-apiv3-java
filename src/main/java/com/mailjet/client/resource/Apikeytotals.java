@@ -12,7 +12,9 @@ import com.mailjet.client.enums.ApiVersion;
 /**
  *
  * @author Guillaume Badi
+ * @deprecated Use {@link Statcounters} with an API key counter source.
  */
+@Deprecated
 public class Apikeytotals {
 
     public static Resource resource = new Resource("apikeytotals", "", ApiVersion.V3, ApiAuthenticationType.Basic);
@@ -36,4 +38,3 @@ public class Apikeytotals {
 	public static final String WORKFLOWEXITEDCOUNT = "WorkflowExitedCount";
 
 }
-

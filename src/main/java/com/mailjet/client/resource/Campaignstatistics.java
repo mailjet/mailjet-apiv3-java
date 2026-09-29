@@ -12,7 +12,9 @@ import com.mailjet.client.enums.ApiVersion;
 /**
  *
  * @author Guillaume Badi
+ * @deprecated Use {@link Statcounters} with a campaign counter source.
  */
+@Deprecated
 public class Campaignstatistics {
 
     public static Resource resource = new Resource("campaignstatistics", "", ApiVersion.V3, ApiAuthenticationType.Basic);
@@ -66,4 +68,3 @@ public class Campaignstatistics {
 	public static final String WORKFLOWEXITEDCOUNT = "WorkflowExitedCount";
 
 }
-
