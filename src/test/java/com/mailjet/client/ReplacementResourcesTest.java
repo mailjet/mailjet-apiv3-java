@@ -1,65 +1,22 @@
 package com.mailjet.client;
 
-import com.mailjet.client.resource.Apikeytotals;
 import com.mailjet.client.resource.Campaigndraft;
 import com.mailjet.client.resource.CampaigndraftDetailcontent;
 import com.mailjet.client.resource.CampaigndraftSchedule;
 import com.mailjet.client.resource.CampaigndraftSend;
 import com.mailjet.client.resource.CampaigndraftStatus;
 import com.mailjet.client.resource.CampaigndraftTest;
-import com.mailjet.client.resource.Campaigngraphstatistics;
-import com.mailjet.client.resource.Campaignstatistics;
-import com.mailjet.client.resource.Domainstatistics;
-import com.mailjet.client.resource.Graphstatistics;
-import com.mailjet.client.resource.Messagestatistics;
-import com.mailjet.client.resource.Newsletter;
-import com.mailjet.client.resource.NewsletterDetailcontent;
-import com.mailjet.client.resource.NewsletterSchedule;
-import com.mailjet.client.resource.NewsletterSend;
-import com.mailjet.client.resource.NewsletterStatus;
-import com.mailjet.client.resource.NewsletterTest;
-import com.mailjet.client.resource.Openstatistics;
-import com.mailjet.client.resource.Senderstatistics;
 import com.mailjet.client.resource.Statcounters;
 import com.mailjet.client.resource.StatisticsRecepientesp;
 import org.junit.Test;
 
 import java.io.UnsupportedEncodingException;
-import java.util.Arrays;
-import java.util.List;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-@SuppressWarnings("deprecation")
-public class DeprecatedResourcesTest {
+public class ReplacementResourcesTest {
 
     private static final String API_URL = "https://api.mailjet.com";
-
-    @Test
-    public void legacyEndpointResourcesRemainDeprecated() {
-        List<Class<?>> deprecatedResources = Arrays.asList(
-                Newsletter.class,
-                NewsletterDetailcontent.class,
-                NewsletterTest.class,
-                NewsletterSchedule.class,
-                NewsletterSend.class,
-                NewsletterStatus.class,
-                Apikeytotals.class,
-                Campaigngraphstatistics.class,
-                Campaignstatistics.class,
-                Domainstatistics.class,
-                Graphstatistics.class,
-                Messagestatistics.class,
-                Openstatistics.class,
-                Senderstatistics.class
-        );
-
-        for (Class<?> resource : deprecatedResources) {
-            assertTrue(resource.getName() + " must remain deprecated",
-                    resource.isAnnotationPresent(Deprecated.class));
-        }
-    }
 
     @Test
     public void campaignDraftResourcesBuildReplacementUrls() throws UnsupportedEncodingException {
