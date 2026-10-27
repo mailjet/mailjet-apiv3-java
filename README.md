@@ -48,6 +48,10 @@ Check out all the resources and all the Java code examples in the [Official Docu
 - [Contribute](#contribute)
 
 ## Release notes
+v6.1.0
+- Flag deprecated calls
+
+## Release notes
 v6.0.0
 - Added unit tests and updated existing
 - Moved to the new version 6.x.x as JDK was moved to Java 11
@@ -103,7 +107,7 @@ Add the following in your `pom.xml`
         <dependency>
             <groupId>com.mailjet</groupId>
             <artifactId>mailjet-client</artifactId>
-            <version>6.0.0</version>
+            <version>6.1.0</version>
         </dependency>
     </dependencies>
 ```
