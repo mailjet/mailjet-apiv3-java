@@ -624,3 +624,14 @@ Feel free to ask anything, and contribute:
  - Submit a pull request.
 
  If you have suggestions on how to improve the guides, please submit an issue in our [Official API Documentation repo](https://github.com/mailjet/api-documentation).
+
+## Creating a GitHub release
+
+Update the version in `pom.xml` and add a matching `v<version>` entry with release notes
+under `Release notes` above. Merge these changes into `master`, then open
+**Actions → Release → Run workflow** on GitHub.
+
+The workflow validates the version and notes, runs the build and unit tests on Java 11,
+then creates a `v<version>` tag and a GitHub Release for the verified commit. Integration
+tests that use the live Mailjet API are skipped. An existing tag stops the workflow;
+choose a new version before running it again. This workflow does not publish to Maven Central.

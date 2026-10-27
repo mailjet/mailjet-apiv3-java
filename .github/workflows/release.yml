@@ -1,0 +1,99 @@
+name: Release
+run-name: New Release Workflow
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master with full history
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Setup Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '11'
+          cache: maven
+
+      - name: Resolve version from pom.xml
+        id: resolve
+        shell: bash
+        run: |
+          VERSION=$(mvn -B help:evaluate -Dexpression=project.version -q -DforceStdout -Dstyle.color=never)
+
+          if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]] || [[ "$VERSION" == *-SNAPSHOT ]]; then
+            echo "Invalid release version: $VERSION"
+            exit 1
+          fi
+
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=v$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Check that tag does not already exist
+        env:
+          TAG: ${{ steps.resolve.outputs.tag }}
+        run: |
+          if git show-ref --verify --quiet "refs/tags/$TAG"; then
+            echo "Tag $TAG already exists"
+            exit 1
+          fi
+
+      - name: Extract release notes from README.md
+        env:
+          VERSION: ${{ steps.resolve.outputs.version }}
+          TAG: ${{ steps.resolve.outputs.tag }}
+          GH_REPO: ${{ github.repository }}
+        shell: bash
+        run: |
+          awk -v version="v$VERSION" '
+            $0 == version { capture=1; next }
+            capture && ($0 ~ /^## / || $0 ~ /^v[0-9]+\./) { exit }
+            capture { print }
+          ' README.md > RELEASE_BODY.md
+
+          if ! grep -q '[^[:space:]]' RELEASE_BODY.md; then
+            echo "README.md does not contain release notes for $VERSION"
+            exit 1
+          fi
+
+          PREV_TAG=$(git describe --tags --abbrev=0 --match 'v[0-9]*' HEAD 2>/dev/null || true)
+          {
+            cat RELEASE_BODY.md
+            if [ -n "$PREV_TAG" ]; then
+              echo
+              echo "Full Changelog: https://github.com/$GH_REPO/compare/$PREV_TAG...$TAG"
+            fi
+          } > RELEASE_NOTES.md
+
+      - name: Build and run unit tests
+        # Integration tests call the live Mailjet API and require credentials.
+        run: mvn -B clean verify -DskipITs
+
+      - name: Create tag on verified commit
+        env:
+          TAG: ${{ steps.resolve.outputs.tag }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$TAG" HEAD -m "Release $TAG"
+          git push origin "refs/tags/$TAG"
+
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.resolve.outputs.version }}
+          TAG: ${{ steps.resolve.outputs.tag }}
+        run: gh release create "$TAG" --verify-tag --title "$VERSION" --notes-file RELEASE_NOTES.md
