@@ -48,6 +48,10 @@ Check out all the resources and all the Java code examples in the [Official Docu
 - [Contribute](#contribute)
 
 ## Release notes
+v6.2.0
+- Removed deprecated newsletter and statistics resources
+
+## Release notes
 v6.1.0
 - Flag deprecated calls
 
@@ -107,7 +111,7 @@ Add the following in your `pom.xml`
         <dependency>
             <groupId>com.mailjet</groupId>
             <artifactId>mailjet-client</artifactId>
-            <version>6.1.0</version>
+            <version>6.2.0</version>
         </dependency>
     </dependencies>
 ```
