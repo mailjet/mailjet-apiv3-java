@@ -65,4 +65,18 @@ public class MailjetRequestUtilTest {
         String decoded = MailjetRequestUtil.decodeDecimals(payload);
         assertEquals("[1,2.2]", decoded);
     }
+    @Test
+    public void nativeDecimalsPreservePrecision() {
+        BigDecimal value = new BigDecimal("12345678901234567890.123456789");
+        MailjetRequest request = new MailjetRequest(com.mailjet.client.resource.Contact.resource)
+                .property("amount", value);
+        assertEquals(value, new org.json.JSONObject(request.getBody()).getBigDecimal("amount"));
+    }
+
+    @Test
+    public void legacyMarkersCannotInjectJson() {
+        String payload = new org.json.JSONObject().put("value", "\ftrue\f").toString();
+        assertEquals("\ftrue\f", new org.json.JSONObject(MailjetRequestUtil.decodeDecimals(payload)).getString("value"));
+    }
+
 }

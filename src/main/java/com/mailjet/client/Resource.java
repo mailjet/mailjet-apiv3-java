@@ -3,38 +3,23 @@ package com.mailjet.client;
 import com.mailjet.client.enums.ApiAuthenticationType;
 import com.mailjet.client.enums.ApiVersion;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  *
  * @author guillaume
  */
+@Getter
+@RequiredArgsConstructor
 public class Resource {
 
-    @Getter
     private final String resource;
-
-    @Getter
     private final String action;
-
-    @Getter
-	private final Boolean withoutNamespace;
-
-    @Getter
-	private final ApiVersion apiVersion;
-
-    @Getter
+    private final ApiVersion apiVersion;
     private final ApiAuthenticationType authenticationType;
+    private final Boolean withoutNamespace;
 
-	public Resource(String resource, String action, ApiVersion apiVersion, ApiAuthenticationType authenticationType, Boolean withoutNamespace) {
-        this.resource = resource;
-        this.action = action;
-        this.withoutNamespace = withoutNamespace;
-        this.apiVersion = apiVersion;
-        this.authenticationType = authenticationType;
-	}
-    
     public Resource(String resource, String action, ApiVersion apiVersion, ApiAuthenticationType authenticationType) {
-
-	    this(resource, action, apiVersion, authenticationType, false);
+        this(resource, action, apiVersion, authenticationType, false);
     }
 }

@@ -1,6 +1,7 @@
 package com.mailjet.client.resource.sms;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.PaginationConstants;
 import com.mailjet.client.enums.ApiAuthenticationType;
 import com.mailjet.client.enums.ApiVersion;
 
@@ -24,7 +25,7 @@ public class Sms {
     public static final String FROMTS = "FromTS";
     public static final String TOTS = "ToTS";
     public static final String STATUSCODE = "StatusCode";
-    public static final String OFFSET = "Offset";
-    public static final String LIMIT = "Limit";
+    public static final String OFFSET = PaginationConstants.OFFSET;
+    public static final String LIMIT = PaginationConstants.LIMIT;
 
 }

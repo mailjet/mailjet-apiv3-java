@@ -6,6 +6,7 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.PaginationConstants;
 import com.mailjet.client.enums.ApiAuthenticationType;
 import com.mailjet.client.enums.ApiVersion;
 
@@ -42,9 +43,9 @@ public class Contactstatistics {
 	public static String SENT = "Sent";
 	public static String SPAM = "Spam";
 	public static String UNSUBSCRIBED = "Unsubscribed";
-	public static String LIMIT = "Limit";
-	public static String OFFSET = "Offset";
-	public static String COUNTONLY = "CountOnly";
+	public static String LIMIT = PaginationConstants.LIMIT;
+	public static String OFFSET = PaginationConstants.OFFSET;
+	public static String COUNTONLY = PaginationConstants.COUNT_ONLY;
 	public static final String SOFTBOUNCEDCOUNT = "SoftbouncedCount";
 	public static final String HARDBOUNCEDCOUNT = "HardbouncedCount";
 	public static final String DEFERREDCOUNT = "DeferredCount";

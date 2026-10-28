@@ -1,5 +1,9 @@
 package com.mailjet.client.easy;
 
+import lombok.Getter;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.errors.MailjetException;
@@ -13,15 +17,13 @@ import org.json.JSONObject;
  *
  * It's a MailjetRequest object wrapper
  */
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class MJEasyEmail {
     private final MJEasyClient client;
+    /** The internal MailjetRequest wrapped by this object. */
+    @Getter
     private final MailjetRequest request;
     private final JSONArray recipients = new JSONArray();
-
-    protected MJEasyEmail(MJEasyClient client, MailjetRequest request) {
-        this.client = client;
-        this.request = request;
-    }
 
     /**
      * Set the sender
@@ -106,11 +108,4 @@ public class MJEasyEmail {
         return client.getClient().post(request);
     }
 
-    /**
-     * Get the internal MailjetRequest wrapped by the MJEasyEmail object
-     * @return MailjetRequest instance
-     */
-    public MailjetRequest getRequest() {
-        return request;
-    }
 }

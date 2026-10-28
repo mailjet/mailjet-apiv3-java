@@ -16,6 +16,8 @@ import lombok.Getter;
  * @author Guillaume Badi
  */
 public class MailjetResponse {
+
+    private static final String MISSING_ENTRY_MESSAGE = "No entry found for key: ";
     
     private final JSONObject responseObject;
     private final String rawResponse;
@@ -28,7 +30,11 @@ public class MailjetResponse {
     private final int status;
 
     public MailjetResponse(int status, String rawResponse) {
-        responseObject = new JSONObject(rawResponse);
+        this(status, rawResponse, new JSONObject(rawResponse));
+    }
+
+    MailjetResponse(int status, String rawResponse, JSONObject responseObject) {
+        this.responseObject = responseObject;
         this.rawResponse = rawResponse;
         this.status = status;
     }
@@ -39,20 +45,20 @@ public class MailjetResponse {
     public String getRawResponseContent() { return rawResponse; }
 
     public JSONArray getData() {
-        if (responseObject.has("Data")) {
-            return responseObject.getJSONArray("Data");
-        } else if (responseObject.has("Sent")) {
-            return responseObject.getJSONArray("Sent");
-        } else if (responseObject.has("Messages")) {
-            return responseObject.getJSONArray("Messages");
+        if (responseObject.has(ResponseFields.DATA)) {
+            return responseObject.getJSONArray(ResponseFields.DATA);
+        } else if (responseObject.has(ResponseFields.SENT)) {
+            return responseObject.getJSONArray(ResponseFields.SENT);
+        } else if (responseObject.has(ResponseFields.MESSAGES)) {
+            return responseObject.getJSONArray(ResponseFields.MESSAGES);
         } else {
             return (new JSONArray()).put(responseObject);
         }
     }
     
     public int getTotal() {
-        if (responseObject.has("Total")) {
-            return responseObject.getInt("Total");
+        if (responseObject.has(ResponseFields.TOTAL)) {
+            return responseObject.getInt(ResponseFields.TOTAL);
         } else {
             return 0;
         }
@@ -62,7 +68,7 @@ public class MailjetResponse {
         try {
             return responseObject.getString(key);
         } catch (NullPointerException e) {
-           throw new MailjetException("No entry found for key: " + key);
+           throw new MailjetException(MISSING_ENTRY_MESSAGE + key);
         }
     }
     
@@ -70,7 +76,7 @@ public class MailjetResponse {
         try {
             return responseObject.getInt(key);
         } catch (NullPointerException e) {
-            throw new MailjetException("No entry found for key: " + key);
+            throw new MailjetException(MISSING_ENTRY_MESSAGE + key);
         }
     }
     
@@ -78,13 +84,13 @@ public class MailjetResponse {
         try {
             return responseObject.getJSONArray(key);
         } catch (NullPointerException e) { 
-            throw new MailjetException("No entry found for key: " + key);
+            throw new MailjetException(MISSING_ENTRY_MESSAGE + key);
         }
     }
     
     public int getCount() {
-        if (responseObject.has("Count")) {
-            return responseObject.getInt("Count");
+        if (responseObject.has(ResponseFields.COUNT)) {
+            return responseObject.getInt(ResponseFields.COUNT);
         } else {
             return 0;
         }

@@ -88,6 +88,18 @@ public class MailjetResponseUtilTest {
         );
     }
 
+    @Test
+    public void isValidJson_rejectsMalformedObjectsAndTrailingContent() {
+        assertFalse(MailjetResponseUtil.isValidJSON("{invalid}"));
+        assertFalse(MailjetResponseUtil.isValidJSON("{} garbage"));
+        assertFalse(MailjetResponseUtil.isValidJSON("{} {}"));
+    }
+
+    @Test(expected = MailjetClientRequestException.class)
+    public void malformedPartialSuccessIsRejected() throws Exception {
+        MailjetResponseUtil.validateMailjetResponse(new MailjetRequest(Emailv31.resource), 400, "{invalid}");
+    }
+
     // -- isValidJSON tests --
 
     @Test

@@ -77,6 +77,25 @@ public class MailjetClientTest {
     }
 
     @Test
+    public void malformedJsonResponseUsesStatusFallbackAsync() throws Exception {
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody("{invalid}"));
+        MailjetResponse response = client.getAsync(new MailjetRequest(Contact.resource))
+                .get(2, java.util.concurrent.TimeUnit.SECONDS);
+        mockWebServer.takeRequest();
+        assertEquals(200, response.getInt("status"));
+    }
+
+    @Test
+    public void validResponsePreservesRawJson() throws Exception {
+        String json = " { \"Count\": 2 } ";
+        mockWebServer.enqueue(new MockResponse().setResponseCode(200).setBody(json));
+        MailjetResponse response = client.get(new MailjetRequest(Contact.resource));
+        mockWebServer.takeRequest();
+        assertEquals(json, response.getRawResponseContent());
+        assertEquals(2, response.getCount());
+    }
+
+    @Test
     public void testContactsGet() throws MailjetException, InterruptedException {
 
         // arrange

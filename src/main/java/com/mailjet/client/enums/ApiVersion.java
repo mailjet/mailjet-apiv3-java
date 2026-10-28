@@ -1,10 +1,12 @@
 package com.mailjet.client.enums;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Declares constants with supported MailJet API versions
  */
+@RequiredArgsConstructor
 public enum ApiVersion {
 
     V3_1("v3.1"),
@@ -14,7 +16,4 @@ public enum ApiVersion {
     @Getter
     private final String urlSegment;
 
-    ApiVersion(String urlSegment){
-        this.urlSegment = urlSegment;
-    }
 }

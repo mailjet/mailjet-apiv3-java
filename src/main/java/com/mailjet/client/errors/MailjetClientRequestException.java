@@ -1,5 +1,7 @@
 package com.mailjet.client.errors;
 
+import lombok.Getter;
+
 /**
  * MailjetClientRequestException indicates that the given request is invalid
  * And MailJet API server returned error like
@@ -17,8 +19,8 @@ public class MailjetClientRequestException extends MailjetException {
         this.statusCode = statusCode;
     }
 
-    private int statusCode;
+    @Getter
+    private final int statusCode;
 
-    public int getStatusCode(){ return statusCode; }
 }
 

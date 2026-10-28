@@ -3,8 +3,6 @@ package com.mailjet.client.transactional;
 import lombok.Builder;
 import lombok.Data;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -44,8 +42,7 @@ public class Attachment {
      * @throws IOException if something wrong with reading file under the given path
      */
     public static Attachment fromFile(String pathToFile) throws IOException {
-        File file = new File(pathToFile);
-        Path path = file.toPath();
+        Path path = Path.of(pathToFile);
 
         String mimeType = Files.probeContentType(path);
         byte[] fileContent = Files.readAllBytes(path);
@@ -68,16 +65,7 @@ public class Attachment {
      */
     public static Attachment fromInputStream(InputStream inputStream, String attachmentFileName, String contentType) throws IOException {
 
-        // replace this with .readAllBytes when migrating to Java 9
-        final ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        int nRead;
-        byte[] data = new byte[4000];
-
-        while ((nRead = inputStream.read(data, 0, data.length)) != -1) {
-            buffer.write(data, 0, nRead);
-        }
-
-        final String base64Content = Base64.getEncoder().encodeToString(buffer.toByteArray());
+        final String base64Content = Base64.getEncoder().encodeToString(inputStream.readAllBytes());
 
         return new AttachmentBuilder()
                 .base64Content(base64Content)

@@ -27,7 +27,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.util.HashMap;
 
 import lombok.Getter;
@@ -40,6 +40,8 @@ import static com.mailjet.client.MailjetRequestUtil.decodeDecimals;
  * @author Guillaume Badi - Mailjet
  */
 public class MailjetRequest {
+
+    private static final String CSV_DATA_ACTION = "csvdata";
 
     /**
     * REST/DATA/send API. By default, the constructor will initialize it with REST
@@ -185,8 +187,7 @@ public class MailjetRequest {
     }
 
     public MailjetRequest setData(String path) throws IOException {
-        _data = new String(Files.readAllBytes(Paths.get(path)), StandardCharsets.UTF_8);
-        System.out.println(_data);
+        _data = Files.readString(Path.of(path), StandardCharsets.UTF_8);
         return this;
     }
 
@@ -230,7 +231,7 @@ public class MailjetRequest {
      * @return the stringified body
      */
     public String getBody() {
-        return _data == null ? decodeDecimals(_body.toString()) : Base64.encode(_data.getBytes());
+        return _data == null ? decodeDecimals(_body.toString()) : java.util.Base64.getEncoder().encodeToString(_data.getBytes(StandardCharsets.UTF_8));
     }
 
     /**
@@ -246,12 +247,12 @@ public class MailjetRequest {
      * @return Content-Type
      */
     public String getContentType() {
-        if ("csvdata".equals(_action))
-            return "text/plain";
+        if (CSV_DATA_ACTION.equals(_action))
+            return HttpConstants.TEXT_PLAIN;
         if ("csverror".equals(_action))
-            return "text/plain";
+            return HttpConstants.TEXT_PLAIN;
         else
-            return "application/json";
+            return HttpConstants.APPLICATION_JSON;
     }
 
     /**
@@ -267,14 +268,14 @@ public class MailjetRequest {
         String url = null;
 
         if (_alt != null || _id != null) {
-            id = _alt != null ? URLEncoder.encode(_alt, "UTF-8") : _id.toString();
+            id = _alt != null ? URLEncoder.encode(_alt, StandardCharsets.UTF_8) : _id.toString();
         }
 
         if (id == null && !_action.equals(""))
             url = base + '/' + _action;
         else if (_action.equals("managemanycontacts") && id != null)
             url = base + '/' + _action + '/' + id;
-		else if (_action.equals("csvdata"))
+		else if (_action.equals(CSV_DATA_ACTION))
 			url = base + '/' + id + '/' + _action + '/' + "text:plain";
         else if (_configuration == 1)
             url = base;
@@ -287,10 +288,7 @@ public class MailjetRequest {
 
         // add query params to the request url
         final HttpUrl.Builder urlBuilder = HttpUrl.parse(url).newBuilder();
-        for (final String key : _filters.keySet()) {
-            final String value = _filters.get(key);
-            urlBuilder.addQueryParameter(key, value);
-        }
+        _filters.forEach(urlBuilder::addQueryParameter);
 
         return urlBuilder.build().toString();
     }
@@ -344,7 +342,7 @@ public class MailjetRequest {
             if (sb.length() == 0) {
                 sb.append('?');
             }
-            sb.append(URLEncoder.encode(key, "UTF-8")).append('=').append(value.replace(' ', '+'));
+            sb.append(URLEncoder.encode(key, StandardCharsets.UTF_8)).append('=').append(value.replace(' ', '+'));
         }
 
         return sb.toString();
@@ -374,7 +372,7 @@ public class MailjetRequest {
     }
 
 	private String definePath(Resource res) {
-		if (res.getAction().equals("csvdata")) {
+		if (res.getAction().equals(CSV_DATA_ACTION)) {
 			return "/DATA";
 		}
 		return "/REST";

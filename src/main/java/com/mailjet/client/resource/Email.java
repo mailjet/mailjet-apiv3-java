@@ -6,6 +6,7 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.ResponseFields;
 import com.mailjet.client.enums.ApiAuthenticationType;
 import com.mailjet.client.enums.ApiVersion;
 
@@ -45,7 +46,7 @@ public class Email {
     public static String MJTRACK_CLICKS = "Mj-trackclick";
     public static String HEADERS = "Headers";
     public static String MESSAGE = "Message";
-    public static String MESSAGES = "Messages";
+    public static String MESSAGES = ResponseFields.MESSAGES;
     public static String MONITORING_CATEGORY = "MonitoringCategory";
 
 }

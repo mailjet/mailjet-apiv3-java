@@ -6,6 +6,7 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.PaginationConstants;
 import com.mailjet.client.enums.ApiAuthenticationType;
 import com.mailjet.client.enums.ApiVersion;
 
@@ -41,9 +42,9 @@ public class Message {
 	public static String MESSAGESTATE = "MessageState";
 	public static String PLANSUBSCRIPTION = "PlanSubscription";
 	public static String SENDER = "Sender";
-	public static String LIMIT = "Limit";
-	public static String OFFSET = "Offset";
-	public static String COUNTONLY = "CountOnly";
+	public static String LIMIT = PaginationConstants.LIMIT;
+	public static String OFFSET = PaginationConstants.OFFSET;
+	public static String COUNTONLY = PaginationConstants.COUNT_ONLY;
 
 }
 

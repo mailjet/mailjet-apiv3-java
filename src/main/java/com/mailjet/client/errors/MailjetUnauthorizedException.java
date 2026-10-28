@@ -1,5 +1,7 @@
 package com.mailjet.client.errors;
 
+import com.mailjet.client.HttpConstants;
+
 /**
  * You have specified an incorrect API Key / API Secret Key pair or Bearer token in case of invoking SMS API
  * You may be unauthorized to access the API or your API key may be inactive.
@@ -7,6 +9,6 @@ package com.mailjet.client.errors;
  */
 public class MailjetUnauthorizedException extends MailjetClientRequestException {
     public MailjetUnauthorizedException(String message) {
-        super(message, 401);
+        super(message, HttpConstants.UNAUTHORIZED);
     }
 }

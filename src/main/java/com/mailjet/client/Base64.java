@@ -1,8 +1,9 @@
 package com.mailjet.client;
 
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 
+/** @deprecated Use {@link java.util.Base64} directly. */
+@Deprecated
 public class Base64 {
 
     /**
@@ -12,7 +13,7 @@ public class Base64 {
      * @return the translated Base64 string (not null)
      */
     public static String encode(byte[] buf){
-        return new String(java.util.Base64.getEncoder().encode(buf), UTF_8);
+        return java.util.Base64.getEncoder().encodeToString(buf);
     }
 
     /**

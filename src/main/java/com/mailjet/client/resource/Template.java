@@ -6,6 +6,7 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.PaginationConstants;
 import com.mailjet.client.enums.ApiAuthenticationType;
 import com.mailjet.client.enums.ApiVersion;
 
@@ -34,9 +35,9 @@ public class Template {
 	public static String CATEGORIESSELECTIONMETHOD = "CategoriesSelectionMethod";
 	public static String PURPOSESSELECTIONMETHOD = "PurposesSelectionMethod";
 	public static String USER = "User";
-	public static String LIMIT = "Limit";
-	public static String OFFSET = "Offset";
-	public static String COUNTONLY = "CountOnly";
+	public static String LIMIT = PaginationConstants.LIMIT;
+	public static String OFFSET = PaginationConstants.OFFSET;
+	public static String COUNTONLY = PaginationConstants.COUNT_ONLY;
 	public static String ISTEXTPARTGENERATIONENABLED = "IsTextPartGenerationEnabled";
 	public static String LOCALE = "Locale";
 

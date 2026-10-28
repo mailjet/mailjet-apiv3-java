@@ -124,16 +124,32 @@ public class SendEmailsRequestTest {
 
         try {
             future.get();
-            fail("Expected a nested ExecutionException");
+            fail("Expected ExecutionException");
         } catch (ExecutionException outer) {
-            // outer.getCause() is the ExecutionException from future.get()
-            Throwable innerExec = outer.getCause();
-            assertTrue(innerExec instanceof ExecutionException);
+            assertTrue(outer.getCause() instanceof MailjetException);
+            assertEquals("Network error", outer.getCause().getMessage());
+        }
+    }
 
-            // innerExec.getCause() is the original MailjetException
-            Throwable mj = ((ExecutionException) innerExec).getCause();
-            assertTrue(mj instanceof MailjetException);
-            assertEquals("Network error", mj.getMessage());
+    @Test(timeout = 2000)
+    public void testSendAsyncWith_returnsBeforeResponseArrives() throws Exception {
+        CompletableFuture<MailjetResponse> pending = new CompletableFuture<>();
+        when(mockClient.postAsync(any(MailjetRequest.class))).thenReturn(pending);
+        CompletableFuture<SendEmailsResponse> result = SendEmailsRequest.builder().build().sendAsyncWith(mockClient);
+        org.junit.Assert.assertFalse(result.isDone());
+        pending.complete(new MailjetResponse(201, "{\"Messages\":[]}"));
+        assertNotNull(result.get().getMessages());
+    }
+
+    @Test
+    public void testSendAsyncWith_conversionFailure() throws Exception {
+        when(mockClient.postAsync(any(MailjetRequest.class))).thenReturn(
+                CompletableFuture.completedFuture(new MailjetResponse(400, "{}")));
+        try {
+            SendEmailsRequest.builder().build().sendAsyncWith(mockClient).get();
+            fail("Expected conversion failure");
+        } catch (ExecutionException e) {
+            assertTrue(e.getCause() instanceof MailjetClientRequestException);
         }
     }
 

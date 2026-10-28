@@ -1,5 +1,8 @@
 package com.mailjet.client.easy;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+
 import com.mailjet.client.ClientOptions;
 import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
@@ -12,6 +15,7 @@ import lombok.Getter;
  * Mailjet easy client
  */
 @Getter
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class MJEasyClient {
     /**
      * -- GETTER --
@@ -60,14 +64,6 @@ public class MJEasyClient {
                 .build();
 
         client = new MailjetClient(clientOptions);
-    }
-
-    /**
-     * Constructor using a pre-configured MailjetClient instance.
-     * @param client Pre-configured MailjetClient instance
-     */
-    protected MJEasyClient(MailjetClient client) {
-        this.client = client;
     }
 
     /**

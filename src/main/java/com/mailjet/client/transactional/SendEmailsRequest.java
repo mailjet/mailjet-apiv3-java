@@ -4,7 +4,7 @@ import com.google.gson.*;
 import com.mailjet.client.MailjetClient;
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
-import com.mailjet.client.MailjetResponseUtil;
+import com.mailjet.client.HttpConstants;
 import com.mailjet.client.errors.MailjetClientRequestException;
 import com.mailjet.client.errors.MailjetException;
 import com.mailjet.client.resource.Emailv31;
@@ -14,6 +14,7 @@ import lombok.Singular;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.CompletionException;
 
 @Builder
 public class SendEmailsRequest {
@@ -73,16 +74,17 @@ public class SendEmailsRequest {
      */
     public CompletableFuture<SendEmailsResponse> sendAsyncWith(MailjetClient mailjetClient)  {
 
-        final CompletableFuture<SendEmailsResponse> responseCompletableFuture = new CompletableFuture<>();
-
         try {
-            CompletableFuture<MailjetResponse> future = mailjetClient.postAsync(getMailjetRequest());
-            responseCompletableFuture.complete(convertResponse(future.get()));
-        } catch (Exception e) {
-            responseCompletableFuture.completeExceptionally(e);
+            return mailjetClient.postAsync(getMailjetRequest()).thenApply(response -> {
+                try {
+                    return convertResponse(response);
+                } catch (MailjetClientRequestException e) {
+                    throw new CompletionException(e);
+                }
+            });
+        } catch (RuntimeException e) {
+            return CompletableFuture.failedFuture(e);
         }
-
-        return responseCompletableFuture;
     }
 
     private SendEmailsResponse convertResponse(MailjetResponse response) throws MailjetClientRequestException {
@@ -91,7 +93,7 @@ public class SendEmailsRequest {
         final SendEmailsResponse typedResponse = gson.fromJson(responseContent, SendEmailsResponse.class);
 
         // in some cases, Mailjet server returns generic error w/o parsing the real passed messages
-        if (typedResponse.getMessages() == null && response.getStatus() != MailjetResponseUtil.CREATED_STATUS){
+        if (typedResponse.getMessages() == null && response.getStatus() != HttpConstants.CREATED){
             throw new MailjetClientRequestException(responseContent, response.getStatus());
         }
 

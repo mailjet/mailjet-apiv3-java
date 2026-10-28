@@ -6,6 +6,7 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.PaginationConstants;
 import com.mailjet.client.enums.ApiAuthenticationType;
 import com.mailjet.client.enums.ApiVersion;
 
@@ -38,9 +39,9 @@ public class Myprofile {
 	public static String VAT = "VAT";
 	public static String VATNUMBER = "VATNumber";
 	public static String WEBSITE = "Website";
-	public static String LIMIT = "Limit";
-	public static String OFFSET = "Offset";
-	public static String COUNTONLY = "CountOnly";
+	public static String LIMIT = PaginationConstants.LIMIT;
+	public static String OFFSET = PaginationConstants.OFFSET;
+	public static String COUNTONLY = PaginationConstants.COUNT_ONLY;
 
 }
 

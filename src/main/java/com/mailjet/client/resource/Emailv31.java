@@ -6,6 +6,7 @@
 package com.mailjet.client.resource;
 
 import com.mailjet.client.Resource;
+import com.mailjet.client.ResponseFields;
 import com.mailjet.client.enums.ApiAuthenticationType;
 import com.mailjet.client.enums.ApiVersion;
 
@@ -17,7 +18,7 @@ public class Emailv31 {
 
     public static Resource resource = new Resource("send", "", ApiVersion.V3_1, ApiAuthenticationType.Basic);
 
-    public static String MESSAGES = "Messages";
+    public static String MESSAGES = ResponseFields.MESSAGES;
     public static String SANDBOX_MODE = "SandboxMode";
     public static String ADVANCE_ERROR_HANDLING = "AdvanceErrorHandling";
     public static String GLOBALS = "Globals";

@@ -40,6 +40,8 @@ public class MailjetClient {
     private ClientOptions _options;
     private OkHttpClient _client;
 
+    private static final String CONNECTION_EXCEPTION_MESSAGE = "Connection Exception";
+
     private static final String userAgent = "mailjet-apiv3-java/v6.2.0";
 
     /**
@@ -92,7 +94,7 @@ public class MailjetClient {
          try (final Response okHttpResponse = getGetCall(request).execute()) {
              return parseResponse(request, okHttpResponse);
         } catch (IOException ex) {
-            throw new MailjetClientCommunicationException("Connection Exception", ex);
+            throw new MailjetClientCommunicationException(CONNECTION_EXCEPTION_MESSAGE, ex);
         }
     }
 
@@ -118,7 +120,7 @@ public class MailjetClient {
     private Call getGetCall(MailjetRequest request) throws MailjetException {
 
         if (request._body.length() > 0)
-            throw new MailjetClientRequestException("Seems like you are using .parameters() on the MailjetRequest object for the GET call. This parameters will not be used. Please, use .filter() instead", 400);
+            throw new MailjetClientRequestException("Seems like you are using .parameters() on the MailjetRequest object for the GET call. This parameters will not be used. Please, use .filter() instead", HttpConstants.BAD_REQUEST);
 
         final Request okHttpRequest = getPreconfiguredRequestBuilder(request)
                 .get()
@@ -138,7 +140,7 @@ public class MailjetClient {
         try (final Response okHttpResponse = getPostCall(request).execute()) {
             return parseResponse(request, okHttpResponse);
         } catch (IOException ex) {
-            throw new MailjetClientCommunicationException("Connection Exception", ex);
+            throw new MailjetClientCommunicationException(CONNECTION_EXCEPTION_MESSAGE, ex);
         }
     }
 
@@ -191,7 +193,7 @@ public class MailjetClient {
         try (final Response okHttpResponse = getPutCall(request).execute()) {
             return parseResponse(request, okHttpResponse);
         } catch (IOException ex) {
-            throw new MailjetClientCommunicationException("Connection Exception", ex);
+            throw new MailjetClientCommunicationException(CONNECTION_EXCEPTION_MESSAGE, ex);
         }
     }
 
@@ -239,7 +241,7 @@ public class MailjetClient {
         try (final Response okHttpResponse = getDeleteCall(request).execute()) {
             return parseResponse(request, okHttpResponse);
         } catch (IOException ex) {
-            throw new MailjetClientCommunicationException("Connection Exception", ex);
+            throw new MailjetClientCommunicationException(CONNECTION_EXCEPTION_MESSAGE, ex);
         }
     }
 
@@ -275,14 +277,16 @@ public class MailjetClient {
         return new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-                completableFuture.completeExceptionally(new MailjetClientCommunicationException("Connection Exception", e));
+                completableFuture.completeExceptionally(new MailjetClientCommunicationException(CONNECTION_EXCEPTION_MESSAGE, e));
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                try {
-                    completableFuture.complete(parseResponse(request, response));
-                } catch (MailjetException e) {
+                try (Response closeableResponse = response) {
+                    completableFuture.complete(parseResponse(request, closeableResponse));
+                } catch (IOException e) {
+                    completableFuture.completeExceptionally(new MailjetClientCommunicationException(CONNECTION_EXCEPTION_MESSAGE, e));
+                } catch (MailjetException | RuntimeException e) {
                     completableFuture.completeExceptionally(e);
                 }
             }
@@ -294,12 +298,14 @@ public class MailjetClient {
         final int responseStatusCode = okHttpResponse.code();
         final String responseBody = okHttpResponse.body() != null ? okHttpResponse.body().string() : null;
 
-        MailjetResponseUtil.validateMailjetResponse(request, responseStatusCode, responseBody);
+        final JSONObject responseObject = MailjetResponseUtil.parseJsonObject(responseBody);
+        MailjetResponseUtil.validateMailjetResponse(request, responseStatusCode, responseBody, responseObject != null);
 
-        final String json = MailjetResponseUtil.isValidJSON(responseBody) ?
-                responseBody : new JSONObject().put("status", responseStatusCode).toString();
+        final JSONObject json = responseObject != null ?
+                responseObject : new JSONObject().put("status", responseStatusCode);
 
-        return new MailjetResponse(responseStatusCode, json);
+        return new MailjetResponse(responseStatusCode,
+                responseObject != null ? responseBody : json.toString(), json);
     }
 
     private static OkHttpClient createDefaultOkHttpClient(){
@@ -314,12 +320,12 @@ public class MailjetClient {
         try {
             url = request.buildUrl(this._options.getBaseUrl());
         } catch (UnsupportedEncodingException e) {
-            throw new MailjetClientCommunicationException("Connection Exception", e);
+            throw new MailjetClientCommunicationException(CONNECTION_EXCEPTION_MESSAGE, e);
         }
 
         final Request.Builder builder = new Request
                 .Builder()
-                .addHeader("Accept", "application/json")
+                .addHeader("Accept", HttpConstants.APPLICATION_JSON)
                 .addHeader("User-Agent", userAgent)
                 .url(url);
 
@@ -328,15 +334,15 @@ public class MailjetClient {
                 if (_options.getApiKey() == null || _options.getApiSecretKey() == null)
                     throw new MailjetUnauthorizedException("To do a request to MailJet api, api key and api secret should be set");
 
-                final String authEncBytes = Base64.encode((_options.getApiKey() + ":" + _options.getApiSecretKey()).getBytes());
-                builder.addHeader("Authorization", "Basic " + authEncBytes);
+                builder.addHeader(HttpConstants.AUTHORIZATION, Credentials.basic(
+                        _options.getApiKey(), _options.getApiSecretKey(), StandardCharsets.UTF_8));
                 break;
 
             case Bearer:
                 if (_options.getBearerAccessToken() == null)
                     throw new MailjetUnauthorizedException("To do a request to MailJet api, api access token should be set");
 
-                builder.addHeader("Authorization", "Bearer " + _options.getBearerAccessToken());
+                builder.addHeader(HttpConstants.AUTHORIZATION, "Bearer " + _options.getBearerAccessToken());
                 break;
         }
 

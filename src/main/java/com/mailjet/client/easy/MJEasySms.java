@@ -1,5 +1,8 @@
 package com.mailjet.client.easy;
 
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+
 import com.mailjet.client.MailjetRequest;
 import com.mailjet.client.MailjetResponse;
 import com.mailjet.client.errors.MailjetException;
@@ -10,14 +13,10 @@ import com.mailjet.client.resource.sms.SmsSend;
  *
  * It's a MailjetRequest object wrapper
  */
+@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
 public class MJEasySms {
     private final MJEasyClient client;
     private final MailjetRequest request;
-
-    protected MJEasySms(MJEasyClient client, MailjetRequest request) {
-        this.client = client;
-        this.request = request;
-    }
 
     /**
      * Set the sender
